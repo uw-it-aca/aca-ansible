@@ -1,0 +1,11 @@
+- name: Remove old builds
+  hosts: all
+
+  vars:
+    builds_to_keep: 5
+
+  tasks:
+    # Clean up the builds
+    - include: includes/purge_builds.yml parent_dir={{ base_dir }}/builds
+    # Clean up the static
+    - include: includes/purge_builds.yml parent_dir={{ base_dir }}/static

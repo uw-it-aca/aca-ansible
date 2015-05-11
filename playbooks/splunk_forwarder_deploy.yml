@@ -1,0 +1,33 @@
+- name: Create the directory structure for the app to live in
+  hosts: all
+
+  vars:
+    splunk_forwarder: "splunkforwarder-6.1.3-220630-Linux-x86_64.tgz"
+    deployment_server: "splunk-search01.s.uw.edu:8089"
+    vars_files: "{{ config_path }}/files/splunk/vars.yml"
+
+
+  tasks:
+    - name: Ensure the splunk directory exists
+      file: group="{{ file_group }}" mode="2775" state="directory" path="{{ base_dir }}/splunk"
+
+    - name: Copy and unarchive forwarder
+      unarchive: copy="yes" src="{{ config_path }}/files/splunk/{{ splunk_forwarder }}" dest="{{ base_dir }}/splunk"
+
+    - name: Ensure the splunk_conf exists
+      file: group="{{ file_group }}" mode="2775" state="directory" path="{{ base_dir }}/splunk/splunk_config"
+
+    - name: Create deploymentclient.conf
+      template: src="templates/splunk/deploymentclient.conf" dest="{{ base_dir }}/splunk/splunk_config" group="{{ file_group }}" mode="644"
+
+    - name: Create deploymentclient.conf
+      file: group="{{ file_group }}" mode="2775" state="link" src="{{ base_dir }}/splunk/splunk_config/deploymentclient.conf" path="{{ base_dir }}/splunk/splunkforwarder/etc/system/local/deploymentclient.conf"
+
+    - name: Start Splunk
+      command: "{{ base_dir }}/splunk/splunkforwarder/bin/splunk start --accept-license"
+
+    - name: Set password
+      command: "{{ base_dir }}/splunk/splunkforwarder/bin/splunk edit user {{ splunk_user }} -password {{ splunk_password }} -auth {{ splunk_auth }}"
+
+    - name: Restart Splunk
+      command: "{{ base_dir }}/splunk/splunkforwarder/bin/splunk restart"

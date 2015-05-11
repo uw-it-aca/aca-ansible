@@ -1,0 +1,13 @@
+    - copy: src="{{ config_path }}/files/certs/aca-cdn-ssh.key" dest="{{ base_dir }}/aca-cdn-ssh.key" mode="0600"
+
+    - command: ssh -i {{ base_dir }}/aca-cdn-ssh.key acahttp@{{ item }} "mkdir -p /data/cdn/cdn/{{ aca_cdn_path }}/"
+      with_items:
+          - aca-cdn-web01.s.uw.edu
+          - aca-cdn-web02.s.uw.edu
+
+    - command: rsync -aze "ssh -i {{ base_dir }}/aca-cdn-ssh.key" {{ base_dir }}/static/{{ current_build_value }} acahttp@{{ item }}:/data/cdn/cdn/{{ aca_cdn_path }}/
+      with_items:
+          - aca-cdn-web01.s.uw.edu
+          - aca-cdn-web02.s.uw.edu
+
+    - file: state="absent" path="{{ base_dir }}/aca-cdn-ssh.key"

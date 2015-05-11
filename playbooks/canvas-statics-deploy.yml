@@ -1,0 +1,30 @@
+- name: Stage files on local host
+  hosts: 127.0.0.1
+  connection: local
+
+  vars:
+    tmp_path: "/tmp/{{ ansible_ssh_user }}/canvas/www"
+
+  tasks:
+  - debug: msg="the tmp path is {{ tmp_path }}"
+
+  - name: Create tmp path
+    file: state="directory" path="{{ tmp_path }}"
+
+  - name: Export branding statics
+    subversion: repo="{{ statics_repository }}" dest="{{ tmp_path }}/branding"
+
+  - name: Export wayf statics
+    subversion: repo="{{ wayf_repository }}" dest="{{ tmp_path }}/wayf"
+
+- name: Deploy to target hosts
+  hosts: all
+
+  vars:
+    tmp_path: "/tmp/{{ ansible_ssh_user }}/canvas/www"
+
+  tasks:
+    - name: Copy files
+      synchronize: src="{{ tmp_path }}" dest="{{ base_dir }}/" rsync_opts=--omit-dir-times,--exclude=.svn group=no perms=no delete=yes
+
+

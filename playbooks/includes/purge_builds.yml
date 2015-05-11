@@ -1,0 +1,17 @@
+   - debug: msg="{{ builds_to_keep }} directories/files will be kept in {{ parent_dir }}"
+
+   - name: Get sub-directories to purge
+     shell: ls -t {{ parent_dir }} | sed "1,{{ builds_to_keep }}d"
+     register: builds_to_purge
+
+   - debug: msg="{{ builds_to_purge.stdout_lines }} will be purged in {{ parent_dir }}"
+     when: builds_to_purge
+
+   - name: Purge build directories
+     file: path={{ parent_dir }}/{{ item }} state=absent
+     with_items:
+       - "{{ builds_to_purge.stdout_lines }}"
+
+   - name: Add readme file
+     copy: src="templates/build_dir_readme" dest="{{ parent_dir }}/README" group="{{ file_group }}" mode="0664"
+

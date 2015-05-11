@@ -1,0 +1,13 @@
+- name: Create the directory structure for the app to live in
+  hosts: all
+
+  vars:
+    build_name: "{{ inventory_file }}"
+    current_build_value: "{{ lookup('current_build', build_name) }}"
+
+  tasks:
+    - include: includes/django-managed-pre-checkout.yml
+
+    - git: repo={{git_repository}} dest={{ base_dir }}/builds/{{ current_build_value }} version={{git_version}}
+
+    - include: includes/django-managed-post-checkout.yml
