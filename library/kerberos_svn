@@ -1,0 +1,45 @@
+#!/usr/bin/python
+
+import sys, getopt
+import os
+import re
+import json
+import shlex
+from subprocess import Popen, PIPE
+
+args_file = sys.argv[1]
+args_data = file(args_file).read()
+arguments = shlex.split(args_data)
+
+params = {}
+
+for arg in arguments:
+    (key, value) = arg.split("=")
+    params[key] = value
+
+destination = params["destination"]
+
+branch = params["svn_repository"]
+kerb_user = params["kerb_user"]
+keytab = params["keytab"]
+
+Popen(["kinit", kerb_user, "-k", "-t", keytab])
+
+data = ""
+
+# If there's a .svn dir there, we know there's been a subversion checkout
+# This keeps us from needing to know a name of a file in the svn repo
+check_dir = "%s/.svn"
+
+if os.path.isdir(check_dir):
+    output = Popen(["svn", "up", destination], stdout=PIPE, stderr=PIPE)
+    data = "%s %s" % (output.stdout.read(), output.stderr.read())
+else:
+    output = Popen(["svn", "co", branch, destination], stdout=PIPE, stderr=PIPE)
+    data = "%s %s" % (output.stdout.read(), output.stderr.read())
+
+
+print json.dumps({
+    "changed": True,
+})
+
