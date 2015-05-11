@@ -1,0 +1,7 @@
+     <Directory {{ base_dir }}/static/>
+     Order deny,allow
+     Allow from all
+     </Directory>
+
+     Alias /static/  {{ base_dir }}/static/
+

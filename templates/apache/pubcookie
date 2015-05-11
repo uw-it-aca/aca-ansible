@@ -1,0 +1,11 @@
+
+<LocationMatch /PubCookie.reply>
+    SetHandler pubcookie-post-reply
+</LocationMatch>
+
+<Location {{ pubcookie_logout_url|default("/user_logout") }}>
+    AuthType uwnetid
+    require valid-user
+    PubcookieEndSession clearLogin
+</Location>
+

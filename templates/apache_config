@@ -1,0 +1,24 @@
+WSGIPythonHome {{ base_dir }}/live/
+WSGIPythonPath {{ base_dir }}/live/lib/python2.6/site-packages:{{ base_dir }}/mysql-libs/
+
+WSGIScriptAlias {{ wsgi_url_base|default("/") }} {{ base_dir }}/live/wsgi/django.wsgi
+
+     <Directory {{ base_dir }}/live/wsgi>
+     Order deny,allow
+     Allow from all
+     </Directory>
+
+
+{% include 'apache/static_content' %}
+
+{% if include_pubcookie %}
+
+{% include 'apache/pubcookie' %}
+{% include 'apache/pubcookie-auth' %}
+
+{% endif %}
+
+{% if extra_apache_config|default(None) %}
+{% include extra_apache_config %}
+{% endif %}
+

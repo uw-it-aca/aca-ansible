@@ -1,0 +1,13 @@
+<Location {{ pubcookie_required_url|default("/") }}>
+    AuthType uwnetid
+    require valid-user
+    PubCookieAppID {{ pubcookie_app_id|default("ACAPubcookie") }}
+</Location>
+
+{% for entry in pubcookie_extra_list|default([]) %}
+<Location {{ entry.location }}>
+    AuthType uwnetid
+    require valid-user
+    PubCookieAppID {{ pubcookie_app_id|default("ACAPubcookie") }}
+</Location>
+{% endfor %}
