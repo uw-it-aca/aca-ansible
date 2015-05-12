@@ -192,9 +192,9 @@ ANCILLARY_CANVAS_ROLES = {
 }
 
 LTI_CONSUMERS = {
-    {% for consumer in lti_consumers|default([]) %}
+{% for consumer in lti_consumers|default([]) %}
     '{{ consumer.key }}': '{{ consumer.secret }}',
-    {% endfor %}
+{% endfor %}
 }
 
 BLTI_AES_KEY = b'{{ blti_aes_key }}'
@@ -264,9 +264,9 @@ EVENT_VALIDATE_SNS_SIGNATURE = True
 EVENT_VALIDATE_ENROLLMENT_SIGNATURE = False
 EVENT_ENROLLMENT_TOPIC_ARN = '{{ event_enrollment_topic_arn }}'
 EVENT_ENROLLMENT_KEYS = {
-    {% for payload_key in event_enrollment_payload_keys|default([]) %}
+{% for payload_key in event_enrollment_payload_keys|default([]) %}
     '{{ payload_key.key }}': '{{ payload_key.secret }}',
-    {% endfor %}
+{% endfor %}
 }
 
 AWS_CA_BUNDLE = '{{ base_dir }}/live/lib/python2.6/site-packages/boto/cacerts/cacerts.txt'
@@ -292,9 +292,9 @@ AWS_SQS = {
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
         'PAYLOAD_SETTINGS': {
             'KEYS': {
-                {% for payload_key in event_enrollment_payload_keys|default([]) %}
+{% for payload_key in event_enrollment_payload_keys|default([]) %}
                 '{{ payload_key.key }}': '{{ payload_key.secret }}',
-                {% endfor %}
+{% endfor %}
             }
         }
     },
@@ -310,9 +310,9 @@ AWS_SQS = {
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
         'PAYLOAD_SETTINGS': {
             'KEYS': {
-                {% for payload_key in event_group_payload_keys|default([]) %}
+{% for payload_key in event_group_payload_keys|default([]) %}
                 '{{ payload_key.key }}': '{{ payload_key.secret }}',
-                {% endfor %}
+{% endfor %}
             }
         }
     }
