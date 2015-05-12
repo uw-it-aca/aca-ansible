@@ -157,7 +157,7 @@ INSTALLED_APPS = (
 {% for key, value in restclients|default({})|dictsort %}
 {% for client in value %}
 
-{% include "{{ template_dir }}/restclients/%s.tmpl"|format(client) %}
+{% include "templates/restclients/%s.tmpl"|format(client) %}
 
 {% endfor %}
 {% endfor %}
