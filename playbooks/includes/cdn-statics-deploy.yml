@@ -1,4 +1,4 @@
-    - copy: src="{{ config_path }}/files/certs/aca-cdn-ssh.key" dest="{{ base_dir }}/aca-cdn-ssh.key" mode="0600"
+    - copy: src="{{ files_dir }}/certs/aca-cdn-ssh.key" dest="{{ base_dir }}/aca-cdn-ssh.key" mode="0600"
 
     - command: ssh -i {{ base_dir }}/aca-cdn-ssh.key acahttp@{{ item }} "mkdir -p /data/cdn/cdn/{{ aca_cdn_path }}/"
       with_items:
