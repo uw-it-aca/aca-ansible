@@ -31,7 +31,7 @@ LOGGING = {
             'level': 'INFO',
             'formatter': 'standard',
             'class': 'accountsynchr.util.dailylogfile.DailyLogFileHandler',
-            'filename': '/data/eventcal/logs/acc_synchr',
+            'filename': '{{ log_file }}',
         },
         'console':{
             'level': 'ERROR',
@@ -52,6 +52,6 @@ LOGGING = {
     }
 }
 
-EVENTCAL_ADMIN_GROUP = 'u_netid_eventcal_admins'
+EVENTCAL_ADMIN_GROUP = '{{ eventcal_admin_group }}'
 
 RESTCLIENTS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'

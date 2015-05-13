@@ -4,7 +4,8 @@
   vars:
     splunk_forwarder: "splunkforwarder-6.1.3-220630-Linux-x86_64.tgz"
     deployment_server: "splunk-search01.s.uw.edu:8089"
-    vars_files: "{{ config_path }}/files/splunk/vars.yml"
+    files_dir: "{{ ansible_env.ANSIBLE_FILES|default('/data/ansible/aca-builds/files') }}"
+    vars_files: "{{ files_dir }}/files/splunk/vars.yml"
 
 
   tasks:
@@ -12,7 +13,7 @@
       file: group="{{ file_group }}" mode="2775" state="directory" path="{{ base_dir }}/splunk"
 
     - name: Copy and unarchive forwarder
-      unarchive: copy="yes" src="{{ config_path }}/files/splunk/{{ splunk_forwarder }}" dest="{{ base_dir }}/splunk"
+      unarchive: copy="yes" src="{{ files_dir }}/splunk/{{ splunk_forwarder }}" dest="{{ base_dir }}/splunk"
 
     - name: Ensure the splunk_conf exists
       file: group="{{ file_group }}" mode="2775" state="directory" path="{{ base_dir }}/splunk/splunk_config"
