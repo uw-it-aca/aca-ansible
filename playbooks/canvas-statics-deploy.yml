@@ -3,19 +3,23 @@
   connection: local
 
   vars:
+    files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
     tmp_path: "/tmp/{{ ansible_ssh_user }}/canvas/www"
 
+  vars_files:
+    - "{{ files_dir }}/canvas/statics_vars.yml"
+
   tasks:
-  - debug: msg="the tmp path is {{ tmp_path }}"
+    - debug: msg="the tmp path is {{ tmp_path }}"
 
-  - name: Create tmp path
-    file: state="directory" path="{{ tmp_path }}"
+    - name: Create tmp path
+      file: state="directory" path="{{ tmp_path }}"
 
-  - name: Export branding statics
-    subversion: repo="{{ statics_repository }}" dest="{{ tmp_path }}/branding"
+    - name: Export branding statics
+      subversion: repo="{{ statics_repository }}" dest="{{ tmp_path }}/branding"
 
-  - name: Export wayf statics
-    subversion: repo="{{ wayf_repository }}" dest="{{ tmp_path }}/wayf"
+    - name: Export wayf statics
+      subversion: repo="{{ wayf_repository }}" dest="{{ tmp_path }}/wayf"
 
 - name: Deploy to target hosts
   hosts: all
@@ -26,5 +30,3 @@
   tasks:
     - name: Copy files
       synchronize: src="{{ tmp_path }}" dest="{{ base_dir }}/" rsync_opts=--omit-dir-times,--exclude=.svn group=no perms=no delete=yes
-
-
