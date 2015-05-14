@@ -10,7 +10,7 @@
     - "{{ files_dir }}/canvas/statics_vars.yml"
 
   tasks:
-    - debug: msg="the tmp path is {{ tmp_path }} {{ statics_repository }}"
+    - debug: msg="the tmp path is {{ tmp_path }}"
 
     - name: Create tmp path
       file: state="directory" path="{{ tmp_path }}"
