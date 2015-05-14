@@ -4,9 +4,10 @@
   vars:
     splunk_forwarder: "splunkforwarder-6.1.3-220630-Linux-x86_64.tgz"
     deployment_server: "splunk-search01.s.uw.edu:8089"
-    files_dir: "{{ ansible_env.ANSIBLE_FILES|default('/data/ansible/aca-builds/files') }}"
-    vars_files: "{{ files_dir }}/files/splunk/vars.yml"
-
+    files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
+ 
+  vars_files:
+    - "{{ files_dir }}/splunk/vars.yml"
 
   tasks:
     - name: Ensure the splunk directory exists
