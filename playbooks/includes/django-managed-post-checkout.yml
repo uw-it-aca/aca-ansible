@@ -7,6 +7,11 @@
     - name: Install the PermissionsLogging module - needed to make sure our logs are group-writable
       pip: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" requirements="{{ base_dir }}/project_requirements.txt" extra_args="-i {{ pypi_mirror | default("https://pypi.s.uw.edu/root/pypi/+simple") }}"
 
+    - name: Perform upgrades with pip.  May (but should not) take a while
+      pip: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" requirements="{{ base_dir }}/builds/{{current_build_value}}/{{ item }}" extra_args="-U -i {{ pypi_mirror | default("https://pypi.s.uw.edu/root/pypi/+simple") }}"
+      with_items: pip_upgrades_files
+      when: pip_upgrades_files is defined
+
     - name: Install requirements with pip.  May (probably will) take a while
       pip: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" requirements="{{ base_dir }}/builds/{{current_build_value}}/{{ item }}" extra_args="-i {{ pypi_mirror | default("https://pypi.s.uw.edu/root/pypi/+simple") }}"
       with_items: pip_requirements_files
