@@ -63,18 +63,18 @@
       file: group="{{ file_group }}" src="{{ base_dir }}/builds/{{current_build_value}}" dest="{{ base_dir }}/live" state="link" force="yes"
 
     - name: Extra Django Command 1
-      django_manage: app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_django_command1|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
+      django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_django_command1|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
 
     - name: Extra Django Command 2
-      django_manage: app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_django_command2|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
+      django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_django_command2|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
 
     - name: Extra Django Async Command 1
-      django_manage: app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_async_django_command1|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
+      django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_async_django_command1|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
       async: 1
       poll: 0
 
     - name: Extra Django Async Command 2
-      django_manage: app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_async_django_command2|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
+      django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_async_django_command2|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
       async: 1
       poll: 0
 
