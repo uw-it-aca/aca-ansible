@@ -21,9 +21,7 @@
     - name: Point apache configuration to the right place
       file: group="{{ file_group }}" src="{{ base_dir }}/live/apache_config/apache-global" dest="{{ apache_config_path | default('/data/conf/apache-global') }}" state="link" force="yes"
 
-    # Copy over the mysql files that are a pain to build on the hosts
-    - name: Copy mysql libraries
-      synchronize: src="{{ files_dir }}/mysql-libs" dest="{{ base_dir }}/" rsync_opts=--omit-dir-times,--exclude=.svn perms=no
+    - include: database-prereqs.yml
 
     - name: Copy node and less
       synchronize: src="{{ files_dir }}/node-libs" dest="{{ base_dir }}/" rsync_opts=--omit-dir-times,--exclude=.svn perms=no
