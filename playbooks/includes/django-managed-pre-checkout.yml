@@ -1,4 +1,5 @@
     - debug: msg = "the build_name is {{ build_name }}"
+    - debug: msg = "the files_dir is {{ files_dir }}"
     - debug: msg = "the current build is {{ current_build_value }}"
 
     - name: Ensure the base directory exists
