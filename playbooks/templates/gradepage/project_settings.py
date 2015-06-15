@@ -112,6 +112,10 @@ SUBMISSION_DEADLINE_WARNING_HOURS = 48
 PAST_TERMS_VIEWABLE = 4
 GRADE_RETENTION_YEARS = 5
 
+GRADEPAGE_SUPPORT_EMAIL = '{{ gradepage_support_email }}'
+REGISTRAR_SUPPORT_EMAIL = '{{ registrar_support_email }}'
+REGISTRAR_SUPPORT_PHONE = '{{ registrar_support_phone }}'
+
 SUPPORTTOOLS_PARENT_APP = 'GradePage'
 
 from django_mobileesp.detector import agent

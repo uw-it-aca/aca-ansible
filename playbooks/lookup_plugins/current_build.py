@@ -1,7 +1,12 @@
 import sqlite3
+import platform
+import re
 
 """
 This lookup plugin tracks the current build number for projects.
+
+The value includes the output of hostname -s, so multiple hosts can
+run deployments without needing to synchonize.
 
 To use:
 
@@ -37,13 +42,18 @@ class LookupModule(object):
         else:
             value = row[0]
 
-
         LookupModule.run_yet = True
-        LookupModule.run_value = value
 
         next_value = value + 1
         c.execute("REPLACE INTO builds (name, current_build) VALUES (?, ?)", (build_name, next_value, ))
         conn.commit()
         c.close()
 
-        return ["%s" % value]
+        hostname = platform.node()
+        shortname = re.match('^([^.]+)', hostname).groups()[0]
+
+        value = "%s-%s" % (hostname, value)
+
+        LookupModule.run_value = value
+
+        return [value]
