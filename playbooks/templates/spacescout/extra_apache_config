@@ -1,0 +1,21 @@
+# Need this to get the oauth authentication headers in:
+WSGIPassAuthorization On
+
+# Need this to keep deflate from consuming all the content in image file streaming
+SetOutputFilter DEFLATE
+AddOutputFilterByType DEFLATE text/html text/plain text/css application/x-javascript application/javascript
+
+# This should be considered temporary, until we have an actual admin/manager app
+<IfModule mod_pubcookie.c>
+    <Location /django_admin>
+    {% if django_admins is defined %}
+    AuthType uwnetid
+        require user {% for admin in django_admins %}{{ admin }} {% endfor %}
+
+        PubCookieAppID {{ pubcookie_app_id|default("ACAPubcookie") }}
+    {% else %}
+    order deny,allow
+        deny from all
+    {% endif %}
+</Location>
+</IfModule>
