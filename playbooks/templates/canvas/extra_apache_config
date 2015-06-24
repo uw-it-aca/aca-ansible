@@ -7,5 +7,6 @@ Alias /wayf/static/ {{ base_dir }}/www/wayf/static/
 Alias /wayf {{ base_dir }}/www/wayf/index.html
 Alias /wayf-test {{ base_dir }}/www/wayf/index.html
 Alias /wayf-beta {{ base_dir }}/www/wayf/index.html
+Alias /unknown-user {{ base_dir }}/www/wayf/unknown_user.html
 
 Alias /branding/ {{ base_dir }}/www/branding/
