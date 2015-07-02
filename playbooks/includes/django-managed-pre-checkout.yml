@@ -18,12 +18,13 @@
     - name: Ensure static content directory exists
       file: group="{{ file_group }}" mode="2775" state="directory" path="{{ base_dir }}/static"
 
+    - name: Create directory for the next build
+      file: group="{{ file_group }}" mode="2775" state="directory" path="{{ base_dir }}/builds/{{ current_build_value }}"
+
     - name: Point apache configuration to the right place
       file: group="{{ file_group }}" src="{{ base_dir }}/live/apache_config/apache-global" dest="{{ apache_config_path | default('/data/conf/apache-global') }}" state="link" force="yes"
 
-    # Copy over the mysql files that are a pain to build on the hosts
-    - name: Copy mysql libraries
-      synchronize: src="{{ files_dir }}/mysql-libs" dest="{{ base_dir }}/" rsync_opts=--omit-dir-times,--exclude=.svn perms=no
+    - include: database-prereqs.yml
 
     - name: Copy node and less
       synchronize: src="{{ files_dir }}/node-libs" dest="{{ base_dir }}/" rsync_opts=--omit-dir-times,--exclude=.svn perms=no
@@ -38,7 +39,3 @@
     - copy: src="{{ files_dir }}/certs/{{ webservice_client_key_name }}" dest="{{ base_dir }}/certs/{{ webservice_client_key_name }}" group="{{ file_group }}"
       when: webservice_client_key_name != "" and webservice_client_key_name is defined
 
-# Something should go here that determines it's build #{{current_build_value}}.  A lookup?
-
-    - name: Create directory for the next build
-      file: group="{{ file_group }}" mode="2775" state="directory" path="{{ base_dir }}/builds/{{ current_build_value }}"
