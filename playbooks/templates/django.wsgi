@@ -10,5 +10,5 @@ site.addsitedir('{{ base_dir }}/builds/{{ current_build_value }}/lib/python2.6/s
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'project.settings'
 
-import django.core.handlers.wsgi
-application = django.core.handlers.wsgi.WSGIHandler()
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()

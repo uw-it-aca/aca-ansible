@@ -128,7 +128,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.RemoteUserBackend',
+    '{{ authentication_backend|default('django.contrib.auth.backends.RemoteUserBackend')}}',
 )
 
 ROOT_URLCONF = 'project.urls'
