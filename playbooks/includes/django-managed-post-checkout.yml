@@ -87,3 +87,6 @@
 
     - name: Reload apache
       command: /usr/local/apache/bin/ap-reload
+
+    - include: purge_all_types.yml
+      when: purge_old_builds | default(true)

@@ -1,0 +1,13 @@
+ScriptAlias /nagios/cgi-bin /data/nagios/nagios/sbin
+<Directory "/usr/local/share/nagios/sbin">
+    Options ExecCGI
+    Order allow,deny
+    Allow from all
+</Directory>
+
+Alias /nagios /data/nagios/nagios/share
+<Directory "/data/nagios/nagios/share">
+    Options None
+    Order allow,deny
+    Allow from all
+</Directory>
