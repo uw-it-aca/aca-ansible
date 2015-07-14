@@ -7,11 +7,12 @@
     files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
 
   tasks:
-    - debug: msg="KEY {{ nagios_registration_oauth_key }}"
-    - include: includes/django-managed-pre-checkout.yml
+#    - include: includes/django-managed-pre-checkout.yml
 
-    - git: repo={{git_repository}} dest={{ base_dir }}/builds/{{ current_build_value }} version={{git_version}}
+#    - git: repo={{git_repository}} dest={{ base_dir }}/builds/{{ current_build_value }} version={{git_version}}
 
-    - include: includes/django-managed-post-checkout.yml
+#    - include: includes/django-managed-post-checkout.yml
+    - include: includes/nagios_registration.yml
 
-    - include: includes/nagios-baseline-config.yml
+#    - include: includes/nagios-baseline-config.yml
+

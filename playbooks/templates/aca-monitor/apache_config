@@ -1,3 +1,5 @@
+WSGIPassAuthorization On
+
 ScriptAlias /nagios/cgi-bin /data/nagios/nagios/sbin
 <Directory "/usr/local/share/nagios/sbin">
     Options ExecCGI
