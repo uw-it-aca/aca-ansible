@@ -1,0 +1,32 @@
+    # Copy over the mysql files that are a pain to build on the hosts
+    - name: Copy mysql libraries
+      synchronize: src="{{ files_dir }}/mysql-libs" dest="{{ base_dir }}/" rsync_opts=--omit-dir-times,--exclude=.svn perms=no
+      when: database_type is not defined or database_type == "mysql"
+
+    - name: Ensure odbc directory exists
+      file: group="{{ file_group }}" mode="2775" state="directory" path="{{ base_dir }}/odbc"
+      when: database_type is defined and database_type == "MS SQL"
+
+    - name: Point ODBC configuration to the right place
+      file: group="{{ file_group }}" src="{{ base_dir }}/odbc/odbc.ini" dest="{{ odbc_config_path | default('/data/etc/odbc.ini') }}" state="link" force="yes"
+      when: database_type is defined and database_type == "MS SQL"
+
+    - name: Point ODBCinst configuration to the right place
+      file: group="{{ file_group }}" src="{{ base_dir }}/odbc/odbcinst.ini" dest="{{ odbc_config_path | default('/data/etc/odbcinst.ini') }}" state="link" force="yes"
+      when: database_type is defined and database_type == "MS SQL"
+
+    - name: Point freetds.conf configuration to the right place
+      file: group="{{ file_group }}" src="{{ base_dir }}/odbc/freetds.conf" dest="{{ odbc_config_path | default('/data/etc/freetds/freetds.conf') }}" state="link" force="yes"
+      when: database_type is defined and database_type == "MS SQL"
+
+    - name: Configure odbc.ini
+      template: src="templates/odbc/odbc.ini" dest="{{ base_dir }}/odbc/odbc.ini" group="{{ file_group }}" mode="664"
+      when: database_type is defined and database_type == "MS SQL"
+
+    - name: Configure odbcinst.ini
+      template: src="templates/odbc/odbcinst.ini" dest="{{ base_dir }}/odbc/odbcinst.ini" group="{{ file_group }}" mode="664"
+      when: database_type is defined and database_type == "MS SQL"
+
+    - name: Configure freetds.conf
+      template: src="templates/odbc/freetds.conf" dest="{{ base_dir }}/odbc/freetds.conf" group="{{ file_group }}" mode="664"
+      when: database_type is defined and database_type == "MS SQL"

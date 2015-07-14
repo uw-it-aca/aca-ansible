@@ -21,9 +21,10 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+{% if not skip_central_db_config|default(False) %}
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.{{ database_backend|default("mysql") }}',
+        'ENGINE': '{{ database_backend|default("django.db.backends.mysql") }}',
         'NAME': '{{ database_name }}',
         'USER': '{{ database_user }}',
         'PASSWORD': '{{ database_password|default("") }}',
@@ -31,6 +32,7 @@ DATABASES = {
         'PORT': '{{ database_port|default("") }}',
     }
 }
+{% endif %}
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -120,13 +122,13 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.auth.middleware.RemoteUserMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'userservice.user.UserServiceMiddleware',
+    {% if include_userservice|default(True) %}'userservice.user.UserServiceMiddleware',{% endif %}
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.RemoteUserBackend',
+    '{{ authentication_backend|default('django.contrib.auth.backends.RemoteUserBackend')}}',
 )
 
 ROOT_URLCONF = 'project.urls'
