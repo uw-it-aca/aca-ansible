@@ -35,6 +35,7 @@ INSTALLED_APPS += (
     'grade_conversion_calculator',
     'grading_standard',
     'utils',
+    'eos',
 )
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
