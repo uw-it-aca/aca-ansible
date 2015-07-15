@@ -12,6 +12,7 @@ import re
 
 current_exit_code = 0
 pattern = r'.* ([0-9]+)%'
+partition_values = []
 
 {% for partition in monitored_disk_partitions %}
 p = subprocess.Popen("/bin/df {{ partition.path }}", stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
@@ -19,7 +20,7 @@ p = subprocess.Popen("/bin/df {{ partition.path }}", stdout=subprocess.PIPE, std
 for line in iter(p.stdout.readline, b''):
     matches = re.match(pattern, str(line))
     if matches:
-        percent = matches.group(1)
+        percent = int(matches.group(1))
         if percent > {{ partition.disk_use_warning }}:
             if current_exit_code < 1:
                 current_exit_code = 1
@@ -27,7 +28,9 @@ for line in iter(p.stdout.readline, b''):
             if current_exit_code < 2:
                 current_exit_code = 2
 
-        print("{{ partition.path }} @ %s%%" % (percent))
+        partition_values.append("{{ partition.path }} @ %s%%" % (percent))
 
 {% endfor %}
+
+print ", ".join(partition_values)
 sys.exit(current_exit_code)
