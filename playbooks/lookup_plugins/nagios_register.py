@@ -38,6 +38,22 @@ class LookupModule(object):
                                             "check_command": "check_acamon_remote!inode_check.py"}),
                            headers={"Content-Type": "application/json"})
 
+            # load average check - values are defined in the ansible variable monitored_load
+            value = client.request("%s/api/v1/service" % (nagios_server),
+                           method='POST',
+                           body=json.dumps({"base_service": "active-service",
+                                            "description": "Load Average Check",
+                                            "check_command": "check_acamon_remote!load_check.py"}),
+                           headers={"Content-Type": "application/json"})
+
+            # cpu idle check - values are defined in the ansible variable monitored_cpu_idle
+            value = client.request("%s/api/v1/service" % (nagios_server),
+                           method='POST',
+                           body=json.dumps({"base_service": "active-service",
+                                            "description": "CPU Idle Check",
+                                            "check_command": "check_acamon_remote!cpu_idle_check.py"}),
+                           headers={"Content-Type": "application/json"})
+
 
             # Create each hosts
             for host in hosts:
@@ -52,21 +68,33 @@ class LookupModule(object):
                                body=json.dumps({"group": group, "host": host}),
                                headers={"Content-Type": "application/json"})
 
-                # Add the disk check check to this host
+                # Add the disk check to this host
                 client.request("%s/api/v1/service" % (nagios_server),
                                method='PATCH',
                                body=json.dumps({"service": "Disk Check",
                                                 "host": host}),
                                headers={"Content-Type": "application/json"})
 
-                # Add the disk check check to this host
+                # Add the inode check to this host
                 client.request("%s/api/v1/service" % (nagios_server),
                                method='PATCH',
                                body=json.dumps({"service": "Inode Check",
                                                 "host": host}),
                                headers={"Content-Type": "application/json"})
 
+                # Add the load average check to this host
+                client.request("%s/api/v1/service" % (nagios_server),
+                               method='PATCH',
+                               body=json.dumps({"service": "Load Average Check",
+                                                "host": host}),
+                               headers={"Content-Type": "application/json"})
 
+                # Add the cpu idle check to this host
+                client.request("%s/api/v1/service" % (nagios_server),
+                               method='PATCH',
+                               body=json.dumps({"service": "CPU Idle Check",
+                                                "host": host}),
+                               headers={"Content-Type": "application/json"})
 
             # Deploy the updated nagios configuration
             value = client.request("%s/api/v1/deploy" % (nagios_server), method="POST")
