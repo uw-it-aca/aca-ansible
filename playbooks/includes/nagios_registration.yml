@@ -1,6 +1,9 @@
 - name: tmp directory for nagios files
   file: state="directory" path="{{ base_dir }}/nagios_{{ acting_user}}" mode="700"
 
+- name: tmp directory for nagios scripts
+  file: state="directory" path="{{ base_dir }}/nagios_{{ acting_user}}/scripts" mode="700"
+
 - name: create the scp wrapper to add content to the acamon account
   template: src="templates/nagios/nagios_scp" dest="{{ base_dir }}/nagios_{{ acting_user }}/nagios_scp" mode="700"
 
@@ -10,10 +13,15 @@
 - name: set the authorized key for acamon
   command: "{{ base_dir }}/nagios_{{ acting_user }}/add_public_key"
 
-#  command: {{ base_dir }}/nagios_{{ acting_user }}/nagios_scp {{ base_dir }}/nagios_{{ acting_user }}/public_key.pub ssh {{ monitor_user_username }}@{{ inventory_hostname }} ls /tmp/
+- name: generating nagios test scripts for host
+  template: src="templates/nagios/disk_check.py" dest="{{ base_dir }}/nagios_{{ acting_user }}/scripts/disk_check.py" mode="750"
+
+- command: "{{ base_dir }}/nagios_{{ acting_user }}/nagios_scp {{ base_dir }}/nagios_{{ acting_user }}/scripts/disk_check.py nagios"
 
 - file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/nagios_scp"
 - file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/add_public_key"
+- file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/scripts/disk_check.py"
+- file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/scripts"
 - file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}"
 
 - set_fact:
