@@ -1,0 +1,12 @@
+#!/usr/bin/expect -f
+spawn ssh {{ monitor_user_username }}@{{ inventory_hostname }} ls -ld .ssh 2>/dev/null || mkdir .ssh && chmod 700 .ssh
+expect "*?assword"
+send "{{ monitor_user_password }}\r\r"
+expect eof
+
+spawn ssh {{ monitor_user_username }}@{{ inventory_hostname }} grep '{{monitor_user_public_key}}' .ssh/authorized_keys 2>/dev/null || echo '{{monitor_user_public_key}}' >> .ssh/authorized_keys
+expect "*?assword"
+send "{{ monitor_user_password }}\r\r"
+expect eof
+
+

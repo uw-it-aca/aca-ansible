@@ -1,3 +1,21 @@
+- name: tmp directory for nagios files
+  file: state="directory" path="{{ base_dir }}/nagios_{{ acting_user}}" mode="700"
+
+- name: create the scp wrapper to add content to the acamon account
+  template: src="templates/nagios/nagios_scp" dest="{{ base_dir }}/nagios_{{ acting_user }}/nagios_scp" mode="700"
+
+- name: create the script to add the public key to the acamon account
+  template: src="templates/nagios/add_public_key" dest="{{ base_dir }}/nagios_{{ acting_user }}/add_public_key" mode="700"
+
+- name: set the authorized key for acamon
+  command: "{{ base_dir }}/nagios_{{ acting_user }}/add_public_key"
+
+#  command: {{ base_dir }}/nagios_{{ acting_user }}/nagios_scp {{ base_dir }}/nagios_{{ acting_user }}/public_key.pub ssh {{ monitor_user_username }}@{{ inventory_hostname }} ls /tmp/
+
+- file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/nagios_scp"
+- file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/add_public_key"
+- file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}"
+
 - set_fact:
     nagios_result: "{{ lookup('nagios_register', nagios_registration_oauth_key, nagios_registration_oauth_secret, nagios_registration_server, inventory_file, groups) }}"
 - debug: msg="{{ nagios_result }}"

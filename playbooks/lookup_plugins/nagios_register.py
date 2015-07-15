@@ -20,6 +20,16 @@ class LookupModule(object):
                            body=json.dumps({"name": group, "alias": group}),
                            headers={"Content-Type": "application/json"})
 
+            # Create services
+            # active-service is defined in templates/aca-monitor/nagios/common_configuration.cfg 
+            value = client.request("%s/api/v1/service" % (nagios_server),
+                           method='POST',
+                           body=json.dumps({"base_service": "active-service",
+                                            "description": "Disk Check",
+                                            "check_command": "check_acamon_remote!disk_check.py!85!95!/,/usr,/var,/data"}),
+                           headers={"Content-Type": "application/json"})
+
+
             # Create each hosts
             for host in hosts:
                 value = client.request("%s/api/v1/host" % (nagios_server),
@@ -33,6 +43,17 @@ class LookupModule(object):
                                body=json.dumps({"group": group, "host": host}),
                                headers={"Content-Type": "application/json"})
 
+                # Add the disk check check to this host
+                client.request("%s/api/v1/service" % (nagios_server),
+                               method='PATCH',
+                               body=json.dumps({"service": "Disk Check",
+                                                "host": host}),
+                               headers={"Content-Type": "application/json"})
+
+
+            # Deploy the updated nagios configuration
+            value = client.request("%s/api/v1/deploy" % (nagios_server), method="POST")
+            return [str(value)]
         except Exception as ex:
             return [str(ex)]
 

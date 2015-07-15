@@ -5,6 +5,7 @@
     build_name: "{{ inventory_file }}"
     current_build_value: "{{ lookup('current_build', build_name) }}"
     files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
+    acting_user: "{{ lookup('env', 'USER') }}"
 
   tasks:
 #    - include: includes/django-managed-pre-checkout.yml
@@ -14,5 +15,5 @@
 #    - include: includes/django-managed-post-checkout.yml
     - include: includes/nagios_registration.yml
 
-#    - include: includes/nagios-baseline-config.yml
+    - include: includes/nagios-baseline-config.yml
 

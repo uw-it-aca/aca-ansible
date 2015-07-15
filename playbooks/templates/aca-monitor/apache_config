@@ -1,7 +1,7 @@
 WSGIPassAuthorization On
 
 ScriptAlias /nagios/cgi-bin /data/nagios/nagios/sbin
-<Directory "/usr/local/share/nagios/sbin">
+<Directory "/data/nagios/nagios/sbin">
     Options ExecCGI
     Order allow,deny
     Allow from all
