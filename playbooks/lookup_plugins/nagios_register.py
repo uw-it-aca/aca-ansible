@@ -22,11 +22,20 @@ class LookupModule(object):
 
             # Create services
             # active-service is defined in templates/aca-monitor/nagios/common_configuration.cfg 
+            # Disk check - values are defined in the ansible variable monitored_disk_partitions
             value = client.request("%s/api/v1/service" % (nagios_server),
                            method='POST',
                            body=json.dumps({"base_service": "active-service",
                                             "description": "Disk Check",
-                                            "check_command": "check_acamon_remote!disk_check.py!85!95!/,/usr,/var,/data"}),
+                                            "check_command": "check_acamon_remote!disk_check.py"}),
+                           headers={"Content-Type": "application/json"})
+
+            # Inode check - values are defined in the ansible variable monitored_disk_partitions
+            value = client.request("%s/api/v1/service" % (nagios_server),
+                           method='POST',
+                           body=json.dumps({"base_service": "active-service",
+                                            "description": "Inode Check",
+                                            "check_command": "check_acamon_remote!inode_check.py"}),
                            headers={"Content-Type": "application/json"})
 
 
@@ -49,6 +58,14 @@ class LookupModule(object):
                                body=json.dumps({"service": "Disk Check",
                                                 "host": host}),
                                headers={"Content-Type": "application/json"})
+
+                # Add the disk check check to this host
+                client.request("%s/api/v1/service" % (nagios_server),
+                               method='PATCH',
+                               body=json.dumps({"service": "Inode Check",
+                                                "host": host}),
+                               headers={"Content-Type": "application/json"})
+
 
 
             # Deploy the updated nagios configuration

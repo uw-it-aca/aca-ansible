@@ -16,11 +16,15 @@
 - name: generating nagios test scripts for host
   template: src="templates/nagios/disk_check.py" dest="{{ base_dir }}/nagios_{{ acting_user }}/scripts/disk_check.py" mode="750"
 
+- template: src="templates/nagios/inode_check.py" dest="{{ base_dir }}/nagios_{{ acting_user }}/scripts/inode_check.py" mode="750"
+
 - command: "{{ base_dir }}/nagios_{{ acting_user }}/nagios_scp {{ base_dir }}/nagios_{{ acting_user }}/scripts/disk_check.py nagios"
+- command: "{{ base_dir }}/nagios_{{ acting_user }}/nagios_scp {{ base_dir }}/nagios_{{ acting_user }}/scripts/inode_check.py nagios"
 
 - file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/nagios_scp"
 - file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/add_public_key"
 - file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/scripts/disk_check.py"
+- file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/scripts/inode_check.py"
 - file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/scripts"
 - file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}"
 
