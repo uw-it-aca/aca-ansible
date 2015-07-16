@@ -35,6 +35,7 @@ INSTALLED_APPS += (
     'grade_conversion_calculator',
     'grading_standard',
     'utils',
+    'eos',
 )
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
@@ -256,6 +257,7 @@ RESTCLIENTS_DISABLE_THREADING = True
 RESTCLIENTS_DAO_CACHE_CLASS = 'sis_provisioner.cache.RestClientsCache'
 RESTCLIENTS_CANVAS_ACCOUNT_ID = '{{ canvas_account_id }}'
 RESTCLIENTS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'
+RESTCLIENTS_EOS_HOST = '{{ eos_host }}'
 SUPPORTTOOLS_PARENT_APP = 'Canvas LMS'
 SUPPORTTOOLS_PARENT_APP_URL = RESTCLIENTS_CANVAS_HOST
 
