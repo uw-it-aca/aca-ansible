@@ -35,5 +35,5 @@
 - file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}"
 
 - set_fact:
-    nagios_result: "{{ lookup('nagios_register', nagios_registration_oauth_key, nagios_registration_oauth_secret, nagios_registration_server, inventory_file, groups) }}"
+    nagios_result: "{{ lookup('nagios_register', nagios_registration_oauth_key, nagios_registration_oauth_secret, nagios_registration_server, inventory_file, groups, nagios_contacts) }}"
 - debug: msg="{{ nagios_result }}"

@@ -6,7 +6,7 @@ class LookupModule(object):
     def __init__(self, *args, **kwargs):
         pass
 
-    def run(self, oauth_key, oauth_secret, nagios_server, inventory, groups, *args, **kwargs):
+    def run(self, oauth_key, oauth_secret, nagios_server, inventory, groups, contacts, *args, **kwargs):
         group = re.match('.*/(.*)', inventory).group(1)
         hosts = groups[group]
 
@@ -14,6 +14,27 @@ class LookupModule(object):
         client = oauth2.Client(consumer)
 
         try:
+            contact_group_name = "cg_%s" % group
+            # Create a contactgroup
+            value = client.request("%s/api/v1/contactgroup" % (nagios_server),
+                           method='POST',
+                           body=json.dumps({"name": contact_group_name}),
+                           headers={"Content-Type": "application/json"})
+
+            # Create the contacts, and add them to the contact group
+            for contact in contacts:
+                value = client.request("%s/api/v1/contact" % (nagios_server),
+                               method='POST',
+                               body=json.dumps({"name": contact["name"], "email": contact["email"]}),
+                               headers={"Content-Type": "application/json"})
+
+                # Add the hosts to the hostgroup
+                value = client.request("%s/api/v1/contactgroup" % (nagios_server),
+                               method='PATCH',
+                               body=json.dumps({"group": contact_group_name, "contact": contact["name"]}),
+                               headers={"Content-Type": "application/json"})
+
+
             # Create the hostgroup
             value = client.request("%s/api/v1/hostgroup" % (nagios_server),
                            method='POST',
@@ -55,11 +76,43 @@ class LookupModule(object):
                            headers={"Content-Type": "application/json"})
 
 
+            # Create disk service group
+            value = client.request("%s/api/v1/servicegroup" % (nagios_server),
+                           method='POST',
+                           body=json.dumps({"name": "Disk Services", "alias": "Disk Services"}),
+                           headers={"Content-Type": "application/json"})
+
+            value = client.request("%s/api/v1/servicegroup" % (nagios_server),
+                           method='POST',
+                           body=json.dumps({"name": "CPU Services", "alias": "CPU Services"}),
+                           headers={"Content-Type": "application/json"})
+
+            # Add the services to their groups
+            value = client.request("%s/api/v1/servicegroup" % (nagios_server),
+                                   method='PATCH',
+                                   body=json.dumps({"group": "Disk Services", "service": "Disk Check"}),
+                                   headers={"Content-Type": "application/json"})
+
+            value = client.request("%s/api/v1/servicegroup" % (nagios_server),
+                                   method='PATCH',
+                                   body=json.dumps({"group": "Disk Services", "service": "Inode Check"}),
+                                   headers={"Content-Type": "application/json"})
+
+            value = client.request("%s/api/v1/servicegroup" % (nagios_server),
+                                   method='PATCH',
+                                   body=json.dumps({"group": "CPU Services", "service": "CPU Idle Check"}),
+                                   headers={"Content-Type": "application/json"})
+
+            value = client.request("%s/api/v1/servicegroup" % (nagios_server),
+                                   method='PATCH',
+                                   body=json.dumps({"group": "CPU Services", "service": "Load Average Check"}),
+                                   headers={"Content-Type": "application/json"})
+
             # Create each hosts
             for host in hosts:
                 value = client.request("%s/api/v1/host" % (nagios_server),
                                method='POST',
-                               body=json.dumps({"name": host, "address": host}),
+                               body=json.dumps({"name": host, "address": host, "contact_groups": contact_group_name}),
                                headers={"Content-Type": "application/json"})
 
                 # Add the hosts to the hostgroup
