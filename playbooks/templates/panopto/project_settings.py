@@ -2,6 +2,8 @@
 TIME_ZONE = 'America/Los_Angeles'
 
 MIDDLEWARE_CLASSES += (
+    'blti.middleware.CSRFHeaderMiddleware',
+    'blti.middleware.SessionHeaderMiddleware',
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
 )
 
@@ -15,6 +17,7 @@ INSTALLED_APPS += (
     'authz_group',
     'scheduler',
     'personal_folder',
+    'blti',
 )
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
