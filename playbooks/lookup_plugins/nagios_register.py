@@ -14,26 +14,28 @@ class LookupModule(object):
         client = oauth2.Client(consumer)
 
         try:
-            contact_group_name = "cg_%s" % group
-            # Create a contactgroup
-            value = client.request("%s/api/v1/contactgroup" % (nagios_server),
-                           method='POST',
-                           body=json.dumps({"name": contact_group_name}),
-                           headers={"Content-Type": "application/json"})
-
-            # Create the contacts, and add them to the contact group
-            for contact in contacts:
-                value = client.request("%s/api/v1/contact" % (nagios_server),
-                               method='POST',
-                               body=json.dumps({"name": contact["name"], "email": contact["email"]}),
-                               headers={"Content-Type": "application/json"})
-
-                # Add the hosts to the hostgroup
-                value = client.request("%s/api/v1/contactgroup" % (nagios_server),
-                               method='PATCH',
-                               body=json.dumps({"group": contact_group_name, "contact": contact["name"]}),
-                               headers={"Content-Type": "application/json"})
-
+# Commenting this out while figuring out better options.  Contacts set on the host don't get service alerts
+# for the host, and i don't want to create a different entry for each host/service combo.
+#            contact_group_name = "cg_%s" % group
+#            # Create a contactgroup
+#            value = client.request("%s/api/v1/contactgroup" % (nagios_server),
+#                           method='POST',
+#                           body=json.dumps({"name": contact_group_name}),
+#                           headers={"Content-Type": "application/json"})
+#
+#            # Create the contacts, and add them to the contact group
+#            for contact in contacts:
+#                value = client.request("%s/api/v1/contact" % (nagios_server),
+#                               method='POST',
+#                               body=json.dumps({"name": contact["name"], "email": contact["email"]}),
+#                               headers={"Content-Type": "application/json"})
+#
+#                # Add the hosts to the hostgroup
+#                value = client.request("%s/api/v1/contactgroup" % (nagios_server),
+#                               method='PATCH',
+#                               body=json.dumps({"group": contact_group_name, "contact": contact["name"]}),
+#                               headers={"Content-Type": "application/json"})
+#
 
             # Create the hostgroup
             value = client.request("%s/api/v1/hostgroup" % (nagios_server),
@@ -112,7 +114,7 @@ class LookupModule(object):
             for host in hosts:
                 value = client.request("%s/api/v1/host" % (nagios_server),
                                method='POST',
-                               body=json.dumps({"name": host, "address": host, "contact_groups": contact_group_name}),
+                               body=json.dumps({"name": host, "address": host, "contact_groups": ""}),
                                headers={"Content-Type": "application/json"})
 
                 # Add the hosts to the hostgroup
