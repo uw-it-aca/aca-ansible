@@ -55,6 +55,21 @@ class LookupModule(object):
                                             "check_command": "check_acamon_remote!cpu_idle_check.py"}),
                            headers={"Content-Type": "application/json"})
 
+            # mysql sql connections check
+            value = client.request("%s/api/v1/service" % (nagios_server),
+                           method='POST',
+                           body=json.dumps({"base_service": "active-service",
+                                            "description": "MySQL Connections Check",
+                                            "check_command": "check_acamon_remote!mysql_connections_check.py"}),
+                           headers={"Content-Type": "application/json"})
+
+            # mysql open files check
+            value = client.request("%s/api/v1/service" % (nagios_server),
+                           method='POST',
+                           body=json.dumps({"base_service": "active-service",
+                                            "description": "MySQL Open Files Check",
+                                            "check_command": "check_acamon_remote!mysql_open_files.py"}),
+                           headers={"Content-Type": "application/json"})
 
             # Create disk service group
             value = client.request("%s/api/v1/servicegroup" % (nagios_server),
@@ -62,9 +77,16 @@ class LookupModule(object):
                            body=json.dumps({"name": "Disk Services", "alias": "Disk Services"}),
                            headers={"Content-Type": "application/json"})
 
+            # Create the cpu service group
             value = client.request("%s/api/v1/servicegroup" % (nagios_server),
                            method='POST',
                            body=json.dumps({"name": "CPU Services", "alias": "CPU Services"}),
+                           headers={"Content-Type": "application/json"})
+
+            # Create the mysql db service group
+            value = client.request("%s/api/v1/servicegroup" % (nagios_server),
+                           method='POST',
+                           body=json.dumps({"name": "MySQL DB Services", "alias": "MySQL DB Services"}),
                            headers={"Content-Type": "application/json"})
 
             # Add the services to their groups
@@ -86,6 +108,16 @@ class LookupModule(object):
             value = client.request("%s/api/v1/servicegroup" % (nagios_server),
                                    method='PATCH',
                                    body=json.dumps({"group": "CPU Services", "service": "Load Average Check"}),
+                                   headers={"Content-Type": "application/json"})
+
+            value = client.request("%s/api/v1/servicegroup" % (nagios_server),
+                                   method='PATCH',
+                                   body=json.dumps({"group": "MySQL DB Services", "service": "MySQL Connections Check"}),
+                                   headers={"Content-Type": "application/json"})
+
+            value = client.request("%s/api/v1/servicegroup" % (nagios_server),
+                                   method='PATCH',
+                                   body=json.dumps({"group": "MySQL DB Services", "service": "MySQL Open Files Check"}),
                                    headers={"Content-Type": "application/json"})
 
             # Create each hosts
@@ -128,6 +160,21 @@ class LookupModule(object):
                                body=json.dumps({"service": "CPU Idle Check",
                                                 "host": host}),
                                headers={"Content-Type": "application/json"})
+
+                # Add the connections check to this host
+                client.request("%s/api/v1/service" % (nagios_server),
+                               method='PATCH',
+                               body=json.dumps({"service": "MySQL Connections Check",
+                                                "host": host}),
+                               headers={"Content-Type": "application/json"})
+
+                # Add the open files check to this host
+                client.request("%s/api/v1/service" % (nagios_server),
+                               method='PATCH',
+                               body=json.dumps({"service": "MySQL Open Files Check",
+                                                "host": host}),
+                               headers={"Content-Type": "application/json"})
+
 
             # Deploy the updated nagios configuration
             value = client.request("%s/api/v1/deploy" % (nagios_server), method="POST")
