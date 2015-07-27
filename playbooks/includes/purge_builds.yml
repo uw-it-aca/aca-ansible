@@ -8,7 +8,7 @@
      when: builds_to_purge
 
    - name: Purge build directories
-     file: path={{ parent_dir }}/{{ item }} state=absent
+     command: /bin/rm -rf {{ parent_dir }}/{{ item }} || echo "FAILED to delete {{ parent_dir }}/{{ item }}!!"
      with_items:
        - "{{ builds_to_purge.stdout_lines }}"
 
