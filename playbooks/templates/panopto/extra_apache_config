@@ -1,4 +1,4 @@
-<LocationMatch ^/scheduler/(course|blti/api)/?.*>
+<LocationMatch ^/(static/)|(scheduler/(course|blti/api)/?).*>
     satisfy any
     AuthType none
     order deny,allow

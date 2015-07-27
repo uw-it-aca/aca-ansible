@@ -1,10 +1,6 @@
 # Settings for Panopto project.
 TIME_ZONE = 'America/Los_Angeles'
 
-MIDDLEWARE_CLASSES += (
-    'django_mobileesp.middleware.UserAgentDetectionMiddleware',
-)
-
 INSTALLED_APPS += (
     'django.contrib.humanize',
     'templatetag_handlebars',
@@ -15,7 +11,14 @@ INSTALLED_APPS += (
     'authz_group',
     'scheduler',
     'personal_folder',
+    'blti',
 )
+
+middleware = list(MIDDLEWARE_CLASSES)
+middleware.insert(1, 'blti.middleware.SessionHeaderMiddleware')
+middleware.insert(1, 'blti.middleware.CSRFHeaderMiddleware')
+middleware.append('django_mobileesp.middleware.UserAgentDetectionMiddleware')
+MIDDLEWARE_CLASSES = tuple(middleware)
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
