@@ -1,0 +1,4 @@
+---
+- name: Django DB Server
+  debug: msg="{{ ansible_hostname }}"
+- include: ../../../includes/nagios_registration_mysql.yml

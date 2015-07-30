@@ -1,2 +1,7 @@
-builds.db                                                                       
+builds.db
 *.pyc
+*.swp
+/bin
+/include
+/local
+/lib

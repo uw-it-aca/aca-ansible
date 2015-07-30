@@ -1,0 +1,4 @@
+    # Clean up the builds
+    - include: purge_builds.yml parent_dir={{ base_dir }}/builds
+    # Clean up the static
+    - include: purge_builds.yml parent_dir={{ base_dir }}/static

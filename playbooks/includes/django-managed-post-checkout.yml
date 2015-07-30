@@ -62,6 +62,10 @@
     - name: Link live to the current build
       file: group="{{ file_group }}" src="{{ base_dir }}/builds/{{current_build_value}}" dest="{{ base_dir }}/live" state="link" force="yes"
 
+    - name: Django management commands
+      django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ item }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
+      with_items: django_management_commands
+
     - name: Extra Django Command 1
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_django_command1|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
 
@@ -78,6 +82,11 @@
       async: 1
       poll: 0
 
+    - name: Extra Django Async Command 3
+      django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_async_django_command3|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
+      async: 1
+      poll: 0
+
     - name: Fix permissions on the new deployed build
       command: find {{ base_dir }}/builds/{{current_build_value}} -exec chmod g+w {} \;
 
@@ -87,3 +96,6 @@
 
     - name: Reload apache
       command: /usr/local/apache/bin/ap-reload
+
+    - include: purge_all_types.yml
+      when: purge_old_builds | default(true)
