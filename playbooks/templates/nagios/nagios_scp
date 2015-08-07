@@ -1,0 +1,8 @@
+#!/usr/bin/expect -f
+set source [lindex $argv 0]
+set destination [lindex $argv 1]
+
+spawn scp $source {{ monitor_user_username }}@{{ inventory_hostname }}:$destination
+expect "*?assword"
+send "{{ monitor_user_password }}\r\r"
+expect eof

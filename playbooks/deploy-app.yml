@@ -1,0 +1,27 @@
+- hosts: django-app-server
+  roles:
+    - { role: "django_app_server_role" }
+  vars:
+    build_name: "{{ inventory_file }}"
+    current_build_value: "{{ lookup('current_build', build_name) }}"
+    files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
+    acting_user: "{{ lookup('env', 'USER') }}"
+
+- hosts: mysql-db-server
+  roles:
+    - { role: "mysql_db_role" }
+  vars:
+    files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
+    acting_user: "{{ lookup('env', 'USER') }}"
+
+# Somewhat customized version of django-app-server - adds nagios server configuration
+- hosts: nagios-app-server
+  roles:
+    - { role: "nagios_app_server_role" }
+  vars:
+    build_name: "{{ inventory_file }}"
+    current_build_value: "{{ lookup('current_build', build_name) }}"
+    files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
+    acting_user: "{{ lookup('env', 'USER') }}"
+
+

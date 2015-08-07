@@ -104,7 +104,7 @@ LOGGING = {
 USERSERVICE_VALIDATION_MODULE = "myuw_mobile.userservice_validation.validate"
 USERSERVICE_ADMIN_GROUP='{{ userservice_admin_group }}'
 RESTCLIENTS_ADMIN_GROUP='{{ restclients_admin_group }}'
-RESTCLIENTS_DAO_CACHE_CLASS='restclients.cache_implementation.FourHourCache'
+RESTCLIENTS_DAO_CACHE_CLASS='{{restclients_dao_cache_class}}'
 AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
 
 SUPPORTTOOLS_PARENT_APP = "MyUW"
