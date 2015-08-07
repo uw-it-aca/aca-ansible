@@ -1,0 +1,23 @@
+- name: create directories
+  file: group="{{ log_group }}" mode="2775" state="directory" path="{{ nagios_base_directory }}/etc"
+
+- name: var/rw directory
+  file: group="{{ log_group }}" mode="2775" state="directory" path="{{ nagios_base_directory }}/var/rw"
+
+- name: log dir
+  file: group="{{ log_group }}" mode="2775" state="directory" path="{{ base_dir }}/logs/nagios"
+
+- name: ensure the nagios_registration configuration file is in place
+  file: group="{{ log_group }}" mode="664" state="touch" path="{{ nagios_configuration_path }}"
+
+- name: ensure the nagios status file has correct permissions
+  file: group="{{ log_group }}" mode="664" state="touch" path="{{ nagios_base_directory }}/var/status.dat"
+
+- name: resource file
+  template: src="templates/aca-monitor/nagios/resources.cfg" dest="{{ nagios_base_directory }}/etc/resources.cfg" group="{{ file_group }}" mode="664"
+
+- name: common configuration
+  template: src="templates/aca-monitor/nagios/common_configuration.cfg" dest="{{ nagios_base_directory }}/etc/common_configuration.cfg" group="{{ file_group }}" mode="664"
+
+- name: main configuration
+  template: src="templates/aca-monitor/nagios/nagios.cfg" dest="{{ nagios_base_directory }}/etc/nagios.cfg" group="{{ file_group }}" mode="664"

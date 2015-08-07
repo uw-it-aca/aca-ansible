@@ -6,6 +6,4 @@
 
   tasks:
     # Clean up the builds
-    - include: includes/purge_builds.yml parent_dir={{ base_dir }}/builds
-    # Clean up the static
-    - include: includes/purge_builds.yml parent_dir={{ base_dir }}/static
+    - include: includes/purge_all_types.yml

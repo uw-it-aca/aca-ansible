@@ -71,3 +71,7 @@ COMPRESS_CSS_FILTERS = [
 COMPRESS_JS_FILTERS = [
     'compressor.filters.jsmin.JSMinFilter',
 ]
+
+EMAIL_HOST = 'appsubmit.cac.washington.edu'
+SQLSHARE_SHARING_URL_FORMAT = '{{ sqlshare_sharing_url_format }}'
+

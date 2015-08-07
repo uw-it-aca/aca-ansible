@@ -2,6 +2,7 @@
 DEBUG = {{ debug|default(False) }}
 TEMPLATE_DEBUG = DEBUG
 
+{% if not skip_compress_statics|default(False) %}
 COMPRESS_ENABLED = True
 COMPRESS_OFFLINE = True
 COMPRESS_ROOT = '{{ base_dir }}/static/{{ current_build_value }}'
@@ -9,6 +10,7 @@ COMPRESS_ROOT = '{{ base_dir }}/static/{{ current_build_value }}'
 COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} {outfile}'),
 )
+{% endif %}
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
@@ -100,7 +102,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
+    {% if not skip_compress_statics|default(False) %}'compressor.finders.CompressorFinder',{% endif %}
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
@@ -148,7 +150,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'compressor',
+    {% if not skip_compress_statics|default(False) %}'compressor',{% endif %}
     'null_command',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
