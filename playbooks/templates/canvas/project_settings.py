@@ -182,14 +182,6 @@ ANCILLARY_CANVAS_ROLES = {
         "account": "root",
         "canvas_role": CANVAS_MASQUERADE_ROLE
     },
-    "APIUserReadWrite": {
-        "account": "root",
-        "canvas_role": CANVAS_MASQUERADE_ROLE
-    },
-    "APIUserReadOnly": {
-        "account": "root",
-        "canvas_role": CANVAS_MASQUERADE_ROLE
-    },
 }
 
 LTI_CONSUMERS = {
