@@ -1,0 +1,20 @@
+# Need this to get the oauth authentication headers in:
+WSGIPassAuthorization On
+
+# Need this to keep deflate from consuming all the content in image file streaming
+SetOutputFilter DEFLATE
+AddOutputFilterByType DEFLATE text/html text/plain text/css application/x-javascript application/javascript
+
+Alias /media /data/www/media
+<Directory /data/www/media/>
+    Order deny,allow
+    Allow from all
+</Directory>
+
+<IfModule mod_pubcookie.c>
+    <Location /admin>
+        AuthType uwnetid
+        require user charlon cstimmel haughar jcivjan
+        PubCookieAppID {{ pubcookie_app_id|default("ACAPubcookie") }}
+    </Location>
+</IfModule>
