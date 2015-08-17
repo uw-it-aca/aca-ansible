@@ -13,3 +13,4 @@
       action: kerberos_svn destination={{ base_dir }}/builds/{{ current_build_value }} kerb_user={{ kerb_user }} svn_repository={{ svn_repository }} keytab={{ base_dir }}/{{ keytab_file }}
 
     - include: includes/django-managed-post-checkout.yml
+    - include: includes/nagios_registration.yml
