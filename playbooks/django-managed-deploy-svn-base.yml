@@ -5,6 +5,7 @@
     build_name: "{{ inventory_file }}"
     current_build_value: "{{ lookup('current_build', build_name) }}"
     files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
+    acting_user: "{{ lookup('env', 'USER') }}"
 
   tasks:
     - include: includes/django-managed-pre-checkout.yml
@@ -13,3 +14,4 @@
       action: kerberos_svn destination={{ base_dir }}/builds/{{ current_build_value }} kerb_user={{ kerb_user }} svn_repository={{ svn_repository }} keytab={{ base_dir }}/{{ keytab_file }}
 
     - include: includes/django-managed-post-checkout.yml
+    - include: includes/nagios_registration.yml
