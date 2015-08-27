@@ -154,5 +154,4 @@ REST_FRAMEWORK = {
 }
 
 RESTCLIENTS_MDOT_DAO_CLASS = 'mdot.mdot_rest_client.client.MDOTLive'
-RESTCLIENTS_MDOT_HOST = 'http://localhost:8000/'
-RESTCLIENTS_MDOT_HOST = 'http://mdot-test-app01.s.uw.edu/'
+RESTCLIENTS_MDOT_HOST = '{{ mdot_api_host }}'
