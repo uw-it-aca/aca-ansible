@@ -28,6 +28,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # ALLOWED_HOSTS = []
 
+# Enable sending of email
+EMAIL_HOST = '{{ email_host }}'
+EMAIL_USE_TLS = True
 
 # Application definition
 
