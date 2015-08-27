@@ -1,0 +1,7 @@
+WSGIPassAuthorization On
+
+<LocationMatch "^(?!/api)/[^/]+">
+    AuthType uwnetid
+    require valid-user
+    PubCookieAppID Aca-Graph
+</LocationMatch>

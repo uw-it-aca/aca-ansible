@@ -1,0 +1,3 @@
+- set_fact:
+    acagraph_result: "{{ lookup('acagraph_register', acagraph_oauth_key, acagraph_oauth_secret, acagraph_oauth_server, inventory_file, groups, restclients, include_pubcookie) }}"
+- debug: msg="{{ acagraph_result }}"
