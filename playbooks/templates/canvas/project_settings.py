@@ -159,6 +159,7 @@ ASTRA_ROLE_MAPPING = {
     "CollDeptAdminCourseDesign": "College or Dept Admin or Designer",
     "CollDeptSuptOutcomeMgr": "College or Dept Support or Outcomes Manager",
     "CollDeptResearchObserve": "College or Dept Researcher or Observer",
+    "DisabilityResourcesAdm": "Disability Resources Admin",
     "UWEOAdmin": "UWEO Admin",
     "UWEOManager": "UWEO Manager",
     "UWEOProgram": "UWEO Program",
