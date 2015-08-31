@@ -29,7 +29,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # ALLOWED_HOSTS = []
 
 # Enable sending of email
-EMAIL_HOST = '{{ email_host }}'
+EMAIL_HOST = '{{ email_host|default('localhost') }}'
 EMAIL_USE_TLS = True
 
 # Application definition
@@ -158,3 +158,5 @@ REST_FRAMEWORK = {
 
 RESTCLIENTS_MDOT_DAO_CLASS = 'mdot.mdot_rest_client.client.MDOTLive'
 RESTCLIENTS_MDOT_HOST = '{{ mdot_api_host }}'
+
+GOOGLE_ANALYTICS_KEY = '{{ ga_tracking_id|default('') }}'
