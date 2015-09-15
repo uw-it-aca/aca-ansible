@@ -1,20 +1,3 @@
-Alias /a-ok /data/myuw/its_ok
-<Directory /data/myuw/its_ok/>
-    Order deny,allow
-    Allow from all
-</Directory>
-
-<Location />
-RewriteEngine On
-
-RewriteCond %{HTTP_USER_AGENT} (iPhone|Android.*Mobile)
-RewriteCond %{REQUEST_URI} ^/$
-RewriteRule ^ {{ web_host_base }}/mobile/login [L,R]
-
-RewriteCond %{HTTP_USER_AGENT} !(iPhone|Android.*Mobile)
-RewriteCond %{REQUEST_URI} ^/$
-RewriteRule ^ {{ legacy_host_base }}%{REQUEST_URI} [L,R]
-</Location>
 
 WSGIDaemonProcess site-1 user=acahttp group=acadev_logs processes=4 threads=10
 WSGIProcessGroup site-1
