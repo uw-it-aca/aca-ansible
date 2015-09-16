@@ -3,7 +3,7 @@
   connection: local
 
   vars:
-    tmp_path: "/tmp/{{ ansible_ssh_user }}/canvas/www"
+    tmp_path: "/tmp/{{ ansible_ssh_user }}/canvas"
 
   tasks:
     - debug: msg="the tmp path is {{ tmp_path }}"
@@ -11,8 +11,11 @@
     - name: Create tmp path
       file: state="directory" path="{{ tmp_path }}"
 
+    - name: Remove www directory
+      file: state="absent" path="{{ tmp_path }}/www"
+
     - name: Export statics
-      git: repo="{{ statics_repository }}" dest="{{ tmp_path }}"  
+      git: repo="https://github.com/uw-it-aca/uw-canvas-statics.git" dest="{{ tmp_path }}/www"  
 
 - name: Deploy to target hosts
   hosts: all
@@ -22,4 +25,4 @@
 
   tasks:
     - name: Copy files
-    synchronize: src="{{ tmp_path }}" dest="{{ base_dir }}/" rsync_opts=--omit-dir-times,--exclude=.git,--exclude=.md,--exclude=LICENSE group=no perms=no delete=yes
+      synchronize: src="{{ tmp_path }}" dest="{{ base_dir }}/" rsync_opts=--omit-dir-times,--exclude=.git,--exclude=README.md,--exclude=LICENSE group=no perms=no delete=yes
