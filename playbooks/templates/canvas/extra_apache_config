@@ -10,4 +10,4 @@ Alias /wayf-beta {{ base_dir }}/www/wayf/index.html
 Alias /unknown-user {{ base_dir }}/www/wayf/unknown_user.html
 
 Alias /includes/ {{ base_dir }}/www/includes/
-Alias /branding/ {{ base_dir }}/www/branding/
+Alias /branding/ {{ base_dir }}/www/includes/
