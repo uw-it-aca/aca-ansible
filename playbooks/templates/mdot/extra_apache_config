@@ -21,7 +21,8 @@ Alias /media /data/www/media
 <IfModule mod_pubcookie.c>
     <Location /admin>
         AuthType uwnetid
-        require user charlon cstimmel haughar jcivjan
+        require user {% for admin in django_admins|default('all denied') %}{{ admin }} {% endfor %}
+
         PubCookieAppID {{ pubcookie_app_id|default("ACAPubcookie") }}
     </Location>
 </IfModule>
