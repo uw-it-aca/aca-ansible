@@ -5,7 +5,7 @@ INSTALLED_APPS += (
     'south',
     'restclients',
     'templatetag_handlebars',
-    'myuw_mobile',
+    'myuw',
     'userservice',
     'supporttools',
     'django_client_logger',
@@ -22,7 +22,7 @@ LOGGING = {
         }
     },
     'formatters': {
-        'myuw_mobile': {
+        'myuw': {
             'format': '%(levelname)-4s %(asctime)s %(message)s [%(name)s]',
             'datefmt': '%d %H:%M:%S',
         },
@@ -33,33 +33,33 @@ LOGGING = {
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         },
-        'myuw_mobile': {
+        'myuw': {
             'level': 'INFO',
             'class': 'permissions_logging.DateNameFileHandler',
             'filename': '{{ base_dir }}/logs/myuw-%Y-%m-%d',
             'permissions': 0o664,
-            'formatter': 'myuw_mobile',
+            'formatter': 'myuw',
         },
         'card': {
             'level': 'INFO',
             'class': 'permissions_logging.DateNameFileHandler',
             'filename': '{{ base_dir }}/logs/card-%Y-%m-%d',
             'permissions': 0o664,
-            'formatter': 'myuw_mobile',
+            'formatter': 'myuw',
         },
         'link': {
             'level': 'INFO',
             'class': 'permissions_logging.DateNameFileHandler',
             'filename': '{{ base_dir }}/logs/link-%Y-%m-%d',
             'permissions': 0o664,
-            'formatter': 'myuw_mobile',
+            'formatter': 'myuw',
         },
         'session': {
             'level': 'INFO',
             'class': 'permissions_logging.DateNameFileHandler',
             'filename': '{{ base_dir }}/logs/session-%Y-%m-%d',
             'permissions': 0o664,
-            'formatter': 'myuw_mobile',
+            'formatter': 'myuw',
         },
         'console':{
             'level': 'ERROR',
@@ -73,12 +73,12 @@ LOGGING = {
             'propagate': True,
         },
         'restclients': {
-            'handlers': ['myuw_mobile'],
+            'handlers': ['myuw'],
             'level': 'INFO',
             'propagate': True,
         },
-        'myuw_mobile': {
-            'handlers': ['myuw_mobile'],
+        'myuw': {
+            'handlers': ['myuw'],
             'level': 'INFO',
             'propagate': True,
         },
@@ -101,7 +101,7 @@ LOGGING = {
 }
 
 
-USERSERVICE_VALIDATION_MODULE = "myuw_mobile.userservice_validation.validate"
+USERSERVICE_VALIDATION_MODULE = "myuw.userservice_validation.validate"
 USERSERVICE_ADMIN_GROUP='{{ userservice_admin_group }}'
 RESTCLIENTS_ADMIN_GROUP='{{ restclients_admin_group }}'
 RESTCLIENTS_DAO_CACHE_CLASS='{{restclients_dao_cache_class}}'
@@ -119,8 +119,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 'django.core.context_processors.tz',
 'django.contrib.messages.context_processors.messages',
 'django.core.context_processors.request',
-'myuw_mobile.context_processors.has_less_compiled',
-'myuw_mobile.context_processors.has_google_analytics',
+'myuw.context_processors.has_less_compiled',
+'myuw.context_processors.has_google_analytics',
 'supporttools.context_processors.supportools_globals',
 )
 
@@ -137,3 +137,8 @@ DETECT_USER_AGENTS = {
 
 GOOGLE_ANALYTICS_KEY = "{{ ga_tracker_key }}"
 
+{% if myuw_fyp_redirects|default(False) %}
+MYUW_USER_SERVLET_URL = "{{ myuw_legacy_url }}"
+MYUW_MANDATORY_SWITCH_PATH = "{{ myuw_fyp_list_path }}"
+MYUW_OPTIN_SWITCH_PATH = "{{ myuw_optin_list_path }}"
+{% endif %}
