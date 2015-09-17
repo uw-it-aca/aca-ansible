@@ -18,6 +18,10 @@ Alias /media /data/www/media
     Allow from all
 </Directory>
 
+# Log format changes for f5
+LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" \"%{X-Forwarded-For}i\" \"%{Via}i\"" combined
+
+# NetID auth for the django admin
 <IfModule mod_pubcookie.c>
     <Location /admin>
         AuthType uwnetid
