@@ -34,18 +34,19 @@ EMAIL_USE_TLS = True
 
 # Application definition
 
-INSTALLED_APPS += (
+INSTALLED_APPS = (
     'django.contrib.admin',
-#    'django.contrib.auth',
-#    'django.contrib.contenttypes',
-#    'django.contrib.sessions',
-#    'django.contrib.messages',
-#    'django.contrib.staticfiles',
-#    'compressor',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'null_command',
     'rest_framework',
     'mdotdevs',
     'mdot_rest',
     'mdot',
+    'compressor',
 )
 
 MIDDLEWARE_CLASSES += (
