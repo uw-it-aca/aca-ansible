@@ -26,7 +26,7 @@ INSTALLED_APPS += (
     'authz_group',
     'blti',
     'sis_provisioner',
-    'canvas_admin',
+    'admin',
     'astra',
     'events',
     'course_request',
