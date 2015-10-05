@@ -26,15 +26,14 @@ INSTALLED_APPS += (
     'authz_group',
     'blti',
     'sis_provisioner',
-    'admin',
+    'canvas_admin',
     'astra',
     'events',
-    'course_request',
+    'groups',
     'libguide',
     'analytics',
     'grade_conversion_calculator',
     'grading_standard',
-    'utils',
     'eos',
 )
 
