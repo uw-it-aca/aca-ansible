@@ -1,13 +1,5 @@
 # Settings for Canvas project.
 
-STATICFILES_DIRS = (
-    '{{ base_dir }}/builds/{{ current_build_value }}/statics',
-)
-
-TEMPLATE_DIRS = (
-    '{{ base_dir }}/builds/{{ current_build_value }}/templates',
-)
-
 TIME_ZONE = 'America/Los_Angeles'
 
 MIDDLEWARE_CLASSES += (
