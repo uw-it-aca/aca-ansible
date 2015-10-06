@@ -1,13 +1,5 @@
 # Settings for Canvas project.
 
-STATICFILES_DIRS = (
-    '{{ base_dir }}/builds/{{ current_build_value }}/statics',
-)
-
-TEMPLATE_DIRS = (
-    '{{ base_dir }}/builds/{{ current_build_value }}/templates',
-)
-
 TIME_ZONE = 'America/Los_Angeles'
 
 MIDDLEWARE_CLASSES += (
@@ -29,12 +21,11 @@ INSTALLED_APPS += (
     'canvas_admin',
     'astra',
     'events',
-    'course_request',
+    'groups',
     'libguide',
     'analytics',
     'grade_conversion_calculator',
     'grading_standard',
-    'utils',
     'eos',
 )
 

@@ -4,6 +4,7 @@
 </LocationMatch>
 
 <Location {{ pubcookie_logout_url|default("/user_logout") }}>
+    PubCookieAppID {{ pubcookie_app_id|default("ACAPubcookie") }}
     AuthType uwnetid
     require valid-user
     PubcookieEndSession clearLogin
