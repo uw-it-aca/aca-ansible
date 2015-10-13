@@ -23,6 +23,7 @@ INSTALLED_APPS += (
     'events',
     'groups',
     'libguide',
+    'course_roster',
     'analytics',
     'grade_conversion_calculator',
     'grading_standard',
