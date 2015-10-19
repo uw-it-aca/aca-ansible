@@ -24,6 +24,7 @@ INSTALLED_APPS += (
     'groups',
     'libguide',
     'course_roster',
+    'canvas_users',
     'analytics',
     'grade_conversion_calculator',
     'grading_standard',
