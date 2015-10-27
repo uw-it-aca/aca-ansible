@@ -3,6 +3,8 @@
     Allow from all
 </Directory>
 
+AliasMatch ^/(favicon|apple-touch-icon-|android-|win8-)(.*)$ {{ base_dir }}/static/{{ current_build_value }}/uw/ico/$1$2
+
 Alias /wayf/static/ {{ base_dir }}/www/wayf/static/
 Alias /wayf {{ base_dir }}/www/wayf/index.html
 Alias /wayf-test {{ base_dir }}/www/wayf/index.html
