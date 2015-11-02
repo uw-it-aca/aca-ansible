@@ -10,8 +10,6 @@ class LookupModule(object):
     def run(self, oauth_key, oauth_secret, nagios_server, inventory, groups, contacts, *args, **kwargs):
         group = re.match('.*/(.*)', inventory).group(1)
         hosts = groups["mysql-db-server"]
-        master_hosts = groups["mysql-db-server-master"]
-        slave_hosts = groups["mysql-db-server-slave"]
 
         consumer = oauth2.Consumer(key=oauth_key, secret=oauth_secret)
         client = oauth2.Client(consumer)
@@ -203,7 +201,7 @@ class LookupModule(object):
                                                 "host": host}),
                                headers={"Content-Type": "application/json"})
 
-            for host in master_hosts:
+            for host in groups.get("mysql-db-server-master", []):
                 # Add the DB master check to this host
                 client.request("%s/api/v1/service" % (nagios_server),
                                method='PATCH',
@@ -211,7 +209,7 @@ class LookupModule(object):
                                                 "host": host}),
                                headers={"Content-Type": "application/json"})
 
-            for host in slave_hosts:
+            for host in groups.get("mysql-db-server-slave", []):
                 # Add the DB slave check to this host
                 client.request("%s/api/v1/service" % (nagios_server),
                                method='PATCH',
