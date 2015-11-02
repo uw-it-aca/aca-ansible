@@ -15,9 +15,7 @@ import re
 import os
 
 
-slaves = [{% for host in groups["mysql-db-server-slave"] %}
-    '{{ host }}'{% if not forloop.last %},{% endif %}{% endfor %}
-]
+slaves = [{% if "mysql-db-server-slave" in groups %}{% for host in groups["mysql-db-server-slave"] %}'{{ host }}',{% endfor %}{% endif %}]
 
 p = subprocess.Popen("{{ mysql_path }} -u {{ nagios_mysql_user|default('nagios') }} -p{{ mysql_password }} -e 'show processlist'", stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
 
@@ -29,13 +27,17 @@ if re.match(r'.*Access denied for user', content):
     print 'Access denied.  Read %s for details' % os.path.realpath(__file__)
     sys.exit(3)
 
+if not len(slaves):
+    print 'No slave hosts defined'
+    sys.exit(3)
+
 err_slaves = []
 for slave in slaves:
     if not re.search(r'repl\s+' + re.escape(slave), content):
         err_slaves.append(slave)
 
 if len(err_slaves):
-    print '%s not connected for replication' % (', '.join(err_slaves)) 
+    print '%s not connected for replication' % (', '.join(err_slaves))
     sys.exit(2)
 
 print '%s connected for replication' % (', '.join(slaves))
