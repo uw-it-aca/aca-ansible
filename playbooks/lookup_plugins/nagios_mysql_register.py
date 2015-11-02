@@ -22,7 +22,7 @@ class LookupModule(object):
                            headers={"Content-Type": "application/json"})
 
             # Create services
-            # active-service is defined in templates/aca-monitor/nagios/common_configuration.cfg 
+            # active-service is defined in templates/aca-monitor/nagios/common_configuration.cfg
             # Disk check - values are defined in the ansible variable monitored_disk_partitions
             value = client.request("%s/api/v1/service" % (nagios_server),
                            method='POST',
@@ -71,6 +71,22 @@ class LookupModule(object):
                                             "check_command": "check_acamon_remote!mysql_open_files.py"}),
                            headers={"Content-Type": "application/json"})
 
+            # mysql master check
+            value = client.request("%s/api/v1/service" % (nagios_server),
+                method='POST',
+                body=json.dumps({"base_service": "active-service",
+                                 "description": "MySQL Master Check",
+                                 "check_command": "check_acamon_remote!mysql_master_check.py"}),
+                headers={"Content-Type": "application/json"})
+
+            # mysql slave check
+            value = client.request("%s/api/v1/service" % (nagios_server),
+                method='POST',
+                body=json.dumps({"base_service": "active-service",
+                                 "description": "MySQL Slave Check",
+                                 "check_command": "check_acamon_remote!mysql_slave_check.py"}),
+                headers={"Content-Type": "application/json"})
+
             # Create disk service group
             value = client.request("%s/api/v1/servicegroup" % (nagios_server),
                            method='POST',
@@ -118,6 +134,16 @@ class LookupModule(object):
             value = client.request("%s/api/v1/servicegroup" % (nagios_server),
                                    method='PATCH',
                                    body=json.dumps({"group": "MySQL DB Services", "service": "MySQL Open Files Check"}),
+                                   headers={"Content-Type": "application/json"})
+
+            value = client.request("%s/api/v1/servicegroup" % (nagios_server),
+                                   method='PATCH',
+                                   body=json.dumps({"group": "MySQL DB Services", "service": "MySQL Master Check"}),
+                                   headers={"Content-Type": "application/json"})
+
+            value = client.request("%s/api/v1/servicegroup" % (nagios_server),
+                                   method='PATCH',
+                                   body=json.dumps({"group": "MySQL DB Services", "service": "MySQL Slave Check"}),
                                    headers={"Content-Type": "application/json"})
 
             # Create each hosts
@@ -175,6 +201,21 @@ class LookupModule(object):
                                                 "host": host}),
                                headers={"Content-Type": "application/json"})
 
+            for host in groups.get("mysql-db-server-master", []):
+                # Add the DB master check to this host
+                client.request("%s/api/v1/service" % (nagios_server),
+                               method='PATCH',
+                               body=json.dumps({"service": "MySQL Master Check",
+                                                "host": host}),
+                               headers={"Content-Type": "application/json"})
+
+            for host in groups.get("mysql-db-server-slave", []):
+                # Add the DB slave check to this host
+                client.request("%s/api/v1/service" % (nagios_server),
+                               method='PATCH',
+                               body=json.dumps({"service": "MySQL Slave Check",
+                                                "host": host}),
+                               headers={"Content-Type": "application/json"})
 
             # Deploy the updated nagios configuration
             value = client.request("%s/api/v1/deploy" % (nagios_server), method="POST")

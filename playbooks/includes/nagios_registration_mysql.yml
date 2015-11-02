@@ -28,6 +28,8 @@
 - template: src="templates/nagios/cpu_idle_check.py" dest="{{ base_dir }}/nagios_{{ acting_user }}/scripts/cpu_idle_check.py" mode="750"
 - template: src="templates/nagios/mysql_connections_check.py" dest="{{ base_dir }}/nagios_{{ acting_user }}/scripts/mysql_connections_check.py" mode="750"
 - template: src="templates/nagios/mysql_open_files.py" dest="{{ base_dir }}/nagios_{{ acting_user }}/scripts/mysql_open_files.py" mode="750"
+- template: src="templates/nagios/mysql_master_check.py" dest="{{ base_dir }}/nagios_{{ acting_user }}/scripts/mysql_master_check.py" mode="750"
+- template: src="templates/nagios/mysql_slave_check.py" dest="{{ base_dir }}/nagios_{{ acting_user }}/scripts/mysql_slave_check.py" mode="750"
 
 - command: "{{ base_dir }}/nagios_{{ acting_user }}/nagios_scp {{ base_dir }}/nagios_{{ acting_user }}/scripts/disk_check.py nagios"
 - command: "{{ base_dir }}/nagios_{{ acting_user }}/nagios_scp {{ base_dir }}/nagios_{{ acting_user }}/scripts/inode_check.py nagios"
@@ -35,6 +37,8 @@
 - command: "{{ base_dir }}/nagios_{{ acting_user }}/nagios_scp {{ base_dir }}/nagios_{{ acting_user }}/scripts/cpu_idle_check.py nagios"
 - command: "{{ base_dir }}/nagios_{{ acting_user }}/nagios_scp {{ base_dir }}/nagios_{{ acting_user }}/scripts/mysql_connections_check.py nagios"
 - command: "{{ base_dir }}/nagios_{{ acting_user }}/nagios_scp {{ base_dir }}/nagios_{{ acting_user }}/scripts/mysql_open_files.py nagios"
+- command: "{{ base_dir }}/nagios_{{ acting_user }}/nagios_scp {{ base_dir }}/nagios_{{ acting_user }}/scripts/mysql_master_check.py nagios"
+- command: "{{ base_dir }}/nagios_{{ acting_user }}/nagios_scp {{ base_dir }}/nagios_{{ acting_user }}/scripts/mysql_slave_check.py nagios"
 
 - file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/nagios_scp"
 - file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/add_public_key"
@@ -44,6 +48,8 @@
 - file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/scripts/cpu_idle_check.py"
 - file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/scripts/mysql_connections_check.py"
 - file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/scripts/mysql_open_files.py"
+- file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/scripts/mysql_master_check.py"
+- file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/scripts/mysql_slave_check.py"
 - file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/scripts"
 - file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}"
 
