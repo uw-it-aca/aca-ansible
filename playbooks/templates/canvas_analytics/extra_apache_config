@@ -1,0 +1,4 @@
+<Location />
+    AuthType uwnetid
+    Require user {{ canvas_analytics_users }}
+</Location>
