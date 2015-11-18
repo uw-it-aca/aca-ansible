@@ -6,6 +6,7 @@
 #
 # If you are looking at this script because it failed to connect, you can run this mysql command:
 # CREATE USER '{{ nagios_mysql_user|default('nagios') }}'@'localhost' IDENTIFIED BY '{{ mysql_password }}';
+# GRANT PROCESS ON *.* TO '{{ nagios_mysql_user|default('nagios') }}'@'localhost';
 #
 ######
 
