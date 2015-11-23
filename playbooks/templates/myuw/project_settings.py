@@ -106,9 +106,10 @@ USERSERVICE_ADMIN_GROUP='{{ userservice_admin_group }}'
 RESTCLIENTS_ADMIN_GROUP='{{ restclients_admin_group }}'
 RESTCLIENTS_DAO_CACHE_CLASS='{{restclients_dao_cache_class}}'
 AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
+RESTCLIENTS_MEMCACHED_SERVERS = {{ restclients_memcached_servers|default("''")}}
 
 SUPPORTTOOLS_PARENT_APP = "MyUW"
-SUPPORTTOOLS_PARENT_APP_URL = "/mobile/landing/"
+SUPPORTTOOLS_PARENT_APP_URL = "/"
 
 TEMPLATE_CONTEXT_PROCESSORS = (
 'django.contrib.auth.context_processors.auth',
