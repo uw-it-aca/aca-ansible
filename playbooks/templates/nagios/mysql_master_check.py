@@ -17,6 +17,9 @@ import os
 
 
 slaves = [{% if "mysql-db-server-slave" in groups %}{% for host in groups["mysql-db-server-slave"] %}'{{ host }}',{% endfor %}{% endif %}]
+masters = { {% if "mysql-db-server-master" in groups %}{% for host in groups["mysql-db-server-master"] %}'{{ host }}': True,{% endfor %}{%endif %} }
+
+connected = []
 
 p = subprocess.Popen("{{ mysql_path }} -u {{ nagios_mysql_user|default('nagios') }} -p{{ mysql_password }} -e 'show processlist'", stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
 
@@ -34,12 +37,15 @@ if not len(slaves):
 
 err_slaves = []
 for slave in slaves:
-    if not re.search(r'repl\s+' + re.escape(slave), content):
-        err_slaves.append(slave)
+    if slave not in masters:
+        if not re.search(r'repl\s+' + re.escape(slave), content):
+            err_slaves.append(slave)
+        else:
+            connected.append(slave)
 
 if len(err_slaves):
     print '%s not connected for replication' % (', '.join(err_slaves))
     sys.exit(2)
 
-print '%s connected for replication' % (', '.join(slaves))
+print '%s connected for replication' % (', '.join(connected))
 sys.exit(0)
