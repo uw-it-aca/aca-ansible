@@ -18,7 +18,7 @@
       git: repo="https://github.com/uw-it-aca/uw-canvas-statics.git" dest="{{ tmp_path }}/www"  
 
 - name: Deploy to target hosts
-  hosts: all
+  hosts: django-app-server
 
   vars:
     tmp_path: "/tmp/{{ ansible_ssh_user }}/canvas/www"
