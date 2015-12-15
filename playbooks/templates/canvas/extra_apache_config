@@ -13,3 +13,13 @@ Alias /unknown-user {{ base_dir }}/www/wayf/unknown_user.html
 
 Alias /includes/ {{ base_dir }}/www/includes/
 Alias /branding/ {{ base_dir }}/www/includes/
+
+### Configuration for going offline 
+#Alias /offline/static/ {{ base_dir }}/www/offline/static/
+#Alias /offline {{ base_dir }}/www/offline/index.html
+#<Location />
+#    ReWriteEngine On
+#    RewriteCond %{REQUEST_URI} !^/(offline|wayf|unknown-user|includes|branding).*
+#    RewriteRule .* /offline [L]
+#</Location>
+### End offline configuration
