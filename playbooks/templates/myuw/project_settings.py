@@ -111,6 +111,13 @@ RESTCLIENTS_MEMCACHED_SERVERS = {{ restclients_memcached_servers|default("''")}}
 SUPPORTTOOLS_PARENT_APP = "MyUW"
 SUPPORTTOOLS_PARENT_APP_URL = "/"
 
+TEMPLATE_LOADERS = (
+    ('django.template.loaders.cached.Loader', (
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    )),
+)
+
 TEMPLATE_CONTEXT_PROCESSORS = (
 'django.contrib.auth.context_processors.auth',
 'django.core.context_processors.debug',
