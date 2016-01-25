@@ -30,7 +30,8 @@ LOGGING = {
         'dailyrotation_file': {
             'level': 'INFO',
             'formatter': 'standard',
-            'class': 'accountsynchr.util.dailylogfile.DailyLogFileHandler',
+            'class': 'permissions_logging.DateNameFileHandler',
+            'permissions': 0o664,
             'filename': '{{ log_file }}',
         },
         'console':{
@@ -41,7 +42,7 @@ LOGGING = {
     'loggers': {
         'django.request': {
             'handlers': ['mail_admins', 'console'],
-            'level': 'ERROR',
+            'level': 'INFO',
             'propagate': True,
         },
         '': {
