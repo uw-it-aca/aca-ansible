@@ -29,10 +29,10 @@ LOGGING = {
         },
         'dailyrotation_file': {
             'level': 'INFO',
-            'formatter': 'standard',
             'class': 'permissions_logging.DateNameFileHandler',
+            'filename': '{{ base_dir }}/logs/acc_synchr.%Y-%m-%d',
             'permissions': 0o664,
-            'filename': '{{ log_file }}',
+            'formatter': 'standard',
         },
         'console':{
             'level': 'ERROR',
