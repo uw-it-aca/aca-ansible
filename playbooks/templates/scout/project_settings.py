@@ -119,16 +119,16 @@ USE_TZ = True
 
 #STATIC_URL = '/static/'
 #STATIC_ROOT = '/tmp/'
-
-STATICFILES_FINDERS = (
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    "compressor.finders.CompressorFinder",
-)
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+#
+# STATICFILES_FINDERS = (
+#     "django.contrib.staticfiles.finders.FileSystemFinder",
+#     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+#     "compressor.finders.CompressorFinder",
+# )
+#
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),
+# )
 
 # django mobileesp
 
@@ -151,7 +151,7 @@ COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'sassc {infile} {outfile}'),
 )
 COMPRESS_ENABLED = True
-COMPRESS_OFFLINE = False
+COMPRESS_OFFLINE = True
 COMPRESS_OUTPUT_DIR = ''
 COMPRESS_CSS_FILTERS = [
     'compressor.filters.css_default.CssAbsoluteFilter',
