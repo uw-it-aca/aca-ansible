@@ -129,15 +129,10 @@ DETECT_USER_AGENTS = {
     'is_win': agent.detectWindowsPhone,
 }
 
-COMPRESS_ROOT = "/tmp/"
-COMPRESS_PRECOMPILERS = (
-    ('text/less', 'lessc {infile} {outfile}'),
+COMPRESS_PRECOMPILERS += (
     ('text/x-sass', 'django_pyscss.compressor.DjangoScssFilter'),
     ('text/x-scss', 'django_pyscss.compressor.DjangoScssFilter'),
 )
-COMPRESS_ENABLED = True
-COMPRESS_OFFLINE = True
-COMPRESS_OUTPUT_DIR = ''
 COMPRESS_CSS_FILTERS = [
     'compressor.filters.css_default.CssAbsoluteFilter',
     'compressor.filters.cssmin.CSSMinFilter'
@@ -151,3 +146,9 @@ COMPRESS_JS_FILTERS = [
 
 # htmlmin
 HTML_MINIFY = True
+
+
+SPOTSEEKER_HOST = "{{ spotseeker_client_host }}"
+SPOTSEEKER_OAUTH_KEY = "{{ spotseeker_client_key }}"
+SPOTSEEKER_OAUTH_SECRET = "{{ spotseeker_client_secret }}"
+SPOTSEEKER_DAO_CLASS = "{{ spotseeker_client_dao }}"
