@@ -21,7 +21,6 @@ MIDDLEWARE_CLASSES = (
 
 INSTALLED_APPS += (
     'django.contrib.humanize',
-    'south',
     'templatetag_handlebars',
     'supporttools',
     'restclients',
