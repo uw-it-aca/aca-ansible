@@ -1,5 +1,8 @@
 # Settings for Canvas project.
 
+# Explicitly set for Django 1.7 warnings
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
 TIME_ZONE = 'America/Los_Angeles'
 
 # Assign rather than append since order is significant
