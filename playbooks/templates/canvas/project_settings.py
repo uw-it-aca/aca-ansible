@@ -257,7 +257,7 @@ EVENT_ENROLLMENT_KEYS = {
 {% endfor %}
 }
 
-AWS_CA_BUNDLE = '{{ base_dir }}/live/lib/{{ python_interpreter|default("python2.6") }}/site-packages/boto/cacerts/cacerts.txt'
+AWS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'
 EVENT_AWS_SQS_CERT = '{{ webservice_client_cert_path }}'
 EVENT_AWS_SQS_KEY = '{{ webservice_client_key_path }}'
 
