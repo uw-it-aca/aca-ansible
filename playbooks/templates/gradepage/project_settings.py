@@ -9,7 +9,6 @@ INSTALLED_APPS += (
     'django.contrib.humanize',
     'templatetag_handlebars',
     'handlebars_i18n',
-    'south',
     'supporttools',
     'restclients',
     'userservice',
