@@ -150,6 +150,7 @@ SS_DISTANCE_CLUSTERING_RATIO = .04
 # Enable sending of email
 EMAIL_HOST = '{{ email_host }}'
 EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Enable Google Analytics
 GA_TRACKING_ID = '{{ google_analytics_id }}'
