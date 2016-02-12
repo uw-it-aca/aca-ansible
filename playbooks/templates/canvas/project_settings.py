@@ -86,6 +86,16 @@ LOGGING = {
             'interval': 1,
             'backupCount': 7,
         },
+        'canvas_users': {
+            'level': 'DEBUG',
+            'formatter': 'simple',
+            'class': 'permissions_logging.TimedRotatingFileHandler',
+            'filename': '{{ base_dir }}/logs/canvas_users.log',
+            'permissions': 0o664,
+            'when': 'midnight',
+            'interval': 1,
+            'backupCount': 7
+        },
         'sis_provisioner_file': {
             'level': 'DEBUG',
             'formatter': 'simple',
@@ -132,6 +142,10 @@ LOGGING = {
         },
         'groups': {
             'handlers': ['groups_file'],
+            'level': 'DEBUG'
+        },
+        'canvas_users': {
+            'handlers': ['canvas_users'],
             'level': 'DEBUG'
         },
         'course_request': {
