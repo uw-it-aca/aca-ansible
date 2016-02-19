@@ -12,9 +12,20 @@ CACHES = {
     }
 }
 
-MIDDLEWARE_CLASSES += (
+# Assign rather than append since order is significant
+MIDDLEWARE_CLASSES = (
+    'django.middleware.common.CommonMiddleware',
     'blti.middleware.CSRFHeaderMiddleware',
     'blti.middleware.SessionHeaderMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.auth.middleware.RemoteUserMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'userservice.user.UserServiceMiddleware',
+    # Uncomment the next line for simple clickjacking protection:
+    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
 )
 
@@ -33,6 +44,7 @@ INSTALLED_APPS += (
     'groups',
     'libguide',
     'course_roster',
+    'canvas_users',
     'analytics',
     'grade_conversion_calculator',
     'grading_standard',
@@ -174,6 +186,7 @@ ASTRA_ROLE_MAPPING = {
     "CollDeptAdminCourseDesign": "College or Dept Admin or Designer",
     "CollDeptSuptOutcomeMgr": "College or Dept Support or Outcomes Manager",
     "CollDeptResearchObserve": "College or Dept Researcher or Observer",
+    "DisabilityResourcesAdm": "Disability Resources Admin",
     "UWEOAdmin": "UWEO Admin",
     "UWEOManager": "UWEO Manager",
     "UWEOProgram": "UWEO Program",

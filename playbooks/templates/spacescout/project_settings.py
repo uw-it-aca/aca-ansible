@@ -150,6 +150,7 @@ SS_DISTANCE_CLUSTERING_RATIO = .04
 # Enable sending of email
 EMAIL_HOST = '{{ email_host }}'
 EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Enable Google Analytics
 GA_TRACKING_ID = '{{ google_analytics_id }}'
@@ -209,6 +210,7 @@ SPOTSEEKER_AUTH_MODULE = 'spotseeker_server.auth.oauth'
 # Custom validation can be added by adding SpotForm and ExtendedInfoForm to org_forms and setting them here.
 SPOTSEEKER_SPOT_FORM = 'spotseeker_server.org_forms.uw_spot.UWSpotForm'
 SPOTSEEKER_EXTENDEDINFO_FORM = 'spotseeker_server.org_forms.uw_spot.ExtendedInfoForm'
+SPOTSEEKER_SEARCH_FILTERS = ['spotseeker_server.org_filters.uw_search.Filter']
 
 OAUTH_PROVIDER_SECRET_SIZE = 64
 
