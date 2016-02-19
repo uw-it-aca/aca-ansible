@@ -44,6 +44,9 @@
       template: src="templates/django.wsgi" group="{{ file_group }}" dest="{{ base_dir }}/builds/{{current_build_value}}/wsgi/django.wsgi" mode="664"
 
     # Moving these further down, so the rest of the basics will be in place - makes it so i can restart apache by hand and get current config - useful for log permissions issues
+
+    - {include: create_cache_table.yml, when: cache_backends}
+
     - name: Collect statics
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="collectstatic"
 
@@ -58,8 +61,6 @@
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="syncdb"
 
     - {include: south_migrate.yml, when: migrate_apps}
-
-    - {include: create_cache_table.yml, when: cache_backends}
 
     - name: Link live to the current build
       file: group="{{ file_group }}" src="{{ base_dir }}/builds/{{current_build_value}}" dest="{{ base_dir }}/live" state="link" force="yes"
