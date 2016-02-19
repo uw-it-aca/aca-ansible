@@ -5,6 +5,13 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 TIME_ZONE = 'America/Los_Angeles'
 
+CACHES = {
+    'default' : {
+        'BACKEND' : 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION' : 'canvas_sessions'
+    }
+}
+
 # Assign rather than append since order is significant
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
