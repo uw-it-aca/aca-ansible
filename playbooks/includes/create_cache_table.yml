@@ -1,4 +1,3 @@
     - name: createcachetable
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="createcachetable {{ item }}"
-      run_once: true
       with_items: cache_backends
