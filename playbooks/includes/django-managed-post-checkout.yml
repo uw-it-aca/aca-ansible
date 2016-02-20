@@ -25,7 +25,7 @@
     - name: Create the project urls file
       template: src="templates/project_urls.py" dest="{{ base_dir }}/builds/{{current_build_value}}/project/urls.py" group="{{ file_group }}" mode="644"
 
-    - name: Create the __init__ file   
+    - name: Create the __init__ file
       command: touch "{{ base_dir }}/builds/{{current_build_value}}/project/__init__.py" creates="{{ base_dir }}/builds/{{current_build_value}}/project/__init__.py"
 
     - name: Create manage.py file
@@ -59,6 +59,7 @@
 
     - name: syncdb
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="syncdb"
+      run_once: true
 
     - {include: south_migrate.yml, when: migrate_apps}
 
