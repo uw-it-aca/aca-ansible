@@ -45,7 +45,7 @@
 
     # Moving these further down, so the rest of the basics will be in place - makes it so i can restart apache by hand and get current config - useful for log permissions issues
 
-    - {include: create_cache_table.yml, when: cache_backends}
+    - {include: create_cache_table.yml, when: cache_backends is defined}
 
     - name: Collect statics
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="collectstatic"
