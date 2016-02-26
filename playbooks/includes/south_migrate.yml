@@ -1,3 +1,4 @@
     - name: migrate
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="migrate {{ item }}"
+      run_once: true
       with_items: migrate_apps
