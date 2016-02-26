@@ -59,6 +59,7 @@
 
     - name: syncdb
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="syncdb"
+      run_once: true
 
     - {include: south_migrate.yml, when: migrate_apps}
 
