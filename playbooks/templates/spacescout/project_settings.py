@@ -214,6 +214,9 @@ SPOTSEEKER_SPOT_FORM = 'spotseeker_server.org_forms.uw_spot.UWSpotForm'
 SPOTSEEKER_EXTENDEDINFO_FORM = 'spotseeker_server.org_forms.uw_spot.ExtendedInfoForm'
 SPOTSEEKER_SEARCH_FILTERS = ['spotseeker_server.org_filters.uw_search.Filter']
 
+# Custom filter for the web app
+SPACESCOUT_SEARCH_FILTERS = ['spacescout_web.org_filters.uw_search.Filter']
+
 OAUTH_PROVIDER_SECRET_SIZE = 64
 
 # admin project settings.py:
