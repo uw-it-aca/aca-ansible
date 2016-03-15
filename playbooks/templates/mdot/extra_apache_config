@@ -1,0 +1,32 @@
+# Need this to get the oauth authentication headers in:
+WSGIPassAuthorization On
+
+# Need this to keep deflate from consuming all the content in image file streaming
+SetOutputFilter DEFLATE
+AddOutputFilterByType DEFLATE text/html text/plain text/css application/x-javascript application/javascript
+
+ExpiresActive On
+ExpiresDefault "access plus 1 week"
+ExpiresByType image/* "access plus 3 months"
+ExpiresByType text/css "access plus 1 year"
+ExpiresByType application/javascript "access plus 1 year"
+ExpiresByType text/html "access plus 1 week"
+
+Alias /media /data/www/media
+<Directory /data/www/media/>
+    Order deny,allow
+    Allow from all
+</Directory>
+
+# Log format changes for f5
+LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" \"%{X-Forwarded-For}i\" \"%{Via}i\"" combined
+
+# NetID auth for the django admin
+<IfModule mod_pubcookie.c>
+    <Location /admin>
+        AuthType uwnetid
+        require user {% for admin in django_admins|default('all denied') %}{{ admin }} {% endfor %}
+
+        PubCookieAppID {{ pubcookie_app_id|default("ACAPubcookie") }}
+    </Location>
+</IfModule>

@@ -1,6 +1,9 @@
 # Settings for GradePage project.
 TIME_ZONE = 'America/Los_Angeles'
 
+# Explicitly set for Django 1.7 warnings
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
 MIDDLEWARE_CLASSES += (
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
 )
@@ -9,7 +12,6 @@ INSTALLED_APPS += (
     'django.contrib.humanize',
     'templatetag_handlebars',
     'handlebars_i18n',
-    'south',
     'supporttools',
     'restclients',
     'userservice',
@@ -48,7 +50,7 @@ LOGGING = {
         },
         'course_grader': {
             'filters': ['info_only', 'add_user'],
-            'class': 'permissions_logging.DateNameFileHandler',                 
+            'class': 'permissions_logging.DateNameFileHandler',
             'filename': '{{ base_dir }}/logs/course-grader-%Y-%m-%d',
             'permissions': 0o664,
             'formatter': 'course_grader',

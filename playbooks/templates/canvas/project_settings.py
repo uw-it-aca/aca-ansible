@@ -1,16 +1,36 @@
 # Settings for Canvas project.
 
+# Explicitly set for Django 1.7 warnings
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
 TIME_ZONE = 'America/Los_Angeles'
 
-MIDDLEWARE_CLASSES += (
+CACHES = {
+    'default' : {
+        'BACKEND' : 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION' : 'canvas_sessions'
+    }
+}
+
+# Assign rather than append since order is significant
+MIDDLEWARE_CLASSES = (
+    'django.middleware.common.CommonMiddleware',
     'blti.middleware.CSRFHeaderMiddleware',
     'blti.middleware.SessionHeaderMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.auth.middleware.RemoteUserMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'userservice.user.UserServiceMiddleware',
+    # Uncomment the next line for simple clickjacking protection:
+    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
 )
 
 INSTALLED_APPS += (
     'django.contrib.humanize',
-    'south',
     'templatetag_handlebars',
     'supporttools',
     'restclients',
@@ -24,6 +44,7 @@ INSTALLED_APPS += (
     'groups',
     'libguide',
     'course_roster',
+    'canvas_users',
     'analytics',
     'grade_conversion_calculator',
     'grading_standard',
@@ -84,6 +105,16 @@ LOGGING = {
             'interval': 1,
             'backupCount': 7,
         },
+        'canvas_users': {
+            'level': 'DEBUG',
+            'formatter': 'simple',
+            'class': 'permissions_logging.TimedRotatingFileHandler',
+            'filename': '{{ base_dir }}/logs/canvas_users.log',
+            'permissions': 0o664,
+            'when': 'midnight',
+            'interval': 1,
+            'backupCount': 7
+        },
         'sis_provisioner_file': {
             'level': 'DEBUG',
             'formatter': 'simple',
@@ -132,6 +163,10 @@ LOGGING = {
             'handlers': ['groups_file'],
             'level': 'DEBUG'
         },
+        'canvas_users': {
+            'handlers': ['canvas_users'],
+            'level': 'DEBUG'
+        },
         'course_request': {
             'handlers': ['course_request_file'],
             'level': 'DEBUG'
@@ -151,6 +186,7 @@ ASTRA_ROLE_MAPPING = {
     "CollDeptAdminCourseDesign": "College or Dept Admin or Designer",
     "CollDeptSuptOutcomeMgr": "College or Dept Support or Outcomes Manager",
     "CollDeptResearchObserve": "College or Dept Researcher or Observer",
+    "DisabilityResourcesAdm": "Disability Resources Admin",
     "UWEOAdmin": "UWEO Admin",
     "UWEOManager": "UWEO Manager",
     "UWEOProgram": "UWEO Program",
@@ -255,7 +291,7 @@ EVENT_ENROLLMENT_KEYS = {
 {% endfor %}
 }
 
-AWS_CA_BUNDLE = '{{ base_dir }}/live/lib/{{ python_interpreter|default("python2.6") }}/site-packages/boto/cacerts/cacerts.txt'
+AWS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'
 EVENT_AWS_SQS_CERT = '{{ webservice_client_cert_path }}'
 EVENT_AWS_SQS_KEY = '{{ webservice_client_key_path }}'
 
