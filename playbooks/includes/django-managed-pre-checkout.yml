@@ -33,9 +33,11 @@
     - name: Ensure certs directory exists
       file: group="{{ file_group }}" mode="2775" state="directory" path="{{ base_dir }}/certs"
 
-    - copy: src="{{ files_dir }}/certs/ca-bundle.crt" dest="{{ base_dir }}/certs/ca-bundle.crt" group="{{ file_group }}"
-    - copy: src="{{ files_dir }}/certs/{{ webservice_client_cert_name }}" dest="{{ base_dir }}/certs/{{ webservice_client_cert_name }}" group="{{ file_group }}"
+    - copy: src="{{ files_dir }}/certs/ca-bundle.crt" dest="{{ base_dir }}/certs/ca-bundle.crt" group="{{ file_group }}" mode="0664"
+
+    - copy: src="{{ files_dir }}/certs/{{ webservice_client_cert_name }}" dest="{{ base_dir }}/certs/{{ webservice_client_cert_name }}" group="{{ file_group }}" mode="0664"
       when: webservice_client_cert_name != "" and webservice_client_cert_name is defined
-    - copy: src="{{ files_dir }}/certs/{{ webservice_client_key_name }}" dest="{{ base_dir }}/certs/{{ webservice_client_key_name }}" group="{{ file_group }}"
+
+    - copy: src="{{ files_dir }}/certs/{{ webservice_client_key_name }}" dest="{{ base_dir }}/certs/{{ webservice_client_key_name }}" group="{{ file_group }}" mode="0664"
       when: webservice_client_key_name != "" and webservice_client_key_name is defined
 
