@@ -142,7 +142,10 @@ COMPRESS_JS_FILTERS = [
 ]
 
 # google analytics tracking
-#GOOGLE_ANALYTICS_KEY = "UA-XXXXXXXX-X"
+GOOGLE_ANALYTICS_KEY = "{{ google_analytics_key | default('') }}"
+
+# google maps api
+GOOGLE_MAPS_API = "{{ google_maps_api_key | default('') }}"
 
 # htmlmin
 HTML_MINIFY = True
