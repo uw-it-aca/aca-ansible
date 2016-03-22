@@ -35,13 +35,20 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Application definition
 
-INSTALLED_APPS += (
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
     'django.contrib.admin',
     'scout',
     #'scout_manager',
     'hybridize',
-    'turbolinks',
     'spotseeker_restclient',
+    'null_command',
+    'compressor',
 )
 
 MIDDLEWARE_CLASSES += (
