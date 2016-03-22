@@ -1,0 +1,1 @@
+AliasMatch ^/(favicon|apple-touch-icon-|android-|win8-|manifest.json|browserconfig.xml)(.*)$ {{ base_dir }}/static/{{ current_build_value }}/src/scout/scout/ico/$1$2
