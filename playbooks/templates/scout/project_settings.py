@@ -35,13 +35,20 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Application definition
 
-INSTALLED_APPS += (
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
     'django.contrib.admin',
     'scout',
     #'scout_manager',
     'hybridize',
-    'turbolinks',
     'spotseeker_restclient',
+    'null_command',
+    'compressor',
 )
 
 MIDDLEWARE_CLASSES += (
@@ -65,6 +72,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'scout.context_processors.google_maps',
                 'scout.context_processors.google_analytics',
                 'scout.context_processors.is_desktop',
                 'scout.context_processors.is_hybrid',
@@ -142,7 +150,10 @@ COMPRESS_JS_FILTERS = [
 ]
 
 # google analytics tracking
-#GOOGLE_ANALYTICS_KEY = "UA-XXXXXXXX-X"
+GOOGLE_ANALYTICS_KEY = "{{ google_analytics_key | default('') }}"
+
+# google maps api
+GOOGLE_MAPS_API = "{{ google_maps_api_key | default('') }}"
 
 # htmlmin
 HTML_MINIFY = True
