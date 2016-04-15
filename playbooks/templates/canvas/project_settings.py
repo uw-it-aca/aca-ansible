@@ -48,6 +48,7 @@ INSTALLED_APPS += (
     'analytics',
     'grade_conversion_calculator',
     'grading_standard',
+    'lti_manager',
     'eos',
 )
 
