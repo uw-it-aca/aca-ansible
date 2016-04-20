@@ -2,8 +2,10 @@
 WSGIPassAuthorization On
 
 # Need this to keep deflate from consuming all the content in image file streaming
-SetOutputFilter DEFLATE
-AddOutputFilterByType DEFLATE text/html text/plain text/css application/x-javascript application/javascript
+# Disabled due to BREACH attack and Django's csrf not being good enough,
+# leaving here as there's a fix in the works.
+# SetOutputFilter DEFLATE
+# AddOutputFilterByType DEFLATE text/html text/plain text/css application/x-javascript application/javascript
 
 # This should be considered temporary, until we have an actual admin/manager app
 <IfModule mod_pubcookie.c>
