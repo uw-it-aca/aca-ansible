@@ -321,8 +321,44 @@ AWS_SQS = {
             }
         }
     },
-    'GROUP' : {
-        'TOPIC_ARN' : '{{ event_group_topic_arn }}',
+    'ENROLLMENT_V2': {
+        'TOPIC_ARN': '{{ event_enrollment_v2_topic_arn }}',
+        'QUEUE': '{{ event_enrollment_v2_sqs_queue }}',
+        'KEY_ID': '{{ event_enrollment_v2_key_id }}',
+        'KEY': '{{ event_enrollment_v2_secret_key }}',
+        'VISIBILITY_TIMEOUT': 60,
+        'MESSAGE_GATHER_SIZE': {{ event_enrollment_v2_sqs_gather }},
+        'VALIDATE_SNS_SIGNATURE': True,
+        'VALIDATE_MSG_SIGNATURE': True,
+        'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
+        'PAYLOAD_SETTINGS': {}
+    },
+    'INSTRUCTOR_ADD': {
+        'TOPIC_ARN': '{{ event_instructor_add_topic_arn }}',
+        'QUEUE': '{{ event_instructor_add_sqs_queue }}',
+        'KEY_ID': '{{ event_instructor_add_key_id }}',
+        'KEY': '{{ event_instructor_add_secret_key }}',
+        'VISIBILITY_TIMEOUT': 60,
+        'MESSAGE_GATHER_SIZE': 50,
+        'VALIDATE_SNS_SIGNATURE': True,
+        'VALIDATE_MSG_SIGNATURE': True,
+        'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
+        'PAYLOAD_SETTINGS': {}
+    },
+    'INSTRUCTOR_DROP': {
+        'TOPIC_ARN': '{{ event_instructor_drop_topic_arn }}',
+        'QUEUE': '{{ event_instructor_drop_sqs_queue }}',
+        'KEY_ID': '{{ event_instructor_drop_key_id }}',
+        'KEY': '{{ event_instructor_drop_secret_key }}',
+        'VISIBILITY_TIMEOUT': 60,
+        'MESSAGE_GATHER_SIZE': 50,
+        'VALIDATE_SNS_SIGNATURE': True,
+        'VALIDATE_MSG_SIGNATURE': True,
+        'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
+        'PAYLOAD_SETTINGS': {}
+    },
+    'GROUP': {
+        'TOPIC_ARN': '{{ event_group_topic_arn }}',
         'QUEUE': '{{ event_group_sqs_queue }}',
         'KEY_ID': '{{ event_group_key_id }}',
         'KEY': '{{ event_group_secret_key }}',
