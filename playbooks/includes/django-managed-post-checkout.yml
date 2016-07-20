@@ -57,7 +57,7 @@
     - include: cdn-statics-deploy.yml
       when: aca_cdn_path | default(false)
 
-    - {include: syncdb.yml, when: (django19 is undefined or not django19}
+    - {include: syncdb.yml, when: (django19 is undefined or not django19)}
     - {include: migrate.yml, when: (django19 is defined and django19)}
 
     - name: Link live to the current build
