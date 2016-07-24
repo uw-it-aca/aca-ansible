@@ -57,11 +57,8 @@
     - include: cdn-statics-deploy.yml
       when: aca_cdn_path | default(false)
 
-    - name: syncdb
-      django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="syncdb"
-      run_once: true
-
-    - {include: south_migrate.yml, when: migrate_apps}
+    - {include: syncdb.yml, when: (django19 is undefined or not django19)}
+    - {include: migrate.yml, when: (django19 is defined and django19)}
 
     - name: Link live to the current build
       file: group="{{ file_group }}" src="{{ base_dir }}/builds/{{current_build_value}}" dest="{{ base_dir }}/live" state="link" force="yes"

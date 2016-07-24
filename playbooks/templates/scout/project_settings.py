@@ -163,3 +163,39 @@ SPOTSEEKER_HOST = "{{ spotseeker_client_host }}"
 SPOTSEEKER_OAUTH_KEY = "{{ spotseeker_client_key }}"
 SPOTSEEKER_OAUTH_SECRET = "{{ spotseeker_client_secret }}"
 SPOTSEEKER_DAO_CLASS = "{{ spotseeker_client_dao }}"
+
+# Enable sending of email
+EMAIL_HOST = '{{ email_host }}'
+EMAIL_USE_TLS = True
+
+# See http://docs.djangoproject.com/en/dev/topics/logging for
+# more details on how to customize your logging configuration.
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'formatters': {
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'console':{
+            'level': 'ERROR',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['mail_admins', 'console'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    }
+}
