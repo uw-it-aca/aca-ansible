@@ -210,7 +210,7 @@ SPOTSEEKER_AUTH_MODULE = 'spotseeker_server.auth.oauth'
 
 # Custom validation can be added by adding SpotForm and ExtendedInfoForm to org_forms and setting them here.
 SPOTSEEKER_SPOT_FORM = 'spotseeker_server.org_forms.uw_spot.UWSpotForm'
-SPOTSEEKER_EXTENDEDINFO_FORM = 'spotseeker_server.org_forms.uw_spot.ExtendedInfoForm'
+SPOTSEEKER_SPOTEXTENDEDINFO_FORM = 'spotseeker_server.org_forms.uw_spot.UWSpotExtendedInfoForm'
 SPOTSEEKER_SEARCH_FILTERS = ['spotseeker_server.org_filters.uw_search.Filter']
 
 # Custom filter for the web app
