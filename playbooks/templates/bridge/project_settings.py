@@ -1,9 +1,9 @@
 # Settings for Bridge project.
 # Django 1.9.6.
-import os
+#import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 TIME_ZONE = 'America/Los_Angeles'
 
@@ -25,23 +25,24 @@ MIDDLEWARE_CLASSES = [
 
 INSTALLED_APPS += (
     'restclients',
-    # 'authz_group',
-    # 'supporttools',
+    'authz_group',
+    'userservice',
+    'supporttools',
     'sis_provisioner',
 )
 
 AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
 
 RESTCLIENTS_ADMIN_GROUP = '{{ restclients_admin_group }}'
-# USERSERVICE_ADMIN_GROUP = '{{ userservice_admin_group }}'
+USERSERVICE_ADMIN_GROUP = '{{ userservice_admin_group }}'
 # USERSERVICE_VALIDATION_MODULE = ''
-# SUPPORTTOOLS_PARENT_APP = "Bridge"
-# SUPPORTTOOLS_PARENT_APP_URL = "/"
+SUPPORTTOOLS_PARENT_APP = "AdminBridge"
+SUPPORTTOOLS_PARENT_APP_URL = "/"
 
 BRIDGE_ADMIN_GROUP = '{{ bridge_admin_group }}'
 BRIDGE_IMPORT_CSV_ROOT='/data/bridge/csv'
 BRIDGE_IMPORT_USER_FILENAME='users'
-BRIDGE_IMPORT_USER_FILE_SIZE=30000
+BRIDGE_IMPORT_USER_FILE_SIZE={{ import_user_file_size }}
 
 RESTCLIENTS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'
 RESTCLIENTS_DAO_CACHE_CLASS='{{restclients_dao_cache_class}}'
