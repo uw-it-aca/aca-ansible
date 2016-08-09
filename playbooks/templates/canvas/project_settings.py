@@ -32,12 +32,12 @@ MIDDLEWARE_CLASSES = (
 INSTALLED_APPS += (
     'django.contrib.humanize',
     'templatetag_handlebars',
+    'sis_provisioner.apps.SISProvisionerConfig',
     'supporttools',
     'restclients',
     'userservice',
     'authz_group',
     'blti',
-    'sis_provisioner',
     'canvas_admin',
     'astra',
     'events',
@@ -49,7 +49,6 @@ INSTALLED_APPS += (
     'grade_conversion_calculator',
     'grading_standard',
     'lti_manager',
-    'eos',
 )
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
