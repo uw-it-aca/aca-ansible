@@ -192,7 +192,7 @@ LOGGING = {
         'file': {
             'level': 'WARNING',
             'class': 'logging.FileHandler',
-            'filename': '/data/spacescout/logs/spacescout.log',
+            'filename': '/data/scout/logs/scout.log',
         },
         'null': {
             'class': 'logging.NullHandler',
@@ -205,7 +205,7 @@ LOGGING = {
     },
     'loggers': {
         '': {
-            'handlers': ['mail_admins', 'console'],
+            'handlers': ['mail_admins', 'file'],
             'level': 'WARNING',
             'propagate': True,
         },
