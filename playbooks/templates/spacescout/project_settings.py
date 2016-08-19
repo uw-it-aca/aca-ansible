@@ -45,12 +45,10 @@ MIDDLEWARE_CLASSES += (
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
-    },
     'formatters': {
+        'standard': {
+            'format': '[%(asctime)s] [%(levelname)s] [%(module)s] %(message)s'
+        },
     },
     'handlers': {
         'mail_admins': {
@@ -58,15 +56,29 @@ LOGGING = {
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         },
-        'console':{
-            'level': 'ERROR',
+        'console': {
+            'level': 'INFO',
             'class': 'logging.StreamHandler',
+            'formatter': 'standard',
+        },
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': '/data/spacescout/logs/spacescout.log',
+        },
+        'null': {
+            'class': 'logging.NullHandler',
+        },
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
         },
     },
     'loggers': {
         '': {
-            'handlers': ['mail_admins', 'console'],
-            'level': 'ERROR',
+            'handlers': ['mail_admins', 'file'],
+            'level': 'WARNING',
             'propagate': True,
         },
     }
