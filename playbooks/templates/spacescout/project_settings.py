@@ -77,7 +77,7 @@ LOGGING = {
     },
     'loggers': {
         '': {
-            'handlers': ['mail_admins', 'console'],
+            'handlers': ['mail_admins', 'file'],
             'level': 'WARNING',
             'propagate': True,
         },
