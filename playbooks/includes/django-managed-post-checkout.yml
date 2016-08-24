@@ -72,24 +72,32 @@
 
     - name: Extra Django Command 1
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_django_command1|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
+      when: extra_django_command1|default(false)
 
     - name: Extra Django Command 2
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_django_command2|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
+      when: extra_django_command2|default(false)
 
     - name: Extra Django Async Command 1
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_async_django_command1|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
       async: 1
       poll: 0
+      when: extra_async_django_command1|default(false)
 
     - name: Extra Django Async Command 2
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_async_django_command2|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
       async: 1
       poll: 0
+      when: extra_async_django_command2|default(false)
 
     - name: Extra Django Async Command 3
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_async_django_command3|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
       async: 1
       poll: 0
+      when: extra_async_django_command3|default(false)
+
+    - name: Reload apache
+      command: /usr/local/apache/bin/ap-reload
 
     - name: Fix permissions on the new deployed build
       command: find {{ base_dir }}/builds/{{current_build_value}} -exec chmod g+w {} \;
@@ -97,9 +105,6 @@
     - name: Fix permissions for the new deployed static
       command: find {{ base_dir }}/static/{{current_build_value}} -exec chmod g+w {} \;
       when: skip_compress_statics is not defined or not skip_compress_statics
-
-    - name: Reload apache
-      command: /usr/local/apache/bin/ap-reload
 
     - include: purge_all_types.yml
       when: purge_old_builds | default(true)
