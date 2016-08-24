@@ -1,6 +1,7 @@
 import sqlite3
 import platform
 import re
+from ansible.plugins.lookup import LookupBase
 
 """
 This lookup plugin tracks the current build number for projects.
@@ -18,16 +19,13 @@ To use:
     - copy: src="something" dest="somewhere/{{current_build_value}}/file"
 """
 
-class LookupModule(object):
-    run_yet = False
-    run_value = None
+class LookupModule(LookupBase):
 
-    def __init__(self, *args, **kwargs):
-        pass
+    def run(self, values, **kwargs):
+        build_name = values[0]
+        action = values[1]
 
-    def run(self, build_name, **kwargs):
-        if LookupModule.run_yet:
-            return ["%s" % LookupModule.run_value]
+        print ("Current Action: %s, build: %s" % (action, build_name))
 
         conn = sqlite3.connect('builds.db')
         c = conn.cursor()
@@ -35,25 +33,32 @@ class LookupModule(object):
         c.execute("CREATE TABLE IF NOT EXISTS builds (current_build INTEGER, name TEXT UNIQUE)")
         conn.commit()
 
-        c.execute('SELECT current_build FROM builds WHERE name = ?', (build_name, ))
-        row = c.fetchone()
-        if row is None:
-            value = 1
+        if "SET" == action:
+            print ("STEP 1")
+            c.execute('SELECT current_build FROM builds WHERE name = ?', (build_name, ))
+            row = c.fetchone()
+            if row is None:
+                print ("STEP 2_0")
+                c.execute('SELECT current_build FROM builds WHERE name = ?', (build_name, ))
+                row = c.fetchone()
+                if row is None:
+                    value = 1
+                else:
+                    value = row[0] + 1
+                print ("STEP 2")
+                c.execute("REPLACE INTO builds (name, current_build) VALUES (?, ?)", (build_name, value, ))
+                conn.commit()
+            else:
+                value = row[0]
         else:
+            c.execute('SELECT current_build FROM builds WHERE name = ?', (build_name, ))
+            row = c.fetchone()
             value = row[0]
 
-        LookupModule.run_yet = True
-
-        next_value = value + 1
-        c.execute("REPLACE INTO builds (name, current_build) VALUES (?, ?)", (build_name, next_value, ))
-        conn.commit()
         c.close()
-
         hostname = platform.node()
         shortname = re.match('^([^.]+)', hostname).groups()[0]
 
         value = "%s-%s" % (hostname, value)
-
-        LookupModule.run_value = value
 
         return [value]

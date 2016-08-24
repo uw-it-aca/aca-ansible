@@ -1,11 +1,21 @@
 - hosts: django-app-server
-  roles:
-    - { role: "django_app_server_role" }
   vars:
     build_name: "{{ inventory_file }}"
-    current_build_value: "{{ lookup('current_build', build_name) }}"
+    startit: "{{ lookup('current_build', build_name, 'SET') }}"
+  tasks:
+    - debug: msg="Start it - {{ startit }}"
+      run_once: true
+
+- hosts: django-app-server
+  vars:
+    build_name: "{{ inventory_file }}"
+    current_build_value: "{{ lookup('current_build', build_name, 'get') }}"
     files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
     acting_user: "{{ lookup('env', 'USER') }}"
+  tasks:
+    - debug: msg="GET it - {{ current_build_value }}"
+  roles:
+    - { role: "django_app_server_role" }
 
 - hosts: mysql-db-server
   roles:
@@ -20,7 +30,7 @@
     - { role: "nagios_app_server_role" }
   vars:
     build_name: "{{ inventory_file }}"
-    current_build_value: "{{ lookup('current_build', build_name) }}"
+    current_build_value: "{{ lookup('current_build', build_name, 'get') }}"
     files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
     acting_user: "{{ lookup('env', 'USER') }}"
 
