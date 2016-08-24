@@ -9,6 +9,8 @@
 
    - name: Purge build directories
      command: /bin/rm -rf {{ parent_dir }}/{{ item }}
+     async: 500
+     poll: 0
      with_items:
        - "{{ builds_to_purge.stdout_lines }}"
      ignore_errors: yes

@@ -101,9 +101,13 @@
 
     - name: Fix permissions on the new deployed build
       command: find {{ base_dir }}/builds/{{current_build_value}} -exec chmod g+w {} \;
+      async: 500
+      poll: 0
 
     - name: Fix permissions for the new deployed static
       command: find {{ base_dir }}/static/{{current_build_value}} -exec chmod g+w {} \;
+      async: 500
+      poll: 0
       when: skip_compress_statics is not defined or not skip_compress_statics
 
     - include: purge_all_types.yml
