@@ -25,8 +25,6 @@ class LookupModule(LookupBase):
         build_name = values[0]
         action = values[1]
 
-        print ("Current Action: %s, build: %s" % (action, build_name))
-
         conn = sqlite3.connect('builds.db')
         c = conn.cursor()
 
@@ -34,18 +32,15 @@ class LookupModule(LookupBase):
         conn.commit()
 
         if "SET" == action:
-            print ("STEP 1")
             c.execute('SELECT current_build FROM builds WHERE name = ?', (build_name, ))
             row = c.fetchone()
             if row is None:
-                print ("STEP 2_0")
                 c.execute('SELECT current_build FROM builds WHERE name = ?', (build_name, ))
                 row = c.fetchone()
                 if row is None:
                     value = 1
                 else:
                     value = row[0] + 1
-                print ("STEP 2")
                 c.execute("REPLACE INTO builds (name, current_build) VALUES (?, ?)", (build_name, value, ))
                 conn.commit()
             else:
