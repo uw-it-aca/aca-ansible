@@ -35,16 +35,11 @@ class LookupModule(LookupBase):
             c.execute('SELECT current_build FROM builds WHERE name = ?', (build_name, ))
             row = c.fetchone()
             if row is None:
-                c.execute('SELECT current_build FROM builds WHERE name = ?', (build_name, ))
-                row = c.fetchone()
-                if row is None:
-                    value = 1
-                else:
-                    value = row[0] + 1
-                c.execute("REPLACE INTO builds (name, current_build) VALUES (?, ?)", (build_name, value, ))
-                conn.commit()
+                value = 1
             else:
-                value = row[0]
+                value = row[0] + 1
+            c.execute("REPLACE INTO builds (name, current_build) VALUES (?, ?)", (build_name, value, ))
+            conn.commit()
         else:
             c.execute('SELECT current_build FROM builds WHERE name = ?', (build_name, ))
             row = c.fetchone()
