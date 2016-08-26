@@ -16,6 +16,12 @@
       pip: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" requirements="{{ base_dir }}/builds/{{current_build_value}}/{{ item }}" extra_args="-i {{ pypi_mirror | default("https://pypi.s.uw.edu/root/pypi/+simple") }}"
       with_items: pip_requirements_files
 
+    - name: Install mysql-python if CentOS7
+      pip: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" name="mysql-python" version="1.2.5"  extra_args="-U -i {{ pypi_mirror | default("https://pypi.s.uw.edu/root/pypi/+simple") }}"
+      environment:
+          PATH: "{{ ansible_env.PATH }}:/usr/local/apache/lib/mysql/bin"
+      when: (centos7 is defined and centos7)
+
     - name: Create project directory
       file: group="{{ file_group }}" mode="2775" state="directory" path="{{ base_dir }}/builds/{{current_build_value}}/project"
 
