@@ -1,11 +1,9 @@
 - hosts: django-app-server
   roles:
     - { role: "django_app_server_role" }
-  vars:
-    build_name: "{{ inventory_file }}"
-    current_build_value: "{{ lookup('current_build', build_name) }}"
-    files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
-    acting_user: "{{ lookup('env', 'USER') }}"
+  vars_files:
+    - "vars/common.yml"
+    - "vars/{{ distribution_version }}.yml"
 
 - hosts: mysql-db-server
   roles:
