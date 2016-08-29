@@ -1,0 +1,1 @@
+path: "{{ ansible_env.PATH }}:/usr/local/apache/lib/mysql/bin"

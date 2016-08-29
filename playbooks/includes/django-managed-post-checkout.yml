@@ -15,6 +15,8 @@
     - name: Install requirements with pip.  May (probably will) take a while
       pip: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" requirements="{{ base_dir }}/builds/{{current_build_value}}/{{ item }}" extra_args="-i {{ pypi_mirror | default("https://pypi.s.uw.edu/root/pypi/+simple") }}"
       with_items: pip_requirements_files
+      environment:
+          PATH: "{{ path }}"
 
     - name: Create project directory
       file: group="{{ file_group }}" mode="2775" state="directory" path="{{ base_dir }}/builds/{{current_build_value}}/project"
