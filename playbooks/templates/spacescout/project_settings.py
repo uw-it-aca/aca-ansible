@@ -61,11 +61,11 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'standard',
         },
-        'file': {
-            'level': 'WARNING',
-            'class': 'logging.FileHandler',
-            'filename': '/data/spacescout/logs/spacescout.log',
-        },
+        #'file': {
+        #    'level': 'WARNING',
+        #    'class': 'logging.FileHandler',
+        #    'filename': '/tmp/spacescout.log',
+        #},
         'null': {
             'class': 'logging.NullHandler',
         },
@@ -76,8 +76,8 @@ LOGGING = {
         },
     },
     'loggers': {
-        '': {
-            'handlers': ['mail_admins', 'file'],
+        'django.request': {
+            'handlers': ['mail_admins',],
             'level': 'WARNING',
             'propagate': True,
         },
