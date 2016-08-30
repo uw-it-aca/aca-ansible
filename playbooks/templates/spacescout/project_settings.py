@@ -36,10 +36,6 @@ DATABASES = {
 
 DATABASE_ROUTERS = ['spacescout_util.db_router.LegacyRouter']
 
-MIDDLEWARE_CLASSES += (
-    'django_mobileesp.middleware.UserAgentDetectionMiddleware',
-)
-
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 LOGGING = {
@@ -101,8 +97,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'spacescout-web'
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/tmp/server-cache'
     }
 }
 
@@ -169,7 +165,6 @@ GA_TRACKING_ID = '{{ google_analytics_id }}'
 GMAPS_API_KEY = '{{ google_maps_api_key }}'
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.cache.UpdateCacheMiddleware',
     'spacescout_web.middleware.unpatch_vary.UnpatchVaryMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -184,7 +179,6 @@ MIDDLEWARE_CLASSES = (
     'mobility.middleware.XMobileMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -204,11 +198,6 @@ INSTALLED_APPS += (
 
 # From the server project settings:
 CACHE_MIDDLEWARE_SECONDS = 60 * 60  # Cache what we can for an hour
-
-CACHES['server'] = {
-    'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-    'LOCATION': '/tmp/server-cache'
-}
 
 INSTALLED_APPS += (
     'south',
