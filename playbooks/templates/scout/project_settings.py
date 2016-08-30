@@ -194,7 +194,7 @@ LOGGING = {
         'file': {
             'level': 'WARNING',
             'class': 'logging.FileHandler',
-            'filename': '/data/scout/logs/scout.log',
+            'filename': '{{ base_dir }}/logs/scout.log',
         },
         'null': {
             'class': 'logging.NullHandler',
@@ -206,7 +206,7 @@ LOGGING = {
         },
     },
     'loggers': {
-        '': {
+        'django.request': {
             'handlers': ['mail_admins', 'file'],
             'level': 'WARNING',
             'propagate': True,
