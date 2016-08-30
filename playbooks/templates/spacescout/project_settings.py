@@ -124,7 +124,6 @@ SS_WEB_LOGOUT_URL = '/user_logout'
 
 DEFAULT_CENTER_LATITUDE = '47.655003'
 DEFAULT_CENTER_LONGITUDE = '-122.306864'
-#DEFAULT_ZOOM_LEVEL = '15'
 
 SS_LOCATIONS = {
     'seattle': {
@@ -158,7 +157,6 @@ SS_DISTANCE_CLUSTERING_RATIO = .04
 # Enable sending of email
 EMAIL_HOST = '{{ email_host }}'
 EMAIL_USE_TLS = True
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Enable Google Analytics
 GA_TRACKING_ID = '{{ google_analytics_id }}'
