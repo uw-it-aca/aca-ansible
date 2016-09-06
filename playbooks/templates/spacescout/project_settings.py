@@ -113,7 +113,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp/server-cache'
+        'LOCATION': '/tmp/server-cache',
+        'TIMEOUT': None,
+        'OPTIONS': {
+            'MAX_ENTRIES': 10000
+        }
     }
 }
 
