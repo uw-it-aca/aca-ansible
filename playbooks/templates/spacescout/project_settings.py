@@ -283,6 +283,7 @@ SS_LDAP_DIRECTORY = '{{ ldap_directory }}'
 SS_LDAP_SEARCH_BASE = '{{ ldap_search_base }}'
 
 LABSTATS_URL = '{{ labstats_url }}'
+CTE_TECHLOAN_URL = '{{ cte_techloan_url }}'
 
 LS_CENTER_LAT = '47.655003'
 LS_CENTER_LON = '-122.306864'
