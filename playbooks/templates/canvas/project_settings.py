@@ -5,6 +5,10 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 TIME_ZONE = 'America/Los_Angeles'
 
+TEMPLATES[0]['OPTIONS']['context_processors'].extend([
+    'supporttools.context_processors.supportools_globals'
+])
+
 CACHES = {
     'default' : {
         'BACKEND' : 'django.core.cache.backends.db.DatabaseCache',
@@ -271,6 +275,7 @@ AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroup
 CANVAS_MANAGER_ADMIN_GROUP = 'u_acadev_canvas_support'
 RESTCLIENTS_ADMIN_GROUP = 'u_acadev_canvas_support-admin'
 USERSERVICE_ADMIN_GROUP = RESTCLIENTS_ADMIN_GROUP
+NONPERSONAL_NETID_EXCEPTION_GROUP = 'u_acadev_canvas_nonpersonal_netids'
 
 RESTCLIENTS_TIMEOUT = 600
 RESTCLIENTS_DISABLE_THREADING = True
@@ -396,18 +401,6 @@ EMAIL_HOST = '{{ email_host }}'
 {% if safe_email_recipient|default(None) %}
 SAFE_EMAIL_RECIPIENT = '{{ safe_email_recipient }}'
 {% endif %}
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.request',
-    'django.core.context_processors.static',
-    'django.core.context_processors.tz',
-    'django.contrib.messages.context_processors.messages',
-    'supporttools.context_processors.supportools_globals',
-)
 
 from django_mobileesp.detector import agent
 DETECT_USER_AGENTS = {
