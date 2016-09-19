@@ -1,0 +1,2 @@
+
+handler404 = 'scout.views.custom_404_response'
