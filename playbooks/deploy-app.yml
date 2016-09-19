@@ -12,9 +12,6 @@
   vars_files:
     - "vars/common.yml"
     - "vars/{{ distribution_version }}.yml"
-  tasks:
-    - debug: msg="Start it - {{ startit }}"
-      run_once: true
 
 - hosts: django-app-server
   vars:
