@@ -13,17 +13,6 @@
     - "vars/common.yml"
     - "vars/{{ distribution_version }}.yml"
 
-- hosts: django-app-server
-  vars:
-    build_name: "{{ inventory_file }}"
-    current_build_value: "{{ lookup('current_build', build_name, 'get') }}"
-    files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
-    acting_user: "{{ lookup('env', 'USER') }}"
-  tasks:
-    - debug: msg="GET it - {{ current_build_value }}"
-  roles:
-    - { role: "django_app_server_role" }
-
 - hosts: mysql-db-server
   roles:
     - { role: "mysql_db_role" }
