@@ -60,19 +60,20 @@ LOGGING = {
         'null': {
             'class': 'logging.NullHandler',
         },
-        # don't enable until we have permissionslogging set up
-        #'spacescout_file': {
-        #    'level': 'WARNING',
-        #    'class': 'logging.FileHandler',
-        #    'filename': '{{ base_dir }}/spacescout.log',
-        #    'formatter': 'standard',
-        #},
-        #'labstats_file': {
-        #    'level': 'WARNING',
-        #    'class': 'logging.FileHandler',
-        #    'filename': '/tmp/test1_labstats.log',
-        #    'formatter': 'standard',
-        #},
+        'spacescout_file': {
+            'level': 'WARNING',
+            'class': 'permissions_logging.DateNameFileHandler',
+            'permissions': 0o664,
+            'filename': '{{ base_dir }}/logs/spacescout-%Y-%m-%d.log',
+            'formatter': 'standard',
+        },
+        'labstats_file': {
+            'level': 'WARNING',
+            'class': 'permissions_logging.DateNameFileHandler',
+            'permissions: 0o664,
+            'filename': '{{ base_dir }}/logs/labstats-%Y-%m-%d.log',
+            'formatter': 'standard',
+        },
 
     },
     'filters': {
@@ -82,12 +83,12 @@ LOGGING = {
     },
     'loggers': {
         'django.request': {
-            'handlers': ['mail_admins'],
+            'handlers': ['mail_admins', 'spacescout_file'],
             'level': 'WARNING',
             'propagate': True,
         },
         'labstats_spacescout': {
-            'handlers': ['mail_admins'],
+            'handlers': ['mail_admins', 'labstats_file'],
             'level': 'WARNING',
             'propagate': True,
         },
