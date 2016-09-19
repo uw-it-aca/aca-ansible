@@ -1,4 +1,12 @@
 - hosts: django-app-server
+  vars:
+    build_name: "{{ inventory_file }}"
+    startit: "{{ lookup('current_build', build_name, 'SET') }}"
+  tasks:
+    - debug: msg="Start it - {{ startit }}"
+      run_once: true
+
+- hosts: django-app-server
   roles:
     - { role: "django_app_server_role" }
   vars_files:
