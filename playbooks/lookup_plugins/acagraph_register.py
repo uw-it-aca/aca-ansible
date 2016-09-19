@@ -21,7 +21,7 @@ class LookupModule(LookupBase):
         client = oauth2.Client(consumer)
 
         # XXX - need to get replication master/slave relationships in here
-        db_servers = groups["mysql-db-server"]
+        db_servers = groups.get("mysql-db-server", [])
         app_servers = groups["django-app-server"]
 
         graph_data = {
