@@ -191,12 +191,13 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'standard',
         },
-        # don't use until we configure permissions_logging
-        #'file': {
-        #    'level': 'WARNING',
-        #    'class': 'logging.FileHandler',
-        #    'filename': '{{ base_dir }}/logs/scout.log',
-        #},
+        'file': {
+            'level': 'WARNING',
+            'class': 'permissions_logging.DateNameFileHandler',
+            'permissions': 0o664,
+            'filename': '{{ base_dir }}/logs/scout-%Y-%m-%d.log',
+            'formatters': 'standard',
+        },
         'null': {
             'class': 'logging.NullHandler',
         },
@@ -208,7 +209,7 @@ LOGGING = {
     },
     'loggers': {
         'django.request': {
-            'handlers': ['mail_admins'],
+            'handlers': ['mail_admins', 'file'],
             'level': 'WARNING',
             'propagate': True,
         },
