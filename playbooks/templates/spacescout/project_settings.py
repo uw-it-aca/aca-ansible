@@ -36,10 +36,6 @@ DATABASES = {
 
 DATABASE_ROUTERS = ['spacescout_util.db_router.LegacyRouter']
 
-MIDDLEWARE_CLASSES += (
-    'django_mobileesp.middleware.UserAgentDetectionMiddleware',
-)
-
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 LOGGING = {
@@ -61,14 +57,24 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'standard',
         },
-        'file': {
-            'level': 'WARNING',
-            'class': 'logging.FileHandler',
-            'filename': '/data/spacescout/logs/spacescout.log',
-        },
         'null': {
             'class': 'logging.NullHandler',
         },
+        'spacescout_file': {
+            'level': 'WARNING',
+            'class': 'permissions_logging.DateNameFileHandler',
+            'permissions': 0o664,
+            'filename': '{{ base_dir }}/logs/spacescout-%Y-%m-%d.log',
+            'formatter': 'standard',
+        },
+        'labstats_file': {
+            'level': 'WARNING',
+            'class': 'permissions_logging.DateNameFileHandler',
+            'permissions': 0o664,
+            'filename': '{{ base_dir }}/logs/labstats-%Y-%m-%d.log',
+            'formatter': 'standard',
+        },
+
     },
     'filters': {
         'require_debug_false': {
@@ -76,11 +82,17 @@ LOGGING = {
         },
     },
     'loggers': {
-        '': {
-            'handlers': ['mail_admins', 'file'],
+        'django.request': {
+            'handlers': ['mail_admins', 'spacescout_file'],
             'level': 'WARNING',
             'propagate': True,
         },
+        'labstats_spacescout': {
+            'handlers': ['mail_admins', 'labstats_file'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+
     }
 }
 
@@ -101,8 +113,12 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'spacescout-web'
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/tmp/server-cache',
+        'TIMEOUT': None,
+        'OPTIONS': {
+            'MAX_ENTRIES': 10000
+        }
     }
 }
 
@@ -128,7 +144,6 @@ SS_WEB_LOGOUT_URL = '/user_logout'
 
 DEFAULT_CENTER_LATITUDE = '47.655003'
 DEFAULT_CENTER_LONGITUDE = '-122.306864'
-#DEFAULT_ZOOM_LEVEL = '15'
 
 SS_LOCATIONS = {
     'seattle': {
@@ -162,14 +177,12 @@ SS_DISTANCE_CLUSTERING_RATIO = .04
 # Enable sending of email
 EMAIL_HOST = '{{ email_host }}'
 EMAIL_USE_TLS = True
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Enable Google Analytics
 GA_TRACKING_ID = '{{ google_analytics_id }}'
 GMAPS_API_KEY = '{{ google_maps_api_key }}'
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.cache.UpdateCacheMiddleware',
     'spacescout_web.middleware.unpatch_vary.UnpatchVaryMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -184,7 +197,6 @@ MIDDLEWARE_CLASSES = (
     'mobility.middleware.XMobileMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -204,11 +216,6 @@ INSTALLED_APPS += (
 
 # From the server project settings:
 CACHE_MIDDLEWARE_SECONDS = 60 * 60  # Cache what we can for an hour
-
-CACHES['server'] = {
-    'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-    'LOCATION': '/tmp/server-cache'
-}
 
 INSTALLED_APPS += (
     'south',
@@ -277,6 +284,7 @@ SS_LDAP_DIRECTORY = '{{ ldap_directory }}'
 SS_LDAP_SEARCH_BASE = '{{ ldap_search_base }}'
 
 LABSTATS_URL = '{{ labstats_url }}'
+CTE_TECHLOAN_URL = '{{ cte_techloan_url }}'
 
 LS_CENTER_LAT = '47.655003'
 LS_CENTER_LON = '-122.306864'

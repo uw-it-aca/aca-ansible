@@ -164,6 +164,8 @@ SPOTSEEKER_OAUTH_KEY = "{{ spotseeker_client_key }}"
 SPOTSEEKER_OAUTH_SECRET = "{{ spotseeker_client_secret }}"
 SPOTSEEKER_DAO_CLASS = "{{ spotseeker_client_dao }}"
 
+CAMPUS_URL_LIST = {{ campus_list }}
+
 # Enable sending of email
 EMAIL_HOST = '{{ email_host }}'
 EMAIL_USE_TLS = True
@@ -191,8 +193,10 @@ LOGGING = {
         },
         'file': {
             'level': 'WARNING',
-            'class': 'logging.FileHandler',
-            'filename': '/data/scout/logs/scout.log',
+            'class': 'permissions_logging.DateNameFileHandler',
+            'permissions': 0o664,
+            'filename': '{{ base_dir }}/logs/scout-%Y-%m-%d.log',
+            'formatters': 'standard',
         },
         'null': {
             'class': 'logging.NullHandler',
@@ -204,7 +208,7 @@ LOGGING = {
         },
     },
     'loggers': {
-        '': {
+        'django.request': {
             'handlers': ['mail_admins', 'file'],
             'level': 'WARNING',
             'propagate': True,
