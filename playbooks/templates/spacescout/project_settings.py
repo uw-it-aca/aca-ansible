@@ -70,7 +70,7 @@ LOGGING = {
         'labstats_file': {
             'level': 'WARNING',
             'class': 'permissions_logging.DateNameFileHandler',
-            'permissions: 0o664,
+            'permissions': 0o664,
             'filename': '{{ base_dir }}/logs/labstats-%Y-%m-%d.log',
             'formatter': 'standard',
         },
