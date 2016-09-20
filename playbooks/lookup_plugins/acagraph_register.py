@@ -1,12 +1,18 @@
 import oauth2
 import json
 import re
+from ansible.plugins.lookup import LookupBase
 
-class LookupModule(object):
-    def __init__(self, *args, **kwargs):
-        pass
+class LookupModule(LookupBase):
 
-    def run(self, oauth_key, oauth_secret, acagraph_server, inventory, groups, restclients, include_pubcookie, *args, **kwargs):
+    def run(self, values, *args, **kwargs):
+        oauth_key = values[0]
+        oauth_secret = values[1]
+        acagraph_server = values[2]
+        inventory = values[3]
+        groups = values[4]
+        restclients = values[5]
+        include_pubcookie = values[6]
 
         group = re.match('.*/(.*)', inventory).group(1)
         hosts = groups[group]
@@ -15,7 +21,7 @@ class LookupModule(object):
         client = oauth2.Client(consumer)
 
         # XXX - need to get replication master/slave relationships in here
-        db_servers = groups["mysql-db-server"]
+        db_servers = groups.get("mysql-db-server", [])
         app_servers = groups["django-app-server"]
 
         graph_data = {

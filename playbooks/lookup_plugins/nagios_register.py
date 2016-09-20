@@ -1,12 +1,17 @@
 import oauth2
 import json
 import re
+from ansible.plugins.lookup import LookupBase
 
-class LookupModule(object):
-    def __init__(self, *args, **kwargs):
-        pass
+class LookupModule(LookupBase):
 
-    def run(self, oauth_key, oauth_secret, nagios_server, inventory, groups, contacts, *args, **kwargs):
+    def run(self, values, *args, **kwargs):
+        oauth_key = values[0]
+        oauth_secret = values[1]
+        nagios_server = values[2]
+        inventory = values[3]
+        groups = values[4]
+        contacts = values[5]
         group = re.match('.*/(.*)', inventory).group(1)
         hosts = groups[group]
 
