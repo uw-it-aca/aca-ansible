@@ -4,16 +4,19 @@
     - name: Copy over requirements for the project level
       copy: src="{{ files_dir }}/project_requirements.txt" dest="{{ base_dir }}/project_requirements.txt" group="{{ file_group }}" mode="0664"
 
+    - name: Install pip-accel
+      pip: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" name=pip-accel
+
     - name: Install the PermissionsLogging module - needed to make sure our logs are group-writable
-      pip: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" requirements="{{ base_dir }}/project_requirements.txt" extra_args="-i {{ pypi_mirror | default("https://pypi.s.uw.edu/root/pypi/+simple") }}"
+      shell: source {{ base_dir }}/builds/{{current_build_value}}/bin/activate && PIP_ACCEL_CACHE={{ pip_accel_cache_dir }} pip-accel install -r {{ base_dir }}/project_requirements.txt -i {{ pypi_mirror | default("https://pypi.s.uw.edu/root/pypi/+simple") }}
 
     - name: Perform upgrades with pip.  May (but should not) take a while
-      pip: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" requirements="{{ base_dir }}/builds/{{current_build_value}}/{{ item }}" extra_args="-U -i {{ pypi_mirror | default("https://pypi.s.uw.edu/root/pypi/+simple") }}"
+      shell: source {{ base_dir }}/builds/{{current_build_value}}/bin/activate && PIP_ACCEL_CACHE={{ pip_accel_cache_dir }} pip-accel install -r {{ base_dir }}//builds/{{current_build_value}}/{{ item }} -U -i {{ pypi_mirror | default("https://pypi.s.uw.edu/root/pypi/+simple") }}
       with_items: pip_upgrades_files
       when: pip_upgrades_files is defined
 
     - name: Install requirements with pip.  May (probably will) take a while
-      pip: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" requirements="{{ base_dir }}/builds/{{current_build_value}}/{{ item }}" extra_args="-i {{ pypi_mirror | default("https://pypi.s.uw.edu/root/pypi/+simple") }}"
+      shell: source {{ base_dir }}/builds/{{current_build_value}}/bin/activate && PIP_ACCEL_CACHE={{ pip_accel_cache_dir }} pip-accel install -r {{ base_dir }}//builds/{{current_build_value}}/{{ item }} -i {{ pypi_mirror | default("https://pypi.s.uw.edu/root/pypi/+simple") }}
       with_items: pip_requirements_files
       environment:
           PATH: "{{ path }}"
@@ -31,7 +34,7 @@
       command: touch "{{ base_dir }}/builds/{{current_build_value}}/project/__init__.py" creates="{{ base_dir }}/builds/{{current_build_value}}/project/__init__.py"
 
     - name: Create manage.py file
-      template: src="templates/manage.py" dest="{{ base_dir }}/builds/{{current_build_value}}/manage.py" group="{{ file_group }}" mode="644"
+      template: src="templates/manage.py" dest="{{ base_dir }}/builds/{{current_build_value}}/manage.py" group="{{ file_group }}" mode="755"
 
     - name: Create apache config directory
       file: group="{{ file_group }}" mode="2775" state="directory" path="{{ base_dir }}/builds/{{current_build_value}}/apache_config"
@@ -71,34 +74,43 @@
 
     - name: Extra Django Command 1
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_django_command1|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
+      when: extra_django_command1|default(false)
 
     - name: Extra Django Command 2
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_django_command2|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
+      when: extra_django_command2|default(false)
 
     - name: Extra Django Async Command 1
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_async_django_command1|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
       async: 1
       poll: 0
+      when: extra_async_django_command1|default(false)
 
     - name: Extra Django Async Command 2
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_async_django_command2|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
       async: 1
       poll: 0
+      when: extra_async_django_command2|default(false)
 
     - name: Extra Django Async Command 3
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_async_django_command3|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
       async: 1
       poll: 0
-
-    - name: Fix permissions on the new deployed build
-      command: find {{ base_dir }}/builds/{{current_build_value}} -exec chmod g+w {} \;
-
-    - name: Fix permissions for the new deployed static
-      command: find {{ base_dir }}/static/{{current_build_value}} -exec chmod g+w {} \;
-      when: skip_compress_statics is not defined or not skip_compress_statics
+      when: extra_async_django_command3|default(false)
 
     - name: Reload apache
       command: /usr/local/apache/bin/ap-reload
+
+    - name: Fix permissions on the new deployed build
+      command: find {{ base_dir }}/builds/{{current_build_value}} -exec chmod g+w {} \;
+      async: 500
+      poll: 0
+
+    - name: Fix permissions for the new deployed static
+      command: find {{ base_dir }}/static/{{current_build_value}} -exec chmod g+w {} \;
+      async: 500
+      poll: 0
+      when: skip_compress_statics is not defined or not skip_compress_statics
 
     - include: purge_all_types.yml
       when: purge_old_builds | default(true)

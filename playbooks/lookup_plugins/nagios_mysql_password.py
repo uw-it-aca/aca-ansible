@@ -1,16 +1,18 @@
 import re
 import hashlib
+from ansible.plugins.lookup import LookupBase
 
-class LookupModule(object):
+class LookupModule(LookupBase):
     """
     Generates a mysql password for the nagios user.  Designed to repeatably give
     the same password, given the same host group and nagios_mysql_user_password_seed
     variable from your group vars.
     """
-    def __init__(self, *args, **kwargs):
-        pass
+    def run(self, values, *args, **kwargs):
+        inventory = values[0]
+        groups = values[1]
+        seed = values[2]
 
-    def run(self, inventory, groups, seed, *args, **kwargs):
         try:
             group = re.match('.*/(.*)', inventory).group(1)
 
