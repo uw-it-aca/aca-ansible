@@ -101,6 +101,11 @@
     - name: Reload apache
       command: /usr/local/apache/bin/ap-reload
 
+    - name: Fix permissions on the pip accel cache
+      command: find {{ pip_accel_cache_dir }} -exec chmod g+w {} \;
+      async: 500
+      poll: 0
+
     - name: Fix permissions on the new deployed build
       command: find {{ base_dir }}/builds/{{current_build_value}} -exec chmod g+w {} \;
       async: 500
