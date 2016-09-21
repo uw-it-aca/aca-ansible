@@ -1,5 +1,5 @@
 - name: Stage files on local host
-  hosts: 127.0.0.1
+  hosts: localhost
   connection: local
 
   vars:
