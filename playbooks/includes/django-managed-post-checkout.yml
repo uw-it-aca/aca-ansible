@@ -12,12 +12,12 @@
 
     - name: Perform upgrades with pip.  May (but should not) take a while
       shell: source {{ base_dir }}/builds/{{current_build_value}}/bin/activate && PIP_ACCEL_CACHE={{ pip_accel_cache_dir }} pip-accel install -r {{ base_dir }}//builds/{{current_build_value}}/{{ item }} -U -i {{ pypi_mirror | default("https://pypi.s.uw.edu/root/pypi/+simple") }}
-      with_items: {{ pip_upgrades_files }}
+      with_items: "{{ pip_upgrades_files }}"
       when: pip_upgrades_files is defined
 
     - name: Install requirements with pip.  May (probably will) take a while
       shell: source {{ base_dir }}/builds/{{current_build_value}}/bin/activate && PIP_ACCEL_CACHE={{ pip_accel_cache_dir }} pip-accel install -r {{ base_dir }}//builds/{{current_build_value}}/{{ item }} -i {{ pypi_mirror | default("https://pypi.s.uw.edu/root/pypi/+simple") }}
-      with_items: {{ pip_requirements_files }}
+      with_items: "{{ pip_requirements_files }}"
       environment:
           PATH: "{{ path }}"
 
@@ -70,7 +70,7 @@
 
     - name: Django management commands
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ item }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
-      with_items: {{ django_management_commands }}
+      with_items: "{{ django_management_commands }}"
 
     - name: Extra Django Command 1
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="{{ extra_django_command1|default('null_command') }}" pythonpath="{{ base_dir }}/builds/{{current_build_value}}"
