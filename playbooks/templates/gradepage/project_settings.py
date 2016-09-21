@@ -19,6 +19,13 @@ INSTALLED_APPS += (
     'grade_conversion_calculator',
 )
 
+TEMPLATES[0]['OPTIONS']['context_processors'].extend([
+    'course_grader.context_processors.user',
+    'course_grader.context_processors.has_less_compiled',
+    'course_grader.context_processors.debug_mode',
+    'supporttools.context_processors.supportools_globals'
+])
+
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 LOGGING = {
@@ -118,18 +125,3 @@ DETECT_USER_AGENTS = {
     'is_tablet': agent.detectTierTablet,
     'is_mobile': agent.detectMobileQuick,
 }
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.request',
-    'django.core.context_processors.static',
-    'django.core.context_processors.tz',
-    'django.contrib.messages.context_processors.messages',
-    'course_grader.context_processors.user',
-    'course_grader.context_processors.has_less_compiled',
-    'course_grader.context_processors.debug_mode',
-    'supporttools.context_processors.supportools_globals',
-)
