@@ -73,6 +73,7 @@ COMPRESS_JS_FILTERS = [
 ]
 
 EMAIL_HOST = 'appsubmit.cac.washington.edu'
+SQLSHARE_WEB_URL = '{{ sqlshare_web_url }}'
 SQLSHARE_SHARING_URL_FORMAT = '{{ sqlshare_sharing_url_format }}'
 SQLSHARE_DETAIL_URL_FORMAT = '{{ sqlshare_detail_url_format }}'
 
