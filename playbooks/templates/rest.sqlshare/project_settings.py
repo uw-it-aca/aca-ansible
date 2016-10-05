@@ -72,6 +72,9 @@ COMPRESS_JS_FILTERS = [
     'compressor.filters.jsmin.JSMinFilter',
 ]
 
+from oauth2_provider.settings import oauth2_settings
+oauth2_settings.ALLOWED_REDIRECT_URI_SCHEMES = ['oob', 'http', 'https']
+
 EMAIL_HOST = 'appsubmit.cac.washington.edu'
 SQLSHARE_WEB_URL = '{{ sqlshare_web_url }}'
 SQLSHARE_SHARING_URL_FORMAT = '{{ sqlshare_sharing_url_format }}'
