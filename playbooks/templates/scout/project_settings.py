@@ -44,7 +44,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'scout',
-    #'scout_manager',
+    'scout_manager',
     'hybridize',
     'spotseeker_restclient',
     'null_command',
@@ -163,6 +163,8 @@ SPOTSEEKER_HOST = "{{ spotseeker_client_host }}"
 SPOTSEEKER_OAUTH_KEY = "{{ spotseeker_client_key }}"
 SPOTSEEKER_OAUTH_SECRET = "{{ spotseeker_client_secret }}"
 SPOTSEEKER_DAO_CLASS = "{{ spotseeker_client_dao }}"
+
+OAUTH_USER = "{{ spotseeker_oauth_user }}"
 
 CAMPUS_URL_LIST = {{ campus_list }}
 
