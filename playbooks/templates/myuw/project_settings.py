@@ -1,14 +1,16 @@
 # Settings for MyUWMobile project.
 TIME_ZONE = 'America/Los_Angeles'
 
-INSTALLED_APPS += (
+INSTALLED_APPS += [
+    'authz_group',
     'restclients',
     'templatetag_handlebars',
-    'myuw',
     'userservice',
+    'django_mobileesp',
     'supporttools',
     'django_client_logger',
-)
+    'myuw.apps.MyUWConfig',
+]
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
@@ -109,14 +111,6 @@ RESTCLIENTS_MEMCACHED_SERVERS = {{ restclients_memcached_servers|default("''")}}
 
 SUPPORTTOOLS_PARENT_APP = "MyUW"
 SUPPORTTOOLS_PARENT_APP_URL = "/"
-
-TEMPLATE_LOADERS = (
-    ('django.template.loaders.cached.Loader', (
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
-    )),
-)
-
 
 from django_mobileesp.detector import mobileesp_agent as agent
 
