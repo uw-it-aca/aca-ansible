@@ -92,38 +92,9 @@ STATIC_URL = 'https://aca-cdn.uw.edu/cdn/{{ aca_cdn_path }}/{{ current_build_val
 STATIC_URL = '/static/{{ current_build_value }}/'
 {% endif %}
 
-# Additional locations of static files
-STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static"
-    # Don't forget to use absolute paths, not relative paths.
-)
-
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    {% if not skip_compress_statics|default(False) %}'compressor.finders.CompressorFinder',{% endif %}
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
-)
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '{{ secret_key }}'
-
-MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.contrib.auth.middleware.RemoteUserMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    {% if include_userservice|default(True) %}'userservice.user.UserServiceMiddleware',{% endif %}
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
-
-AUTHENTICATION_BACKENDS = (
-    '{{ authentication_backend|default('django.contrib.auth.backends.RemoteUserBackend')}}',
-)
 
 ROOT_URLCONF = 'project.urls'
 
@@ -131,6 +102,38 @@ ROOT_URLCONF = 'project.urls'
 WSGI_APPLICATION = 'project.wsgi.application'
 
 {% if django19|default(False) %}
+
+INSTALLED_APPS = [
+    # Uncomment the next line to enable the admin:
+    # 'django.contrib.admin',
+    # Uncomment the next line to enable admin documentation:
+    # 'django.contrib.admindocs',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    {% if not skip_compress_statics|default(False) %}'compressor',{% endif %}
+]
+
+MIDDLEWARE_CLASSES = [
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.auth.middleware.RemoteUserMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    # Uncomment the next line for simple clickjacking protection:
+    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    {% if include_userservice|default(True) %}'userservice.user.UserServiceMiddleware',{% endif %}
+]
+
+AUTHENTICATION_BACKENDS = [
+    '{{ authentication_backend|default('django.contrib.auth.backends.RemoteUserBackend')}}',
+]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -145,6 +148,9 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
+                {% if include_supporttools|default(False) %}'supporttools.context_processors.supportools_globals',
+                'supporttools.context_processors.has_less_compiled',
+                {% endif %}
             ],
             'loaders': [
                 {% if debug|default(False) %}
@@ -160,21 +166,27 @@ TEMPLATES = [
         },
     },
 ]
+
+# Additional locations of static files
+STATICFILES_DIRS = [
+    # Put strings here, like "/home/html/static"
+    # Don't forget to use absolute paths, not relative paths.
+]
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    {% if not skip_compress_statics|default(False) %}'compressor.finders.CompressorFinder',{% endif %}
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+]
+
 {% else %}
+
 TEMPLATE_DEBUG = DEBUG
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-#    'django.template.loaders.eggs.Loader',
+AUTHENTICATION_BACKENDS = (
+    '{{ authentication_backend|default('django.contrib.auth.backends.RemoteUserBackend')}}',
 )
-
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates"
-    # Don't forget to use absolute paths, not relative paths.
-)
-{% endif %}
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -190,6 +202,47 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+MIDDLEWARE_CLASSES = (
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.auth.middleware.RemoteUserMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    {% if include_userservice|default(True) %}'userservice.user.UserServiceMiddleware',{% endif %}
+    # Uncomment the next line for simple clickjacking protection:
+    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
+
+# Additional locations of static files
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static"
+    # Don't forget to use absolute paths, not relative paths.
+)
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    {% if not skip_compress_statics|default(False) %}'compressor.finders.CompressorFinder',{% endif %}
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
+
+TEMPLATE_DIRS = (
+    # Put strings here, like "/home/html/django_templates"
+    # Don't forget to use absolute paths, not relative paths.
+)
+
+# List of callables that know how to import templates from various sources.
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+#    'django.template.loaders.eggs.Loader',
+)
+
+{% endif %}
+
 
 {% for key, value in restclients|default({})|dictsort %}
 {% for client in value %}
