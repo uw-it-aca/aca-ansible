@@ -16,7 +16,7 @@
       when: pip_upgrades_files is defined
 
     - name: Install requirements with pip.  May (probably will) take a while
-      shell: source {{ base_dir }}/builds/{{current_build_value}}/bin/activate && PIP_ACCEL_CACHE={{ pip_accel_cache_dir }} pip-accel install -r {{ base_dir }}//builds/{{current_build_value}}/{{ item }} -i {{ pypi_mirror | default("https://pypi.s.uw.edu/root/pypi/+simple") }}
+      shell: cd {{ base_dir }}/builds/{{current_build_value}} && source ./bin/activate && PIP_ACCEL_CACHE={{ pip_accel_cache_dir }} pip-accel install -r {{ item }} -i {{ pypi_mirror | default("https://pypi.s.uw.edu/root/pypi/+simple") }}
       with_items: "{{ pip_requirements_files }}"
       environment:
           PATH: "{{ path }}"

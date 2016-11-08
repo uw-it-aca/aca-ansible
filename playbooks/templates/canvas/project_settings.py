@@ -377,6 +377,18 @@ AWS_SQS = {
 {% endfor %}
             }
         }
+    },
+    'PERSON_V1': {
+        'TOPIC_ARN': '{{ event_person_change_topic_arn }}',
+        'QUEUE': '{{ event_person_change_sqs_queue }}',
+        'KEY_ID': '{{ event_person_change_key_id }}',
+        'KEY': '{{ event_person_change_secret_key }}',
+        'VISIBILITY_TIMEOUT': 60,
+        'MESSAGE_GATHER_SIZE': 50,
+        'VALIDATE_SNS_SIGNATURE': True,
+        'VALIDATE_MSG_SIGNATURE': True,
+        'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
+        'PAYLOAD_SETTINGS': {}
     }
 }
 
