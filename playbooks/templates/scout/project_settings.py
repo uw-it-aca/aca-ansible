@@ -175,6 +175,8 @@ EMAIL_HOST = '{{ email_host }}'
 EMAIL_USE_TLS = True
 
 USERSERVICE_ADMIN_GROUP= '{{ userservice_admin_group }}'
+AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
+
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
