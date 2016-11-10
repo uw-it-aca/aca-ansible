@@ -49,6 +49,7 @@ INSTALLED_APPS = (
     'spotseeker_restclient',
     'null_command',
     'compressor',
+    'userservice'
 )
 
 MIDDLEWARE_CLASSES += (
