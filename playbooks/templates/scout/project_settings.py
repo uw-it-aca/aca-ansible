@@ -177,6 +177,7 @@ EMAIL_USE_TLS = True
 
 USERSERVICE_ADMIN_GROUP= '{{ userservice_admin_group }}'
 AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
+MANAGER_SUPERUSER_GROUP = '{{ userservice_admin_group }}'
 
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
