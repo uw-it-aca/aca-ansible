@@ -1,15 +1,16 @@
 # Settings for MyUWMobile project.
 TIME_ZONE = 'America/Los_Angeles'
 
-INSTALLED_APPS += (
-    'south',
+INSTALLED_APPS += [
+    'authz_group',
     'restclients',
     'templatetag_handlebars',
-    'myuw',
     'userservice',
+    'django_mobileesp',
     'supporttools',
     'django_client_logger',
-)
+    'myuw.apps.MyUWConfig',
+]
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
@@ -111,32 +112,11 @@ RESTCLIENTS_MEMCACHED_SERVERS = {{ restclients_memcached_servers|default("''")}}
 SUPPORTTOOLS_PARENT_APP = "MyUW"
 SUPPORTTOOLS_PARENT_APP_URL = "/"
 
-TEMPLATE_LOADERS = (
-    ('django.template.loaders.cached.Loader', (
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
-    )),
-)
+from django_mobileesp.detector import mobileesp_agent as agent
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-'django.contrib.auth.context_processors.auth',
-'django.core.context_processors.debug',
-'django.core.context_processors.i18n',
-'django.core.context_processors.media',
-'django.core.context_processors.static',
-'django.core.context_processors.tz',
-'django.contrib.messages.context_processors.messages',
-'django.core.context_processors.request',
-'myuw.context_processors.has_less_compiled',
-'myuw.context_processors.has_google_analytics',
-'supporttools.context_processors.supportools_globals',
-)
-
-from django_mobileesp.detector import agent
-
-MIDDLEWARE_CLASSES += (
+MIDDLEWARE_CLASSES += [
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
-)
+]
 
 DETECT_USER_AGENTS = {
     'is_tablet': agent.detectTierTablet,
