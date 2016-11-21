@@ -44,21 +44,24 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'scout',
-    #'scout_manager',
+    'scout_manager',
     'hybridize',
     'spotseeker_restclient',
     'null_command',
     'compressor',
+    'userservice'
 )
 
 MIDDLEWARE_CLASSES += (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.auth.middleware.RemoteUserMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
     'turbolinks.middleware.TurbolinksMiddleware',
     'htmlmin.middleware.HtmlMinifyMiddleware',
     'htmlmin.middleware.MarkRequestMiddleware',
+    'userservice.user.UserServiceMiddleware'
 )
 
 TEMPLATES = [
@@ -164,11 +167,18 @@ SPOTSEEKER_OAUTH_KEY = "{{ spotseeker_client_key }}"
 SPOTSEEKER_OAUTH_SECRET = "{{ spotseeker_client_secret }}"
 SPOTSEEKER_DAO_CLASS = "{{ spotseeker_client_dao }}"
 
+OAUTH_USER = "{{ spotseeker_oauth_user }}"
+
 CAMPUS_URL_LIST = {{ campus_list }}
 
 # Enable sending of email
 EMAIL_HOST = '{{ email_host }}'
 EMAIL_USE_TLS = True
+
+USERSERVICE_ADMIN_GROUP= '{{ userservice_admin_group }}'
+AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
+MANAGER_SUPERUSER_GROUP = '{{ userservice_admin_group }}'
+
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
