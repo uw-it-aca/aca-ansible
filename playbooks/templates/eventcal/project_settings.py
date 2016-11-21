@@ -1,9 +1,8 @@
 # Settings for Event Calendar project.
-INSTALLED_APPS += (
-    'south',
+INSTALLED_APPS += [
     'restclients',
     'accountsynchr',
-)
+]
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
