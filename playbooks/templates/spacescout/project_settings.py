@@ -87,7 +87,7 @@ LOGGING = {
             'level': 'WARNING',
             'propagate': True,
         },
-        'labstats_spacescout': {
+        'spacescout_labstats': {
             'handlers': ['mail_admins', 'labstats_file'],
             'level': 'WARNING',
             'propagate': True,
