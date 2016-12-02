@@ -1,4 +1,6 @@
 import sqlite3
+import datetime
+import os
 import platform
 import re
 from ansible.plugins.lookup import LookupBase
@@ -47,8 +49,10 @@ class LookupModule(LookupBase):
 
         c.close()
         hostname = platform.node()
+        username = os.environ['USER']
+        date = datetime.date.today().isoformat()
         shortname = re.match('^([^.]+)', hostname).groups()[0]
 
-        value = "%s-%s" % (hostname, value)
+        value = "{0}-{1}-{2}-{3}".format(hostname, username, date, value)
 
         return [value]
