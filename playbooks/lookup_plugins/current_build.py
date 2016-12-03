@@ -1,5 +1,6 @@
 import sqlite3
 import datetime
+import hashlib
 import os
 import platform
 import re
@@ -54,5 +55,6 @@ class LookupModule(LookupBase):
         shortname = re.match('^([^.]+)', hostname).groups()[0]
 
         value = "{0}-{1}-{2}-{3}".format(hostname, username, date, value)
+        value = hashlib.md5(value).hexdigest()
 
         return [value]
