@@ -62,6 +62,14 @@ LOGGING = {
             'permissions': 0o664,
             'formatter': 'myuw',
         },
+        'performance_log': {
+            'level': 'INFO',
+            'class': 'permissions_logging.DateNameFileHandler',
+            'filename': '{{ base_dir }}/logs/view_performance-%Y-%m-%d',
+            'permissions': 0o664,
+            'formatter': 'myuw',
+        },
+
         'console':{
             'level': 'ERROR',
             'class': 'logging.StreamHandler',
@@ -77,6 +85,11 @@ LOGGING = {
             'handlers': ['myuw'],
             'level': 'INFO',
             'propagate': True,
+        },
+        'myuw.util.performance': {
+            'handlers': ['performance_log'],
+            'level': 'INFO',
+            'propagate': False,
         },
         'myuw': {
             'handlers': ['myuw'],
