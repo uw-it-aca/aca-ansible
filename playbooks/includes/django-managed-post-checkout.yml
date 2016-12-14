@@ -3,7 +3,7 @@
       when: centos7 is undefined or not centos7
 
     - name: Create a virtualenv for the build
-      command: /usr/bin/virtualenv -p {{ python_interpreter|default('python2.7') }} {{ base_dir }}/builds/{{current_build_value}}
+      command: /usr/bin/virtualenv {{ base_dir }}/builds/{{current_build_value}}
       when: centos7 is defined and centos7
 
     - name: Copy over requirements for the project level
