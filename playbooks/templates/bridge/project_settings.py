@@ -25,10 +25,10 @@ MIDDLEWARE_CLASSES = [
 
 INSTALLED_APPS += (
     'restclients',
+    'sis_provisioner.apps.Sis_provisionerConfig',
     'authz_group',
     'userservice',
     'supporttools',
-    'sis_provisioner',
 )
 
 AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
@@ -72,7 +72,7 @@ LOGGING = {
         'bridge': {
             'level': 'INFO',
             'class': 'permissions_logging.DateNameFileHandler',
-            'filename': '/data/bridge/logs/bridge-%Y-%m-%d',
+            'filename': '/data/bridge/logs/%Y-%m-%d',
             'permissions': 0o664,
             'formatter': 'bridge',
         },
