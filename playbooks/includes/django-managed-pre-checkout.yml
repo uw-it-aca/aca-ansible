@@ -27,7 +27,7 @@
     - include: database-prereqs.yml
 
     - name: Copy node and less
-      synchronize: src="{{ files_dir }}/node-libs" dest="{{ base_dir }}/" rsync_opts=--omit-dir-times,--exclude=.svn perms=no
+      synchronize: src="{{ files_dir }}/node-libs" dest="{{ base_dir }}/" rsync_opts=--no-group,--omit-dir-times,--exclude=.svn perms=no
 
     # assuming certs aren't changing between releases?
     - name: Ensure certs directory exists
