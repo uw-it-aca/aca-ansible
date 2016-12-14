@@ -25,21 +25,17 @@ MIDDLEWARE_CLASSES = [
 
 INSTALLED_APPS += (
     'restclients',
-    'authz_group',
-    'userservice',
-    'supporttools',
-    'sis_provisioner',
+    'sis_provisioner.apps.Sis_provisionerConfig',
 )
 
 AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
-
 RESTCLIENTS_ADMIN_GROUP = '{{ restclients_admin_group }}'
-USERSERVICE_ADMIN_GROUP = '{{ userservice_admin_group }}'
+# USERSERVICE_ADMIN_GROUP = '{{ userservice_admin_group }}'
 # USERSERVICE_VALIDATION_MODULE = ''
-SUPPORTTOOLS_PARENT_APP = "AdminBridge"
-SUPPORTTOOLS_PARENT_APP_URL = "/"
+# SUPPORTTOOLS_PARENT_APP = "AdminBridge"
+# SUPPORTTOOLS_PARENT_APP_URL = "/"
 
-BRIDGE_ADMIN_GROUP = '{{ bridge_admin_group }}'
+# BRIDGE_ADMIN_GROUP = '{{ bridge_admin_group }}'
 BRIDGE_IMPORT_CSV_ROOT='/data/bridge/csv'
 BRIDGE_IMPORT_USER_FILENAME='users'
 BRIDGE_IMPORT_USER_FILE_SIZE={{ import_user_file_size }}
@@ -72,7 +68,7 @@ LOGGING = {
         'bridge': {
             'level': 'INFO',
             'class': 'permissions_logging.DateNameFileHandler',
-            'filename': '/data/bridge/logs/bridge-%Y-%m-%d',
+            'filename': '/data/bridge/logs/%Y-%m-%d',
             'permissions': 0o664,
             'formatter': 'bridge',
         },

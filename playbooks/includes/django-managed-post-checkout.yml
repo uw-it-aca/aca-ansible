@@ -59,6 +59,7 @@
 
     - name: Collect statics
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="collectstatic"
+      when: skip_collect_statics is not defined or not skip_collect_statics
 
     - name: Compress statics
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="compress"
