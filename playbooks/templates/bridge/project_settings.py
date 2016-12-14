@@ -26,20 +26,16 @@ MIDDLEWARE_CLASSES = [
 INSTALLED_APPS += (
     'restclients',
     'sis_provisioner.apps.Sis_provisionerConfig',
-    'authz_group',
-    'userservice',
-    'supporttools',
 )
 
 AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
-
 RESTCLIENTS_ADMIN_GROUP = '{{ restclients_admin_group }}'
-USERSERVICE_ADMIN_GROUP = '{{ userservice_admin_group }}'
+# USERSERVICE_ADMIN_GROUP = '{{ userservice_admin_group }}'
 # USERSERVICE_VALIDATION_MODULE = ''
-SUPPORTTOOLS_PARENT_APP = "AdminBridge"
-SUPPORTTOOLS_PARENT_APP_URL = "/"
+# SUPPORTTOOLS_PARENT_APP = "AdminBridge"
+# SUPPORTTOOLS_PARENT_APP_URL = "/"
 
-BRIDGE_ADMIN_GROUP = '{{ bridge_admin_group }}'
+# BRIDGE_ADMIN_GROUP = '{{ bridge_admin_group }}'
 BRIDGE_IMPORT_CSV_ROOT='/data/bridge/csv'
 BRIDGE_IMPORT_USER_FILENAME='users'
 BRIDGE_IMPORT_USER_FILE_SIZE={{ import_user_file_size }}
