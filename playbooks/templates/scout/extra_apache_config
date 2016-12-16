@@ -1,5 +1,23 @@
+<LocationMatch /PubCookie.reply>
+    SetHandler pubcookie-post-reply
+</LocationMatch>
+
+<Location /user_logout>
+    PubCookieAppID Scout
+    AuthType uwnetid
+    require valid-user
+    PubcookieEndSession clearLogin
+</Location>
+<Location /manager>
+    AuthType uwnetid
+    require group u_acadev_scout_access
+    PubCookieAppID Scout
+</Location>
+
+
 AliasMatch ^/(favicon|apple-touch-icon-|android-|win8-|manifest.json|browserconfig.xml)(.*)$ {{ base_dir }}/static/{{ current_build_value }}/src/scout/scout/ico/$1$2
 
 <VirtualHost *:80>
     Redirect permanent / {{ secure_url }}
 </VirtualHost>
+
