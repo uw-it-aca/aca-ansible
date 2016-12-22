@@ -65,6 +65,10 @@
       django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="compress"
       when: skip_compress_statics is not defined or not skip_compress_statics
 
+    - name: Compress templates
+      django_manage: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" app_path="{{ base_dir }}/builds/{{current_build_value}}" command="preprocess_templates"
+      when: (preprocess_templates is defined and preprocess_templates)
+
     - include: cdn-statics-deploy.yml
       when: aca_cdn_path | default(false)
 

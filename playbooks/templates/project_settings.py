@@ -115,6 +115,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     {% if not skip_compress_statics|default(False) %}'compressor',{% endif %}
+    {% if preprocess_templates|default(False)%}'template_preprocess',{% endif %}
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -134,10 +135,15 @@ AUTHENTICATION_BACKENDS = [
     '{{ authentication_backend|default('django.contrib.auth.backends.RemoteUserBackend')}}',
 ]
 
+{% if preprocess_templates|default(False) %}
+COMPILED_TEMPLATE_PATH = '{{ base_dir }}/compiled_templates/{{ current_build_value }}'
+{% endif %}
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            {% if preprocess_templates|default(False) %}COMPILED_TEMPLATE_PATH{% endif %}
+        ],
         'OPTIONS': {
             'context_processors': [
                 'django.contrib.auth.context_processors.auth',
