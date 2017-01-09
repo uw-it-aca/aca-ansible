@@ -43,7 +43,14 @@ BRIDGE_IMPORT_USER_FILE_SIZE={{ import_user_file_size }}
 RESTCLIENTS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'
 RESTCLIENTS_DAO_CACHE_CLASS='{{restclients_dao_cache_class}}'
 RESTCLIENTS_DISABLE_THREADING = True
-RESTCLIENTS_TIMEOUT = 600
+RESTCLIENTS_TIMEOUT = 60
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/data/bridge/cache',
+    }
+}
 
 LOGGING = {
     'version': 1,
