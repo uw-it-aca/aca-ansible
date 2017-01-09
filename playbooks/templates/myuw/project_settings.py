@@ -69,6 +69,13 @@ LOGGING = {
             'permissions': 0o664,
             'formatter': 'myuw',
         },
+        'restclients_timing_log': {
+            'level': 'INFO',
+            'class': 'permissions_logging.DateNameFileHandler',
+            'filename': '/data/myuw/logs/restclients_timing-%Y-%m-%d',
+            'permissions': 0o664,
+            'formatter': 'myuw',
+        },
 
         'console':{
             'level': 'ERROR',
@@ -80,6 +87,11 @@ LOGGING = {
             'handlers': ['mail_admins', 'console'],
             'level': 'ERROR',
             'propagate': True,
+        },
+        'restclients.dao': {
+            'handlers': ['restclients_timing_log'],
+            'level': 'INFO',
+            'propagate': False,
         },
         'restclients': {
             'handlers': ['myuw'],
