@@ -134,6 +134,10 @@ RESTCLIENTS_DAO_CACHE_CLASS='{{restclients_dao_cache_class}}'
 AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
 RESTCLIENTS_MEMCACHED_SERVERS = {{ restclients_memcached_servers|default("''")}}
 
+RESTCLIENTS_DEFAULT_TIMEOUT = 3
+RESTCLIENTS_CANVAS_SOCKET_TIMEOUT = 3
+
+
 SUPPORTTOOLS_PARENT_APP = "MyUW"
 SUPPORTTOOLS_PARENT_APP_URL = "/"
 
