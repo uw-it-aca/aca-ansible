@@ -1,23 +1,4 @@
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'sqlshare_web.context_processors.less_compiled',
-                'sqlshare_web.context_processors.google_analytics',
-            ],
-        },
-    },
-]
-
-
 SQLSHARE_WEB_HOST = '{{ sqlshare_web_host }}'
 SQLSHARE_REST_HOST = '{{ sqlshare_rest_host }}'
 
