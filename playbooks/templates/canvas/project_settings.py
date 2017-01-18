@@ -197,7 +197,8 @@ ASTRA_ROLE_MAPPING = {
     "UWEOOperations": "UWEO Operations",
     "UWEOReadOnly": "UWEO Read Only",
     "APIUserReadOnly": "API User (Read Only)",
-    "APIUserReadWrite": "API User (Read-Write)"
+    "APIUserReadWrite": "API User (Read-Write)",
+    "AllyApplication": "Ally application"
 }
 
 CANVAS_MASQUERADE_ROLE = "Become users only (dept. admin)"
