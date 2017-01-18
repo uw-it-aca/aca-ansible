@@ -79,6 +79,13 @@ LOGGING = {
             'permissions': 0o664,
             'formatter': 'bridge',
         },
+        'restclients_timing_log': {
+            'level': 'INFO',
+            'class': 'permissions_logging.DateNameFileHandler',
+            'filename': '/data/bridge/logs/restclients_timing-%Y-%m-%d',
+            'permissions': 0o664,
+            'formatter': 'myuw',
+        },
         'console':{
             'level': 'ERROR',
             'class': 'logging.StreamHandler',
@@ -89,6 +96,11 @@ LOGGING = {
             'handlers': ['mail_admins', 'console'],
             'level': 'ERROR',
             'propagate': True,
+        },
+        'restclients.dao': {
+            'handlers': ['restclients_timing_log'],
+            'level': 'INFO',
+            'propagate': False,
         },
         'restclients': {
             'handlers': ['bridge'],
