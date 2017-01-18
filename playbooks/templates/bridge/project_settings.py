@@ -84,7 +84,7 @@ LOGGING = {
             'class': 'permissions_logging.DateNameFileHandler',
             'filename': '/data/bridge/logs/restclients_timing-%Y-%m-%d',
             'permissions': 0o664,
-            'formatter': 'myuw',
+            'formatter': 'bridge',
         },
         'console':{
             'level': 'ERROR',
