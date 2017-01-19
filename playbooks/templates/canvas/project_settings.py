@@ -244,6 +244,8 @@ UW_GROUP_BLACKLIST = [
 DEFAULT_GROUP_SECTION_NAME = 'UW Group members'
 
 LOGIN_DOMAIN_WHITELIST = ['gmail.com', 'google.com', 'googlemail.com']
+ADD_USER_DOMAIN_WHITELIST = ['uw.edu', 'washington.edu', 'u.washington.edu',
+'cac.washington.edu', 'deskmail.washington.edu']
 
 SIS_IMPORT_ROOT_ACCOUNT_ID = 'uwcourse'
 SIS_IMPORT_CSV_ROOT = '{{ base_dir }}/var/csv'
