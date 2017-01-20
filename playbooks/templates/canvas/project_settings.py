@@ -139,6 +139,16 @@ LOGGING = {
             'interval': 1,
             'backupCount': 7,
         },
+        'restclients_timing_log': {
+            'level': 'INFO',
+            'formatter': 'simple',
+            'class': 'permissions_logging.TimedRotatingFileHandler',
+            'filename': '{{ base_dir }}/logs/restclients.log',
+            'permissions': 0o664,
+            'when': 'midnight',
+            'interval': 1,
+            'backupCount': 7,
+        },
         'console': {
             'level': 'ERROR',
             'class': 'logging.StreamHandler',
@@ -174,6 +184,11 @@ LOGGING = {
         'course_request': {
             'handlers': ['course_request_file'],
             'level': 'DEBUG'
+        },
+        'restclients.dao': {
+            'handlers': ['restclients_timing_log'],
+            'level': 'INFO',
+            'propagate': False,
         },
         '': {
             'handlers': ['console'],
