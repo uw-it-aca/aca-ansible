@@ -129,11 +129,11 @@ LOGGING = {
             'interval': 1,
             'backupCount': 7,
         },
-        'course_request_file': {
-            'level': 'DEBUG',
+        'lti_performance_log': {
+            'level': 'INFO',
             'formatter': 'simple',
             'class': 'permissions_logging.TimedRotatingFileHandler',
-            'filename': '{{ base_dir }}/logs/course_request.log',
+            'filename': '{{ base_dir }}/logs/lti_performance.log',
             'permissions': 0o664,
             'when': 'midnight',
             'interval': 1,
@@ -181,9 +181,10 @@ LOGGING = {
             'handlers': ['canvas_users'],
             'level': 'DEBUG'
         },
-        'course_request': {
-            'handlers': ['course_request_file'],
-            'level': 'DEBUG'
+        'blti.performance': {
+            'handlers': ['lti_performance_log'],
+            'level': 'INFO',
+            'propagate': False,
         },
         'restclients.dao': {
             'handlers': ['restclients_timing_log'],
