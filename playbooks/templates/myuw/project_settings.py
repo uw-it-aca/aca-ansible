@@ -145,6 +145,7 @@ from django_mobileesp.detector import mobileesp_agent as agent
 
 MIDDLEWARE_CLASSES += [
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
+    'restclients.middleware.EnableServiceDegradationMiddleware',
 ]
 
 DETECT_USER_AGENTS = {
