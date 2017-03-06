@@ -4,11 +4,20 @@ TIME_ZONE = 'America/Los_Angeles'
 # Explicitly set for Django 1.7 warnings
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
-MIDDLEWARE_CLASSES += (
+# Redefines MIDDLEWARE_CLASSES to use custom RemoteUserMiddleware
+MIDDLEWARE_CLASSES = [
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'course_grader.auth.middleware.RemoteUserIfExistsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'userservice.user.UserServiceMiddleware',
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
-)
+]
 
-INSTALLED_APPS += (
+INSTALLED_APPS += [
     'django.contrib.humanize',
     'templatetag_handlebars',
     'supporttools',
@@ -17,7 +26,7 @@ INSTALLED_APPS += (
     'authz_group',
     'course_grader',
     'grade_conversion_calculator',
-)
+]
 
 TEMPLATES[0]['OPTIONS']['context_processors'].extend([
     'course_grader.context_processors.user',
