@@ -97,6 +97,8 @@ LOGGING = {
     }
 }
 
+LOGIN_URL = '/user_login'
+
 GRADEPAGE_ADMIN_GROUP = '{{ support_group }}'
 
 AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
