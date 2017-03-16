@@ -9,6 +9,9 @@
     - name: Copy over requirements for the project level
       copy: src="{{ files_dir }}/project_requirements.txt" dest="{{ base_dir }}/project_requirements.txt" group="{{ file_group }}" mode="0664"
 
+    - name: Upgrades pip and setuptools
+      shell: source {{ base_dir }}/builds/{{current_build_value}}/bin/activate && pip install --upgrade pip && pip install --upgrade setuptools
+
     - name: Install pip-accel
       pip: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" name=pip-accel
 
