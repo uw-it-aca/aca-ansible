@@ -1,0 +1,5 @@
+RESTCLIENTS_UPASS_DAO_CLASS = 'restclients.dao_implementation.upass.Live'
+RESTCLIENTS_UPASS_HOST = '{% if "upass" in restclients.production|default(False) %}https://wscc.admin.uw.edu:443{% else %}https://eval-wscc.admin.uw.edu:443{% endif %}'
+RESTCLIENTS_UPASS_CERT_FILE='{% if webservice_client_cert_path|default(None) %}{{ webservice_client_cert_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_cert_name }}{% endif %}'
+RESTCLIENTS_UPASS_KEY_FILE='{% if webservice_client_key_path|default(None) %}{{ webservice_client_key_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_key_name }}{% endif %}'
+
