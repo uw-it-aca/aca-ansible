@@ -64,3 +64,15 @@ LOGGING = {
         },
     }
 }
+
+AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
+USERSERVICE_VALIDATION_MODULE = 'notify.userservice_validation_module.validate_override_user'
+USERSERVICE_ADMIN_GROUP = '{{ support_group }}'
+RESTCLIENTS_ADMIN_GROUP = USERSERVICE_ADMIN_GROUP
+
+SUPPORT_EMAIL = '{{ support_email }}'
+SENDER_ADDRESS = '{{ sender_address }}'
+
+GOOGLE_ANALYTICS_KEY = '{{ google_analytics_key }}'
+
+UI_SYSTEM_MESSAGE = None
