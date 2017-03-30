@@ -24,10 +24,6 @@ LOGGING = {
         },
     },
     'handlers': {
-        'can_alerts': {
-            'level': 'ERROR',
-            'class': 'nws.log.NotificationsLogger',
-        },
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
@@ -41,13 +37,13 @@ LOGGING = {
         'nws_file_log': {
             'level': 'DEBUG',
             'class': 'logging.handlers.WatchedFileHandler',
-            'filename': '/data/notifications/logs/nws.log',
+            'filename': '/data/notify/logs/nws.log',
             'formatter': 'formatter',
         },
         'ui_file_log': {
             'level': 'INFO',
             'class': 'logging.handlers.WatchedFileHandler',
-            'filename': '/data/notifications/logs/ui.log',
+            'filename': '/data/notify/logs/ui.log',
             'formatter': 'formatter',
         },
     },
