@@ -24,8 +24,9 @@ MIDDLEWARE_CLASSES = [
 ]
 
 INSTALLED_APPS += (
+    'rc_django',
     'restclients',
-    'sis_provisioner.apps.Sis_provisionerConfig',
+    'sis_provisioner.apps.BridgeProvisionerConfig',
 )
 
 AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
@@ -49,7 +50,7 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': '/data/bridge/cache',
-    }
+        }
 }
 
 LOGGING = {
@@ -82,7 +83,7 @@ LOGGING = {
         'restclients_timing_log': {
             'level': 'INFO',
             'class': 'permissions_logging.DateNameFileHandler',
-            'filename': '/data/bridge/logs/restclients_timing-%Y-%m-%d',
+            'filename': '/data/bridge/logs/timing-%Y-%m-%d',
             'permissions': 0o664,
             'formatter': 'bridge',
         },
