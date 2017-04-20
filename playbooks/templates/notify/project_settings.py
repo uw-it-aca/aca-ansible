@@ -10,6 +10,10 @@ INSTALLED_APPS += [
     'rc_django',
 ]
 
+MIDDLEWARE_CLASSES += [
+    'django_mobileesp.middleware.UserAgentDetectionMiddleware'
+]
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -65,6 +69,7 @@ AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroup
 USERSERVICE_VALIDATION_MODULE = 'notify.userservice_validation_module.validate_override_user'
 USERSERVICE_ADMIN_GROUP = '{{ support_group }}'
 RESTCLIENTS_ADMIN_GROUP = USERSERVICE_ADMIN_GROUP
+RESTCLIENTS_DAO_CACHE_CLASS='notify.cache_implementation.UICache'
 
 SUPPORT_EMAIL = '{{ support_email }}'
 SENDER_ADDRESS = '{{ sender_address }}'
@@ -72,3 +77,13 @@ SENDER_ADDRESS = '{{ sender_address }}'
 GOOGLE_ANALYTICS_KEY = '{{ google_analytics_key }}'
 
 UI_SYSTEM_MESSAGE = None
+
+from django_mobileesp.detector import mobileesp_agent as agent
+DETECT_USER_AGENTS = {
+    'is_android': agent.detectAndroid,
+    'is_ios': agent.detectIos,
+    'is_windows_phone': agent.detectWindowsPhone,
+    'is_mobile': agent.detectTierTablet | \
+                 agent.detectTierIphone | \
+                 agent.detectMobileQuick,
+}
