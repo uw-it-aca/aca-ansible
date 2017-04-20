@@ -10,6 +10,10 @@ INSTALLED_APPS += [
     'rc_django',
 ]
 
+MIDDLEWARE_CLASSES += [
+    'django_mobileesp.middleware.UserAgentDetectionMiddleware'
+]
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -73,3 +77,13 @@ SENDER_ADDRESS = '{{ sender_address }}'
 GOOGLE_ANALYTICS_KEY = '{{ google_analytics_key }}'
 
 UI_SYSTEM_MESSAGE = None
+
+from django_mobileesp.detector import mobileesp_agent as agent
+DETECT_USER_AGENTS = {
+    'is_android': agent.detectAndroid,
+    'is_ios': agent.detectIos,
+    'is_windows_phone': agent.detectWindowsPhone,
+    'is_mobile': agent.detectTierTablet | \
+                 agent.detectTierIphone | \
+                 agent.detectMobileQuick,
+}
