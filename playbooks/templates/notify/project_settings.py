@@ -65,6 +65,7 @@ AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroup
 USERSERVICE_VALIDATION_MODULE = 'notify.userservice_validation_module.validate_override_user'
 USERSERVICE_ADMIN_GROUP = '{{ support_group }}'
 RESTCLIENTS_ADMIN_GROUP = USERSERVICE_ADMIN_GROUP
+RESTCLIENTS_DAO_CACHE_CLASS='notify.cache_implementation.UICache'
 
 SUPPORT_EMAIL = '{{ support_email }}'
 SENDER_ADDRESS = '{{ sender_address }}'
