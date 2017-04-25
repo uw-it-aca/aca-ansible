@@ -11,11 +11,13 @@ WSGIScriptAlias {{ wsgi_url_base|default("/") }} {{ base_dir }}/live/wsgi/django
 
 {% include 'apache/static_content' %}
 
-{% if include_pubcookie %}
+{% if include_shibboleth|default(false) %}
+{% include 'apache/shibboleth' %}
+{% endif %}
 
+{% if include_pubcookie|default(false) %}
 {% include 'apache/pubcookie' %}
 {% include 'apache/pubcookie-auth' %}
-
 {% endif %}
 
 {% if extra_apache_config|default(None) %}
