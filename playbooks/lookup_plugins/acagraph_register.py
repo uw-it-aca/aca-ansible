@@ -13,6 +13,7 @@ class LookupModule(LookupBase):
         groups = values[4]
         restclients = values[5]
         include_pubcookie = values[6]
+        include_shibboleth = values[7]
 
         group = re.match('.*/(.*)', inventory).group(1)
         hosts = groups[group]
@@ -47,6 +48,12 @@ class LookupModule(LookupBase):
         try:
             if include_pubcookie:
                 graph_data["login_systems"].append("Pubcookie")
+        except Exception as ex:
+            pass
+
+        try:
+            if include_shibboleth:
+                graph_data["login_systems"].append("Shibboleth")
         except Exception as ex:
             pass
 
