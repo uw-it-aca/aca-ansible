@@ -137,4 +137,6 @@ DETECT_USER_AGENTS = {
 }
 
 GOOGLE_ANALYTICS_KEY = "{{ ga_tracker_key }}"
+GOOGLE_SEARCH_KEY = '{{ gcse_key }}'
 
+SERU_LIST = "{{ myuw_seru_path }}"
