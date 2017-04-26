@@ -10,8 +10,17 @@ INSTALLED_APPS += [
     'rc_django',
 ]
 
-MIDDLEWARE_CLASSES += [
-    'django_mobileesp.middleware.UserAgentDetectionMiddleware'
+# Redefines MIDDLEWARE_CLASSES to use custom RemoteUserMiddleware
+MIDDLEWARE_CLASSES = [
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'notify.auth.middleware.RemoteUserIfExistsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'userservice.user.UserServiceMiddleware',
+    'django_mobileesp.middleware.UserAgentDetectionMiddleware',
 ]
 
 LOGGING = {
