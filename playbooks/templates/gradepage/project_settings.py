@@ -4,16 +4,7 @@ TIME_ZONE = 'America/Los_Angeles'
 # Explicitly set for Django 1.7 warnings
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
-# Redefines MIDDLEWARE_CLASSES to use custom RemoteUserMiddleware
-MIDDLEWARE_CLASSES = [
-    'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.contrib.auth.middleware.PersistentRemoteUserMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'userservice.user.UserServiceMiddleware',
+MIDDLEWARE_CLASSES += [
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
 ]
 
@@ -96,8 +87,6 @@ LOGGING = {
         },
     }
 }
-
-LOGIN_URL = '/user_login'
 
 GRADEPAGE_ADMIN_GROUP = '{{ support_group }}'
 
