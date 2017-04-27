@@ -11,7 +11,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'course_grader.auth.middleware.RemoteUserIfExistsMiddleware',
+    'django.contrib.auth.middleware.PersistentRemoteUserMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'userservice.user.UserServiceMiddleware',
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
