@@ -123,7 +123,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.contrib.auth.middleware.RemoteUserMiddleware',
+    {% if persistent_remote_user|default(False) %}'django.contrib.auth.middleware.PersistentRemoteUserMiddleware'{% else %}'django.contrib.auth.middleware.RemoteUserMiddleware'{% endif %},
     'django.middleware.locale.LocaleMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -179,6 +179,9 @@ STATICFILES_FINDERS = [
     {% if not skip_compress_statics|default(False) %}'compressor.finders.CompressorFinder',{% endif %}
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 ]
+
+{% if login_url|default(None) %}
+LOGIN_URL = '{{ login_url }}'{% endif %}
 
 {% else %}
 
@@ -242,7 +245,6 @@ TEMPLATE_LOADERS = (
 )
 
 {% endif %}
-
 
 {% for key, value in restclients|default({})|dictsort %}
 {% for client in value %}
