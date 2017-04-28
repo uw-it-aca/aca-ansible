@@ -11,11 +11,10 @@ MIDDLEWARE_CLASSES += [
 INSTALLED_APPS += [
     'django.contrib.humanize',
     'templatetag_handlebars',
+    'course_grader.apps.CourseGraderConfig',
     'supporttools',
-    'restclients',
     'userservice',
     'authz_group',
-    'course_grader',
     'grade_conversion_calculator',
 ]
 
