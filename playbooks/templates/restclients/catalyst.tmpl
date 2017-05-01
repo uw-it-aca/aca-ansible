@@ -7,3 +7,4 @@ RESTCLIENTS_CATALYST_SOL_AUTH_PRIVATE_KEY='{{ catalyst_client_private_key }}'
 RESTCLIENTS_CATALYST_CERT_FILE='{% if webservice_client_cert_path|default(None) %}{{ webservice_client_cert_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_cert_name }}{% endif %}'
 RESTCLIENTS_CATALYST_KEY_FILE='{% if webservice_client_key_path|default(None) %}{{ webservice_client_key_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_key_name }}{% endif %}'
 {% endif %}
+RESTCLIENTS_CATALYST_POOL_SIZE={{ catalyst_client_max_pool_size|default(5) }}
