@@ -7,7 +7,5 @@ RESTCLIENTS_CANVAS_OAUTH_BEARER='{{ canvas_client_oauth_bearer }}'
 {% if canvas_client_account_id|default(None) %}
 RESTCLIENTS_CANVAS_ACCOUNT_ID='{{ canvas_client_account_id }}'
 {% endif %}
-{% if canvas_client_timeout|default(None) %}
-RESTCLIENTS_CANVAS_SOCKET_TIMEOUT={{ canvas_client_timeout }}
-{% endif %}
-
+RESTCLIENTS_CANVAS_TIMEOUT={{ canvas_client_timeout|default(5) }}
+RESTCLIENTS_CANVAS_POOL_SIZE={{ canvas_client_max_pool_size|default(5) }}
