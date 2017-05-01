@@ -15,6 +15,7 @@ INSTALLED_APPS += [
     'supporttools',
     'userservice',
     'authz_group',
+    'rc_django',
     'grade_conversion_calculator',
 ]
 
