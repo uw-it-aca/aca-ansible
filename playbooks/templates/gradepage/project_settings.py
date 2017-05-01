@@ -120,7 +120,7 @@ REGISTRAR_SUPPORT_PHONE = '{{ registrar_support_phone }}'
 
 SUPPORTTOOLS_PARENT_APP = 'GradePage'
 
-from django_mobileesp.detector import agent
+from django_mobileesp.detector import mobileesp_agent as agent
 DETECT_USER_AGENTS = {
     'is_tablet': agent.detectTierTablet,
     'is_mobile': agent.detectMobileQuick,
