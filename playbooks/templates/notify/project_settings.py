@@ -6,7 +6,7 @@ INSTALLED_APPS += [
     'supporttools',
     'userservice',
     'authz_group',
-    'notify',
+    'notify.apps.NotifyUIConfig',
     'rc_django',
 ]
 
