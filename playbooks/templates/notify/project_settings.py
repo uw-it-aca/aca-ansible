@@ -78,6 +78,8 @@ GOOGLE_ANALYTICS_KEY = '{{ google_analytics_key }}'
 
 UI_SYSTEM_MESSAGE = None
 
+SUPPORTTOOLS_PARENT_APP = 'Notify.UW'
+
 from django_mobileesp.detector import mobileesp_agent as agent
 DETECT_USER_AGENTS = {
     'is_android': agent.detectAndroid,
