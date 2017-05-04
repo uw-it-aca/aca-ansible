@@ -23,7 +23,6 @@ TEMPLATES[0]['OPTIONS']['context_processors'].extend([
     'course_grader.context_processors.user',
     'course_grader.context_processors.has_less_compiled',
     'course_grader.context_processors.debug_mode',
-    'supporttools.context_processors.supportools_globals'
 ])
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
