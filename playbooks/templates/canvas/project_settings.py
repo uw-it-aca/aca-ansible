@@ -429,7 +429,7 @@ EMAIL_HOST = '{{ email_host }}'
 SAFE_EMAIL_RECIPIENT = '{{ safe_email_recipient }}'
 {% endif %}
 
-from django_mobileesp.detector import agent
+from django_mobileesp.detector import mobileesp_agent as agent
 DETECT_USER_AGENTS = {
     'is_tablet': agent.detectTierTablet,
     'is_mobile': agent.detectMobileQuick,
