@@ -38,13 +38,9 @@ INSTALLED_APPS += (
     'templatetag_handlebars',
     'sis_provisioner.apps.SISProvisionerConfig',
     'supporttools',
-    'restclients',
     'userservice',
     'authz_group',
     'blti',
-    'canvas_admin',
-    'astra',
-    'events',
     'groups',
     'libguide',
     'course_roster',
@@ -52,7 +48,7 @@ INSTALLED_APPS += (
     'analytics',
     'grade_conversion_calculator',
     'grading_standard',
-    'lti_manager',
+    'rc_django',
 )
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
