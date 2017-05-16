@@ -1,0 +1,2 @@
+from django.views.i18n import JavaScriptCatalog
+
