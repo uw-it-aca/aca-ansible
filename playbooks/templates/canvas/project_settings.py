@@ -159,30 +159,32 @@ LOGGING = {
         },
         'sis_provisioner': {
             'handlers': ['sis_provisioner_file'],
-            'level': 'DEBUG'
+            'level': 'DEBUG',
         },
-        'events': {
+        'sis_provisioner.events': {
             'handlers': ['event_file'],
-            'level': 'DEBUG'
+            'level': 'DEBUG',
+            'propagate': False,
         },
-        'astra': {
+        'sis_provisioner.dao.astra': {
             'handlers': ['astra_file'],
-            'level': 'DEBUG'
+            'level': 'DEBUG',
+            'propagate': False,
         },
         'groups': {
             'handlers': ['groups_file'],
-            'level': 'DEBUG'
+            'level': 'DEBUG',
         },
         'canvas_users': {
             'handlers': ['canvas_users'],
-            'level': 'DEBUG'
+            'level': 'DEBUG',
         },
         'blti.performance': {
             'handlers': ['lti_performance_log'],
             'level': 'INFO',
             'propagate': False,
         },
-        'restclients.dao': {
+        'restclients_core.dao': {
             'handlers': ['restclients_timing_log'],
             'level': 'INFO',
             'propagate': False,
