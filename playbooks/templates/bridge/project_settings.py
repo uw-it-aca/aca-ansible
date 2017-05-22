@@ -83,7 +83,7 @@ LOGGING = {
         'restclients_timing_log': {
             'level': 'INFO',
             'class': 'permissions_logging.DateNameFileHandler',
-            'filename': '/data/bridge/logs/timing-%Y-%m-%d',
+            'filename': '/data/bridge/logs/timing/%Y-%m-%d',
             'permissions': 0o664,
             'formatter': 'bridge',
         },
