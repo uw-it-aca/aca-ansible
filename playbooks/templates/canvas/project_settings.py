@@ -25,7 +25,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.contrib.auth.middleware.RemoteUserMiddleware',
+    'django.contrib.auth.middleware.PersistentRemoteUserMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'userservice.user.UserServiceMiddleware',
     # Uncomment the next line for simple clickjacking protection:
@@ -294,7 +294,6 @@ RESTCLIENTS_ADMIN_GROUP = 'u_acadev_canvas_support-admin'
 USERSERVICE_ADMIN_GROUP = RESTCLIENTS_ADMIN_GROUP
 NONPERSONAL_NETID_EXCEPTION_GROUP = 'u_acadev_canvas_nonpersonal_netids'
 
-RESTCLIENTS_TIMEOUT = 600
 RESTCLIENTS_DISABLE_THREADING = True
 RESTCLIENTS_DAO_CACHE_CLASS = 'sis_provisioner.cache.RestClientsCache'
 RESTCLIENTS_CANVAS_ACCOUNT_ID = '{{ canvas_account_id }}'
