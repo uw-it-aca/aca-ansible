@@ -135,6 +135,16 @@ LOGGING = {
             'interval': 1,
             'backupCount': 7
         },
+        'course_roster_log': {
+            'level': 'DEBUG',
+            'formatter': 'simple',
+            'class': 'permissions_logging.TimedRotatingFileHandler',
+            'filename': '{{ base_dir }}/logs/course_roster.log',
+            'permissions': 0o664,
+            'when': 'midnight',
+            'interval': 1,
+            'backupCount': 7
+        },
         'sis_provisioner_log': {
             'level': 'DEBUG',
             'formatter': 'simple',
@@ -206,6 +216,10 @@ LOGGING = {
         },
         'grading_standard': {
             'handlers': ['grading_standard_log'],
+            'level': 'DEBUG',
+        },
+        'course_roster': {
+            'handlers': ['course_roster_log'],
             'level': 'DEBUG',
         },
         'blti.performance': {
