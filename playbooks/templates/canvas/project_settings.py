@@ -75,7 +75,7 @@ LOGGING = {
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler',
         },
-        'event_file': {
+        'event_log': {
             'level': 'DEBUG',
             'formatter': 'simple',
             'class': 'permissions_logging.TimedRotatingFileHandler',
@@ -85,7 +85,17 @@ LOGGING = {
             'interval': 1,
             'backupCount': 7,
         },
-        'astra_file': {
+        'admin_log': {
+            'level': 'DEBUG',
+            'formatter': 'simple',
+            'class': 'permissions_logging.TimedRotatingFileHandler',
+            'filename': '{{ base_dir }}/logs/admin.log',
+            'permissions': 0o664,
+            'when': 'midnight',
+            'interval': 1,
+            'backupCount': 7,
+        },
+        'astra_log': {
             'level': 'DEBUG',
             'formatter': 'simple',
             'class': 'permissions_logging.TimedRotatingFileHandler',
@@ -95,7 +105,7 @@ LOGGING = {
             'interval': 1,
             'backupCount': 7,
         },
-        'groups_file': {
+        'groups_log': {
             'level': 'DEBUG',
             'formatter': 'simple',
             'class': 'permissions_logging.TimedRotatingFileHandler',
@@ -105,7 +115,7 @@ LOGGING = {
             'interval': 1,
             'backupCount': 7,
         },
-        'canvas_users': {
+        'canvas_users_log': {
             'level': 'DEBUG',
             'formatter': 'simple',
             'class': 'permissions_logging.TimedRotatingFileHandler',
@@ -115,7 +125,27 @@ LOGGING = {
             'interval': 1,
             'backupCount': 7
         },
-        'sis_provisioner_file': {
+        'grading_standard_log': {
+            'level': 'DEBUG',
+            'formatter': 'simple',
+            'class': 'permissions_logging.TimedRotatingFileHandler',
+            'filename': '{{ base_dir }}/logs/grading_standard.log',
+            'permissions': 0o664,
+            'when': 'midnight',
+            'interval': 1,
+            'backupCount': 7
+        },
+        'course_roster_log': {
+            'level': 'DEBUG',
+            'formatter': 'simple',
+            'class': 'permissions_logging.TimedRotatingFileHandler',
+            'filename': '{{ base_dir }}/logs/course_roster.log',
+            'permissions': 0o664,
+            'when': 'midnight',
+            'interval': 1,
+            'backupCount': 7
+        },
+        'sis_provisioner_log': {
             'level': 'DEBUG',
             'formatter': 'simple',
             'class': 'permissions_logging.TimedRotatingFileHandler',
@@ -158,25 +188,38 @@ LOGGING = {
             'propagate': True,
         },
         'sis_provisioner': {
-            'handlers': ['sis_provisioner_file'],
+            'handlers': ['sis_provisioner_log'],
             'level': 'DEBUG',
         },
         'sis_provisioner.events': {
-            'handlers': ['event_file'],
+            'handlers': ['event_log'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'sis_provisioner.views': {
+            'handlers': ['admin_log'],
             'level': 'DEBUG',
             'propagate': False,
         },
         'sis_provisioner.dao.astra': {
-            'handlers': ['astra_file'],
+            'handlers': ['astra_log'],
             'level': 'DEBUG',
             'propagate': False,
         },
         'groups': {
-            'handlers': ['groups_file'],
+            'handlers': ['groups_log'],
             'level': 'DEBUG',
         },
         'canvas_users': {
-            'handlers': ['canvas_users'],
+            'handlers': ['canvas_users_log'],
+            'level': 'DEBUG',
+        },
+        'grading_standard': {
+            'handlers': ['grading_standard_log'],
+            'level': 'DEBUG',
+        },
+        'course_roster': {
+            'handlers': ['course_roster_log'],
             'level': 'DEBUG',
         },
         'blti.performance': {
