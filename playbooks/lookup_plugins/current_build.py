@@ -25,8 +25,14 @@ To use:
 class LookupModule(LookupBase):
 
     def run(self, values, **kwargs):
+        print "values: %s" % values
         build_name = values[0]
-        action = values[1]
+        print "build_name: %s" % build_name
+        try:
+            action = values[1]
+        except:
+            action = "except"
+        print "action: %s" % action
 
         conn = sqlite3.connect('builds.db')
         c = conn.cursor()
