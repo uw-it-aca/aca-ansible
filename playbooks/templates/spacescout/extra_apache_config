@@ -7,6 +7,11 @@ WSGIPassAuthorization On
 # SetOutputFilter DEFLATE
 # AddOutputFilterByType DEFLATE text/html text/plain text/css application/x-javascript application/javascript
 
+# Rewrite requests except /api, /oauth, and /PubCookie.reply to scout
+RedirectMatch permanent ^\/bothell https://scout.uw.edu/bothell/
+RedirectMatch permanent ^\/tacoma https://scout.uw.edu/tacoma/
+RedirectMatch permanent ^\/(?!api|oauth|PubCookie[.]reply) https://scout.uw.edu/
+
 # This should be considered temporary, until we have an actual admin/manager app
 <IfModule mod_pubcookie.c>
     <Location /django_admin>
