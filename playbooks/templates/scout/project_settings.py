@@ -208,6 +208,13 @@ LOGGING = {
             'filename': '{{ base_dir }}/logs/scout-%Y-%m-%d.log',
             'formatters': 'standard',
         },
+        'file_manager': {
+            'level': 'WARNING',
+            'class': 'permissions_logging.DateNameFileHandler',
+            'permissions': 0o664,
+            'filename': '{{ base_dir }}/logs/scout-manager-%Y-%m-%d.log',
+            'formatters': 'standard',
+        },
         'null': {
             'class': 'logging.NullHandler',
         },
@@ -221,6 +228,11 @@ LOGGING = {
         'django.request': {
             'handlers': ['mail_admins', 'file'],
             'level': 'WARNING',
+            'propagate': True,
+        },
+        'scout_manager': {
+            'handlers': ['file_manager'],
+            'level': 'INFO',
             'propagate': True,
         },
     }
