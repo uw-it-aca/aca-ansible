@@ -57,9 +57,6 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'standard',
         },
-        'null': {
-            'class': 'logging.NullHandler',
-        },
         'spacescout_file': {
             'level': 'WARNING',
             'class': 'permissions_logging.DateNameFileHandler',
