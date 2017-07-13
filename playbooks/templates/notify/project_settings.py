@@ -90,7 +90,9 @@ AWS_SQS = {
 SUPPORT_EMAIL = '{{ support_email }}'
 SENDER_ADDRESS = '{{ sender_address }}'
 
+{% if google_analytics_key|default(None) %}
 GOOGLE_ANALYTICS_KEY = '{{ google_analytics_key }}'
+{% endif %}
 
 UI_SYSTEM_MESSAGE = None
 
