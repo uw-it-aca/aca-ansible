@@ -71,6 +71,22 @@ USERSERVICE_ADMIN_GROUP = '{{ support_group }}'
 RESTCLIENTS_ADMIN_GROUP = USERSERVICE_ADMIN_GROUP
 RESTCLIENTS_DAO_CACHE_CLASS='notify.cache_implementation.UICache'
 
+AWS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'
+AWS_SQS = {
+    'ENROLLMENT_V2': {
+        'TOPIC_ARN': '{{ event_enrollment_v2_topic_arn }}',
+        'QUEUE': '{{ event_enrollment_v2_sqs_queue }}',
+        'KEY_ID': '{{ event_enrollment_v2_key_id }}',
+        'KEY': '{{ event_enrollment_v2_secret_key }}',
+        'VISIBILITY_TIMEOUT': 60,
+        'MESSAGE_GATHER_SIZE': {{ event_enrollment_v2_sqs_gather }},
+        'VALIDATE_SNS_SIGNATURE': True,
+        'VALIDATE_MSG_SIGNATURE': True,
+        'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
+        'PAYLOAD_SETTINGS': {}
+    },
+}
+
 SUPPORT_EMAIL = '{{ support_email }}'
 SENDER_ADDRESS = '{{ sender_address }}'
 
