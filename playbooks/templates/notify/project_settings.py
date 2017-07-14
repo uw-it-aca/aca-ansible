@@ -23,45 +23,73 @@ LOGGING = {
         }
     },
     'formatters': {
-        'formatter': {
-            'format': '%(levelname)-4s %(asctime)s %(message)s [%(name)s] PID:%(process)d',
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(asctime)s %(levelname)s %(message)s'
         },
     },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
+            'class': 'django.utils.log.AdminEmailHandler',
         },
-        'console':{
+        'console': {
             'level': 'ERROR',
             'class': 'logging.StreamHandler',
-            'formatter': 'formatter'
+            'formatter': 'simple',
         },
-        'nws_file_log': {
+        'event_log': {
             'level': 'DEBUG',
-            'class': 'logging.handlers.WatchedFileHandler',
-            'filename': '/data/notify/logs/nws.log',
-            'formatter': 'formatter',
+            'formatter': 'simple',
+            'class': 'permissions_logging.TimedRotatingFileHandler',
+            'filename': '{{ base_dir }}/logs/events.log',
+            'permissions': 0o664,
+            'when': 'midnight',
+            'interval': 1,
+            'backupCount': 7,
         },
-        'ui_file_log': {
+        'ui_log': {
             'level': 'INFO',
-            'class': 'logging.handlers.WatchedFileHandler',
-            'filename': '/data/notify/logs/ui.log',
-            'formatter': 'formatter',
+            'formatter': 'simple',
+            'class': 'permissions_logging.TimedRotatingFileHandler',
+            'filename': '{{ base_dir }}/logs/ui.log',
+            'permissions': 0o664,
+            'when': 'midnight',
+            'interval': 1,
+            'backupCount': 7,
+        },
+        'null': {
+            'class': 'logging.NullHandler',
         },
     },
     'loggers': {
-        'nws': {
-            'handlers': ['nws_file_log'],
+        'django.security.DisallowedHost': {
+            'handlers': ['null'],
+            'propagate': False,
+        },
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'notify': {
+            'handlers': ['ui_log'],
             'level': 'DEBUG',
             'propagate': True,
         },
-        'ui': {
-            'handlers': ['ui_file_log'],
+        'notify.events': {
+            'handlers': ['event_log'],
             'level': 'DEBUG',
-            'propagate': True,
+            'propagate': False,
         },
+        '': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'propagate': True,
+        }
     }
 }
 
