@@ -115,6 +115,12 @@ AWS_SQS = {
     },
 }
 
+EMAIL_BACKEND = '{{ email_backend }}'
+EMAIL_HOST = '{{ email_host }}'
+{% if safe_email_recipient|default(None) %}
+SAFE_EMAIL_RECIPIENT = '{{ safe_email_recipient }}'
+{% endif %}
+
 SUPPORT_EMAIL = '{{ support_email }}'
 SENDER_ADDRESS = '{{ sender_address }}'
 
