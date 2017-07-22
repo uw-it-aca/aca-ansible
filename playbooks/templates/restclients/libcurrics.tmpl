@@ -1,2 +1,4 @@
 RESTCLIENTS_LIBCURRICS_DAO_CLASS = 'Live'
 RESTCLIENTS_LIBCURRICS_HOST = 'https://currics.lib.washington.edu'
+RESTCLIENTS_LIBCURRICS_TIMEOUT={{ libcurrics_socket_timeout|default(5) }}
+RESTCLIENTS_LIBCURRICS_POOL_SIZE={{ libcurrics_max_pool_size|default(10) }}

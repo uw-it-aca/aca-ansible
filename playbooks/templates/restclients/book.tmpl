@@ -1,2 +1,4 @@
-RESTCLIENTS_BOOK_DAO_CLASS = 'restclients.dao_implementation.book.Live'
+RESTCLIENTS_BOOK_DAO_CLASS = 'Live'
 RESTCLIENTS_BOOKSTORE_HOST = 'http://www3.bookstore.washington.edu'
+RESTCLIENTS_BOOK_TIMEOUT={{ book_socket_timeout|default(5) }}
+RESTCLIENTS_BOOK_POOL_SIZE={{ book_max_pool_size|default(10) }}
