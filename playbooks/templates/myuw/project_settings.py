@@ -3,8 +3,8 @@ TIME_ZONE = 'America/Los_Angeles'
 
 INSTALLED_APPS += [
     'authz_group',
-    'restclients',
     'templatetag_handlebars',
+    'rc_django',
     'userservice',
     'django_mobileesp',
     'supporttools',

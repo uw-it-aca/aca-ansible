@@ -1,0 +1,7 @@
+RESTCLIENTS_MAILMAN_DAO_CLASS = 'Live'
+RESTCLIENTS_MAILMAN_HOST = '{% if "mailman" in restclients.production|default(False) %}mailman1.u.washington.edu{% else %}mailmandev1.u.washington.edu{% endif %}'
+RESTCLIENTS_MAILMAN_KEY = '{{ mailman_key}}'
+RESTCLIENTS_MAILMAN_TIMEOUT = {{ mailman_socket_timeout|default(5) }}
+RESTCLIENTS_MAILMAN_POOL_SIZE = {{ mailman_max_pool_size|default(5) }}
+MAILMAN_COURSEREQUEST_RECIPIENT = '{{ mailman_recipient }}'
+EMAIL_USE_TLS = False

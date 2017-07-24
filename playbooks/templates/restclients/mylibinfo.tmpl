@@ -2,3 +2,5 @@ RESTCLIENTS_LIBRARIES_DAO_CLASS = 'Live'
 RESTCLIENTS_LIBRARIES_HOST = 'https://mylibinfo.lib.washington.edu:443'
 RESTCLIENTS_LIBRARIES_CERT_FILE='{% if webservice_client_cert_path|default(None) %}{{ webservice_client_cert_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_cert_name }}{% endif %}'
 RESTCLIENTS_LIBRARIES_KEY_FILE='{% if webservice_client_key_path|default(None) %}{{ webservice_client_key_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_key_name }}{% endif %}'
+RESTCLIENTS_LIBRARIES_TIMEOUT={{ libraries_socket_timeout|default(5) }}
+RESTCLIENTS_LIBRARIES_POOL_SIZE={{ libraries_max_pool_size|default(10) }}

@@ -1,2 +1,4 @@
 RESTCLIENTS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'
-RESTCLIENTS_CALENDAR_DAO_CLASS='restclients.dao_implementation.trumba.CalendarLive'
+RESTCLIENTS_CALENDAR_DAO_CLASS='CalendarLive'
+RESTCLIENTS_CALENDAR_SOCKET_TIMEOUT={{ calendar_socket_timeout|default(5) }}
+RESTCLIENTS_CALENDAR_MAX_POOL_SIZE={{ calendar_max_pool_size|default(10) }}
