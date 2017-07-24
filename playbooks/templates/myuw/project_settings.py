@@ -155,5 +155,6 @@ MYUW_MANDATORY_SWITCH_PATH = "{{ myuw_fyp_list_path }}"
 MYUW_OPTIN_SWITCH_PATH = "{{ myuw_optin_list_path }}"
 {% endif %}
 
-
 SERU_LIST = "{{ myuw_seru_path }}"
+
+MYUW_ADMIN_GROUP = '{{ myuw_admin_group }}'
