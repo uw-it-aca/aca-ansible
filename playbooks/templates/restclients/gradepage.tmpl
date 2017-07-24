@@ -1,0 +1,5 @@
+RESTCLIENTS_GRADEPAGE_DAO_CLASS='Live'
+RESTCLIENTS_GRADEPAGE_HOST='{% if "gradepage" in restclients.production|default(False) %}https://gradepage.uw.edu{% else %}https://gradepage-test.s.uw.edu{% endif %}'
+{% endif %}
+RESTCLIENTS_GRADEPAGE_TIMEOUT={{ gradepage_timeout|default(5) }}
+RESTCLIENTS_GRADEPAGE_POOL_SIZE={{ gradepage_max_pool_size|default(5) }}
