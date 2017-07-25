@@ -3,8 +3,8 @@ TIME_ZONE = 'America/Los_Angeles'
 
 INSTALLED_APPS += (
     'south',
-    'restclients',
     'templatetag_handlebars',
+    'rc_django',
     'myuw_mobile',
     'userservice',
     'supporttools',
@@ -128,7 +128,7 @@ from django_mobileesp.detector import agent
 
 MIDDLEWARE_CLASSES += (
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
-    'restclients.middleware.EnableServiceDegradationMiddleware',
+    'rc_django.middleware.EnableServiceDegradationMiddleware',
 )
 
 DETECT_USER_AGENTS = {
@@ -137,4 +137,6 @@ DETECT_USER_AGENTS = {
 }
 
 GOOGLE_ANALYTICS_KEY = "{{ ga_tracker_key }}"
+GOOGLE_SEARCH_KEY = '{{ gcse_key }}'
 
+SERU_LIST = "{{ myuw_seru_path }}"

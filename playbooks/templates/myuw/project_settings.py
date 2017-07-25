@@ -98,6 +98,11 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
+        'myuw.util.performance': {
+            'handlers': ['performance_log'],
+            'level': 'INFO',
+            'propagate': False,
+        },
         'myuw': {
             'handlers': ['myuw'],
             'level': 'INFO',

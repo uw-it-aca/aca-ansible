@@ -17,4 +17,5 @@
 
    - name: Add readme file
      copy: src="templates/build_dir_readme" dest="{{ parent_dir }}/README" group="{{ file_group }}" mode="0664"
+     ignore_errors: yes
 

@@ -2,3 +2,5 @@
     - include: purge_builds.yml parent_dir={{ base_dir }}/builds
     # Clean up the static
     - include: purge_builds.yml parent_dir={{ base_dir }}/static
+    # Clean up compiled templates
+    - include: purge_builds.yml parent_dir={{ base_dir }}/compiled_templates
