@@ -158,3 +158,4 @@ MYUW_OPTIN_SWITCH_PATH = "{{ myuw_optin_list_path }}"
 SERU_LIST = "{{ myuw_seru_path }}"
 
 MYUW_ADMIN_GROUP = '{{ myuw_admin_group }}'
+MYUW_ENABLED_FEATURES = {{ myuw_enabled_features }}
