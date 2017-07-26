@@ -41,6 +41,13 @@ LOGGING = {
             'permissions': 0o664,
             'formatter': 'myuw',
         },
+        'pref': {
+            'level': 'INFO',
+            'class': 'permissions_logging.DateNameFileHandler',
+            'filename': '{{ base_dir }}/logs/pref-%Y-%m-%d',
+            'permissions': 0o664,
+            'formatter': 'myuw',
+        },
         'card': {
             'level': 'INFO',
             'class': 'permissions_logging.DateNameFileHandler',
@@ -98,10 +105,10 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
-        'myuw.util.performance': {
-            'handlers': ['performance_log'],
+        'myuw.views.choose': {
+            'handlers': ['pref'],
             'level': 'INFO',
-            'propagate': False,
+            'propagate': True,
         },
         'myuw': {
             'handlers': ['myuw'],
