@@ -88,15 +88,15 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-        'restclients.dao': {
+        'restclients_core.dao': {
             'handlers': ['restclients_timing_log'],
             'level': 'INFO',
             'propagate': False,
         },
-        'restclients': {
-            'handlers': ['myuw'],
+        'myuw.util.performance': {
+            'handlers': ['performance_log'],
             'level': 'INFO',
-            'propagate': True,
+            'propagate': False,
         },
         'myuw.util.performance': {
             'handlers': ['performance_log'],
@@ -135,8 +135,6 @@ AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroup
 RESTCLIENTS_MEMCACHED_SERVERS = {{ restclients_memcached_servers|default("''")}}
 
 RESTCLIENTS_DEFAULT_TIMEOUT = 3
-RESTCLIENTS_CANVAS_SOCKET_TIMEOUT = 3
-
 
 SUPPORTTOOLS_PARENT_APP = "MyUW"
 SUPPORTTOOLS_PARENT_APP_URL = "/"
@@ -145,7 +143,7 @@ from django_mobileesp.detector import mobileesp_agent as agent
 
 MIDDLEWARE_CLASSES += [
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
-    'restclients.middleware.EnableServiceDegradationMiddleware',
+    'rc_django.middleware.EnableServiceDegradationMiddleware',
 ]
 
 DETECT_USER_AGENTS = {
@@ -162,5 +160,7 @@ MYUW_MANDATORY_SWITCH_PATH = "{{ myuw_fyp_list_path }}"
 MYUW_OPTIN_SWITCH_PATH = "{{ myuw_optin_list_path }}"
 {% endif %}
 
-
 SERU_LIST = "{{ myuw_seru_path }}"
+
+MYUW_ADMIN_GROUP = '{{ myuw_admin_group }}'
+MYUW_ENABLED_FEATURES = {{ myuw_enabled_features }}
