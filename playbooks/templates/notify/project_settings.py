@@ -52,7 +52,7 @@ LOGGING = {
             'backupCount': 7,
         },
         'ui_log': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'formatter': 'simple',
             'class': 'permissions_logging.TimedRotatingFileHandler',
             'filename': '{{ base_dir }}/logs/ui.log',
