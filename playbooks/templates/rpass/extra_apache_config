@@ -1,0 +1,5 @@
+<Location /r-pass>
+   AuthType securid
+   require valid-user
+   PubCookieAppID r_pass
+</Location>
