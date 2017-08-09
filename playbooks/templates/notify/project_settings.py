@@ -132,6 +132,10 @@ UI_SYSTEM_MESSAGE = None
 
 SUPPORTTOOLS_PARENT_APP = 'Notify.UW'
 
+INVALID_UUIDS = [
+    '00000000-0000-0000-0000-000000000000'
+]
+
 from django_mobileesp.detector import mobileesp_agent as agent
 DETECT_USER_AGENTS = {
     'is_android': agent.detectAndroid,
