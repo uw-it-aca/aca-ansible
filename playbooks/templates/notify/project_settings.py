@@ -20,14 +20,18 @@ LOGGING = {
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
+        },
+        'add_user': {
+            '()': 'notify.log.UserFilter'
         }
     },
     'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        'ui': {
+            'format': '%(asctime)s %(user)s %(actas)s %(message)s',
+            'datefmt': '[%Y-%m-%d %H:%M:%S]',
         },
         'simple': {
-            'format': '%(asctime)s %(levelname)s %(message)s'
+            'format': '%(levelname)s %(asctime)s %(message)s'
         },
     },
     'handlers': {
@@ -53,7 +57,8 @@ LOGGING = {
         },
         'ui_log': {
             'level': 'DEBUG',
-            'formatter': 'simple',
+            'filters': ['add_user'],
+            'formatter': 'ui',
             'class': 'permissions_logging.TimedRotatingFileHandler',
             'filename': '{{ base_dir }}/logs/ui.log',
             'permissions': 0o664,
