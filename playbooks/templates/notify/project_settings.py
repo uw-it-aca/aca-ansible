@@ -14,6 +14,13 @@ MIDDLEWARE_CLASSES += [
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
 ]
 
+CACHES = {
+    'default' : {
+        'BACKEND' : 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION' : 'notify_sessions'
+    }
+}
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
