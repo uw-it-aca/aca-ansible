@@ -2,11 +2,11 @@
 TIME_ZONE = 'America/Los_Angeles'
 
 INSTALLED_APPS += [
+    'notify.apps.NotifyUIConfig',
     'templatetag_handlebars',
     'supporttools',
     'userservice',
     'authz_group',
-    'notify.apps.NotifyUIConfig',
     'rc_django',
 ]
 
