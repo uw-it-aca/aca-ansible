@@ -157,6 +157,9 @@ TEMPLATES = [
                 {% if include_supporttools|default(False) %}'supporttools.context_processors.supportools_globals',
                 'supporttools.context_processors.has_less_compiled',
                 {% endif %}
+                {% for context_proc in extra_context_processors %}
+                  {{ context_proc }},
+                {% endfor %}
             ],
             'loaders': [
                 {% if debug|default(False) %}
