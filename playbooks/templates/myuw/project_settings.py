@@ -148,6 +148,16 @@ SUPPORTTOOLS_PARENT_APP_URL = "/"
 
 from django_mobileesp.detector import mobileesp_agent as agent
 
+EMAIL_BACKEND = "{{ email_backend }}"
+EMAIL_HOST = "{{ email_host }}"
+EMAIL_PORT = {{ email_port }}
+EMAIL_USE_TLS = {{ email_use_tls }}
+EMAIL_USE_SSL = {{ email_use_ssl }}
+EMAIL_TIMEOUT = {{ email_timeout }}
+{% if safe_email_recipient|default(None) %}
+SAFE_EMAIL_RECIPIENT = '{{ safe_email_recipient }}'
+{% endif %}
+
 MIDDLEWARE_CLASSES += [
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
     'rc_django.middleware.EnableServiceDegradationMiddleware',
