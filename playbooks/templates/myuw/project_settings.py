@@ -110,6 +110,11 @@ LOGGING = {
             'level': 'INFO',
             'propagate': True,
         },
+        'myuw.views.logger': {
+            'handlers': ['link'],
+            'level': 'INFO',
+            'propagate': True,
+        },
         'myuw': {
             'handlers': ['myuw'],
             'level': 'INFO',
@@ -150,6 +155,7 @@ from django_mobileesp.detector import mobileesp_agent as agent
 
 EMAIL_BACKEND = "{{ email_backend }}"
 EMAIL_HOST = "{{ email_host }}"
+EMAIL_PORT = {{ email_port }}
 EMAIL_TIMEOUT = {{ email_timeout }}
 {% if safe_email_recipient|default(None) %}
 SAFE_EMAIL_RECIPIENT = '{{ safe_email_recipient }}'
