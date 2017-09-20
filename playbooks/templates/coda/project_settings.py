@@ -2,6 +2,7 @@
 TIME_ZONE = 'America/Los_Angeles'
 
 INSTALLED_APPS += [
+    'supporttools',
     'authz_group',
     'templatetag_handlebars',
     'userservice',
