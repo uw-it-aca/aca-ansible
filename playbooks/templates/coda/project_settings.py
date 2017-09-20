@@ -2,20 +2,25 @@
 TIME_ZONE = 'America/Los_Angeles'
 
 INSTALLED_APPS += [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django_mobileesp',
     'authz_group',
-    'supporttools',
-    'compressor',
-    'rc_django',
     'templatetag_handlebars',
     'userservice',
+    'django_mobileesp',
     'coursedashboards.apps.CourseDashboardsConfig',
+    'rc_django',
+]
+
+COMPRESS_PRECOMPILERS += (
+    ('text/x-sass', 'pyscss {infile} > {outfile}'),
+    ('text/x-scss', 'pyscss {infile} > {outfile}'),
+)
+
+COMPRESS_CSS_FILTERS = [
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    'compressor.filters.cssmin.CSSMinFilter'
+]
+COMPRESS_JS_FILTERS = [
+    'compressor.filters.jsmin.JSMinFilter',
 ]
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
@@ -104,7 +109,6 @@ LOGGING = {
     }
 }
 
-
 USERSERVICE_VALIDATION_MODULE = "coursedashboards.userservice_validation.validate"
 USERSERVICE_ADMIN_GROUP='{{ userservice_admin_group }}'
 RESTCLIENTS_ADMIN_GROUP='{{ restclients_admin_group }}'
@@ -130,3 +134,9 @@ DETECT_USER_AGENTS = {
 }
 
 CODA_ADMIN_GROUP = '{{ coda_admin_group }}'
+
+EMAIL_BACKEND = '{{ email_backend }}'
+EMAIL_HOST = '{{ email_host }}'
+{% if safe_email_recipient|default(None) %}
+SAFE_EMAIL_RECIPIENT = '{{ safe_email_recipient }}'
+{% endif %}
