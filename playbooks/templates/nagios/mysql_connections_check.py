@@ -18,7 +18,8 @@ p = subprocess.Popen("{{ mysql_path }} -u {{ nagios_mysql_user|default('nagios')
 
 content = ""
 for line in iter(p.stdout.readline, b''):
-    content += line
+    if 'mysql: [Warning]' not in line:
+        content += line
 
 if re.match('.*Access denied for user', content):
     print "Access denied.  Read %s for details" % os.path.realpath(__file__)
@@ -36,7 +37,8 @@ p = subprocess.Popen("{{ mysql_path }} -u {{ nagios_mysql_user|default('nagios')
 
 content = ""
 for line in iter(p.stdout.readline, b''):
-    content += line
+    if 'mysql: [Warning]' not in line:
+        content += line
 
 matches = re.match('.*\nmax_connections\s+([\d]+)', content)
 
