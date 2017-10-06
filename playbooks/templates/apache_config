@@ -20,6 +20,12 @@ WSGIScriptAlias {{ wsgi_url_base|default("/") }} {{ base_dir }}/live/wsgi/django
 {% include 'apache/pubcookie-auth' %}
 {% endif %}
 
+{% if include_apache_test_config|default(false) %}
+{% if extra_apache_test_config|default(None) %}
+{% include extra_apache_test_config %}
+{% endif %}
+{% endif %}
+
 {% if extra_apache_config|default(None) %}
 {% include extra_apache_config %}
 {% endif %}

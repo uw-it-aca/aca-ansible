@@ -1,0 +1,11 @@
+NameVirtualHost *:80
+
+<VirtualHost {{ansible_hostname}}:80>
+     ServerName coda-test.s.uw.edu
+     DocumentRoot /data/coda/www
+</VirtualHost>
+
+<VirtualHost {{ansible_hostname}}:80>
+     ServerName aca-test.s.uw.edu
+     DocumentRoot /data/www
+</VirtualHost>
