@@ -5,10 +5,11 @@ INSTALLED_APPS += (
     'south',
     'templatetag_handlebars',
     'rc_django',
-    'myuw_mobile',
     'userservice',
     'supporttools',
-    'django_client_logger'
+    'django_client_logger',
+    'myuw.apps.MyUWConfig',
+    'blti'
 )
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
