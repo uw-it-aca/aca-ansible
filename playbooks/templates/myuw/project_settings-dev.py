@@ -125,7 +125,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 'supporttools.context_processors.supportools_globals',
 )
 
-from django_mobileesp.detector import agent
+from django_mobileesp.detector import mobileesp_agent as agent
 
 MIDDLEWARE_CLASSES += (
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
