@@ -141,3 +141,12 @@ GOOGLE_ANALYTICS_KEY = "{{ ga_tracker_key }}"
 GOOGLE_SEARCH_KEY = '{{ gcse_key }}'
 
 SERU_LIST = "{{ myuw_seru_path }}"
+
+BLTI_AES_KEY = b'{{ blti_aes_key }}'
+BLTI_AES_IV = b'{{ blti_aes_iv }}'
+
+LTI_CONSUMERS = {
+{% for consumer in lti_consumers|default([]) %}
+    '{{ consumer.key }}': '{{ consumer.secret }}',
+{% endfor %}
+}
