@@ -138,7 +138,9 @@ LOGGING = {
     }
 }
 
-USERSERVICE_VALIDATION_MODULE = "myuw_mobile.userservice_validation.validate"
+RESTCLIENTS_MEMCACHED_SERVERS = {{ restclients_memcached_servers|default("''")}}
+
+USERSERVICE_VALIDATION_MODULE = "myuw.userservice_validation.validate"
 USERSERVICE_ADMIN_GROUP='{{ userservice_admin_group }}'
 RESTCLIENTS_ADMIN_GROUP='{{ restclients_admin_group }}'
 RESTCLIENTS_DAO_CACHE_CLASS='{{restclients_dao_cache_class}}'
