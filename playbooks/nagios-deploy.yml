@@ -1,11 +1,13 @@
-- name: Deploy nagios services to the target hosts
-  hosts: all
-
+- hosts: all
   vars:
-    build_name: "{{ inventory_file }}"
-    current_build_value: "{{ lookup('current_build', build_name) }}"
     files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
     acting_user: "{{ lookup('env', 'USER') }}"
-
   tasks:
     - include: includes/nagios_registration.yml
+
+- hosts: mysql-db-server
+  vars:
+    files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
+    acting_user: "{{ lookup('env', 'USER') }}"
+  tasks:
+    - include: includes/nagios_registration_mysql.yml
