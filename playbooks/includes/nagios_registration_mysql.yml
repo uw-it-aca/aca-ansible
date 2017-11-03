@@ -1,15 +1,15 @@
 - set_fact:
     mysql_password: "{{ lookup('nagios_mysql_password', inventory_file, groups, nagios_mysql_user_password_seed) }}"
     nagios_base_dir: "/data/DB/tmp"
-    nagios_tmp_dir: "{{ nagios_base_dir }}/nagios_{{ acting_user }}"
+    nagios_tmp_dir: "/data/DB/tmp/nagios_{{ acting_user }}"
 
 - name: Create base_dir
-  file: state="directory" path="{{ base_dir }}" mode="2775" group="{{ file_group }}"
+  file: state="directory" path="{{ nagios_base_dir }}" mode="2775" group="{{ file_group }}"
 
 - name: Create tmp directory for nagios files
   file: state="directory" path="{{ nagios_tmp_dir }}" mode="700"
 
-- name: Create tmp directory for nagios scripts
+- name: Create tmp directory for nagios mysql scripts
   file: state="directory" path="{{ nagios_tmp_dir }}/scripts" mode="700"
 
 - name: Create the scp wrapper to add content to the acamon account
