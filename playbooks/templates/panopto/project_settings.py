@@ -6,12 +6,12 @@ INSTALLED_APPS += (
     'templatetag_handlebars',
     'handlebars_i18n',
     'supporttools',
-    'restclients',
     'userservice',
     'authz_group',
-    'scheduler',
+    'scheduler.apps.SchedulerConfig',
     'personal_folder',
     'blti',
+    'rc_django',
 )
 
 middleware = list(MIDDLEWARE_CLASSES)

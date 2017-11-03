@@ -1,5 +1,5 @@
 - set_fact:
-  nagios_tmp_dir: "{{ base_dir }}/nagios_{{ acting_user }}"
+    nagios_tmp_dir: "{{ base_dir }}/nagios_{{ acting_user }}"
 
 - name: Create tmp directory for nagios files
   file: state="directory" path="{{ nagios_tmp_dir }}" mode="700"
