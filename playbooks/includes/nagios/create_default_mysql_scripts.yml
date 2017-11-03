@@ -1,15 +1,13 @@
-- name: Create nagios script mysql_connections_check.py
+- name: Create default nagios mysql scripts
   template: src="templates/nagios/mysql_connections_check.py" dest="{{ nagios_tmp_dir }}/scripts/mysql_connections_check.py" mode="750"
+
+- template: src="templates/nagios/mysql_open_files.py" dest="{{ nagios_tmp_dir }}/scripts/mysql_open_files.py" mode="750"
+- template: src="templates/nagios/mysql_master_check.py" dest="{{ nagios_tmp_dir }}/scripts/mysql_master_check.py" mode="750"
+- template: src="templates/nagios/mysql_slave_check.py" dest="{{ nagios_tmp_dir }}/scripts/mysql_slave_check.py" mode="750"
+
+- name: Copy nagios mysql scripts to monitor user
   command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/mysql_connections_check.py nagios"
 
-- name: Create nagios script mysql_open_files.py
-  template: src="templates/nagios/mysql_open_files.py" dest="{{ nagios_tmp_dir }}/scripts/mysql_open_files.py" mode="750"
-  command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/mysql_open_files.py nagios"
-
-- name: Create nagios script mysql_master_check.py
-  template: src="templates/nagios/mysql_master_check.py" dest="{{ nagios_tmp_dir }}/scripts/mysql_master_check.py" mode="750"
-  command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/mysql_master_check.py nagios"
-
-- name: Create nagios script mysql_slave_check.py
-  template: src="templates/nagios/mysql_slave_check.py" dest="{{ nagios_tmp_dir }}/scripts/mysql_slave_check.py" mode="750"
-  command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/mysql_slave_check.py nagios"
+- command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/mysql_open_files.py nagios"
+- command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/mysql_master_check.py nagios"
+- command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/mysql_slave_check.py nagios"

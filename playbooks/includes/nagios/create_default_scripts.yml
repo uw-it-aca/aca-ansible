@@ -1,19 +1,14 @@
-- name: Create nagios script disk_check.py
+- name: Create default nagios scripts
   template: src="templates/nagios/disk_check.py" dest="{{ nagios_tmp_dir }}/scripts/disk_check.py" mode="750"
+- template: src="templates/nagios/inode_check.py" dest="{{ nagios_tmp_dir }}/scripts/inode_check.py" mode="750"
+- template: src="templates/nagios/load_check.py" dest="{{ nagios_tmp_dir }}/scripts/load_check.py" mode="750"
+- template: src="templates/nagios/cpu_idle_check.py" dest="{{ nagios_tmp_dir }}/scripts/cpu_idle_check.py" mode="750"
+- template: src="templates/nagios/process_check.py" dest="{{ nagios_tmp_dir }}/scripts/process_check.py" mode="750"
+
+- name: Copy nagios scripts to monitor user
   command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/disk_check.py nagios"
 
-- name: Create nagios script inode_check.py
-  template: src="templates/nagios/inode_check.py" dest="{{ nagios_tmp_dir }}/scripts/inode_check.py" mode="750"
-  command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/inode_check.py nagios"
-
-- name: Create nagios script load_check.py
-  template: src="templates/nagios/load_check.py" dest="{{ nagios_tmp_dir }}/scripts/load_check.py" mode="750"
-  command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/load_check.py nagios"
-
-- name: Create nagios script cpu_idle_check.py
-  template: src="templates/nagios/cpu_idle_check.py" dest="{{ nagios_tmp_dir }}/scripts/cpu_idle_check.py" mode="750"
-  command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/cpu_idle_check.py nagios"
-
-- name: Create nagios script process_check.py
-  template: src="templates/nagios/process_check.py" dest="{{ nagios_tmp_dir }}/scripts/process_check.py" mode="750"
-  command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/process_check.py nagios"
+- command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/inode_check.py nagios"
+- command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/load_check.py nagios"
+- command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/cpu_idle_check.py nagios"
+- command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/process_check.py nagios"
