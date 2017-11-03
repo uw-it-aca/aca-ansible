@@ -12,6 +12,7 @@ class LookupModule(LookupBase):
         inventory = values[3]
         groups = values[4]
         contacts = values[5]
+        monitored_processes = values[6]
         group = re.match('.*/(.*)', inventory).group(1)
         hosts = groups[group]
 
@@ -49,7 +50,7 @@ class LookupModule(LookupBase):
                            headers={"Content-Type": "application/json"})
 
             # Create services
-            # active-service is defined in templates/aca-monitor/nagios/common_configuration.cfg 
+            # active-service is defined in templates/aca-monitor/nagios/common_configuration.cfg
             # Disk check - values are defined in the ansible variable monitored_disk_partitions
             value = client.request("%s/api/v1/service" % (nagios_server),
                            method='POST',
@@ -82,6 +83,16 @@ class LookupModule(LookupBase):
                                             "check_command": "check_acamon_remote!cpu_idle_check.py"}),
                            headers={"Content-Type": "application/json"})
 
+            # process checks - values are defined in the ansible variable monitored_processes
+            for process in monitored_processes:
+                value = client.request("%s/api/v1/service" % (nagios_server),
+                    method='POST',
+                    body=json.dumps({
+                        "base_service": "active-service",
+                        "description": "Process Check (%s)" % process,
+                        "check_command": "check_acamon_remote!process_check.py!%s" % process}),
+                    headers={"Content-Type": "application/json"})
+
 
             # Create disk service group
             value = client.request("%s/api/v1/servicegroup" % (nagios_server),
@@ -89,9 +100,16 @@ class LookupModule(LookupBase):
                            body=json.dumps({"name": "Disk Services", "alias": "Disk Services"}),
                            headers={"Content-Type": "application/json"})
 
+            # Create cpu service group
             value = client.request("%s/api/v1/servicegroup" % (nagios_server),
                            method='POST',
                            body=json.dumps({"name": "CPU Services", "alias": "CPU Services"}),
+                           headers={"Content-Type": "application/json"})
+
+            # Create the process group
+            value = client.request("%s/api/v1/servicegroup" % (nagios_server),
+                           method='POST',
+                           body=json.dumps({"name": "Process Services", "alias": "Process Services"}),
                            headers={"Content-Type": "application/json"})
 
             # Add the services to their groups
@@ -114,6 +132,13 @@ class LookupModule(LookupBase):
                                    method='PATCH',
                                    body=json.dumps({"group": "CPU Services", "service": "Load Average Check"}),
                                    headers={"Content-Type": "application/json"})
+
+            for process in monitored_processes:
+                value = client.request("%s/api/v1/servicegroup" % (nagios_server),
+                    method='PATCH',
+                    body=json.dumps({"group": "Process Services", "service": "Process Check (%s)" % process}),
+                    headers={"Content-Type": "application/json"})
+
 
             # Create each hosts
             for host in hosts:
@@ -155,6 +180,14 @@ class LookupModule(LookupBase):
                                body=json.dumps({"service": "CPU Idle Check",
                                                 "host": host}),
                                headers={"Content-Type": "application/json"})
+
+                # Add the process checks to this host
+                for process in monitored_processes:
+                    client.request("%s/api/v1/service" % (nagios_server),
+                        method='PATCH',
+                        body=json.dumps({"service": "Process Check (%s)" % process,
+                                         "host": host}),
+                        headers={"Content-Type": "application/json"})
 
             # Deploy the updated nagios configuration
             value = client.request("%s/api/v1/deploy" % (nagios_server), method="POST")

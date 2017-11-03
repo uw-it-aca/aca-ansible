@@ -1,39 +1,26 @@
-- name: tmp directory for nagios files
-  file: state="directory" path="{{ base_dir }}/nagios_{{ acting_user}}" mode="700"
+- set_fact:
+  nagios_tmp_dir: "{{ base_dir }}/nagios_{{ acting_user }}"
 
-- name: tmp directory for nagios scripts
-  file: state="directory" path="{{ base_dir }}/nagios_{{ acting_user}}/scripts" mode="700"
+- name: Create tmp directory for nagios files
+  file: state="directory" path="{{ nagios_tmp_dir }}" mode="700"
 
-- name: create the scp wrapper to add content to the acamon account
-  template: src="templates/nagios/nagios_scp" dest="{{ base_dir }}/nagios_{{ acting_user }}/nagios_scp" mode="700"
+- name: Create tmp directory for nagios scripts
+  file: state="directory" path="{{ nagios_tmp_dir }}/scripts" mode="700"
 
-- name: create the script to add the public key to the acamon account
-  template: src="templates/nagios/add_public_key" dest="{{ base_dir }}/nagios_{{ acting_user }}/add_public_key" mode="700"
+- name: Create the scp wrapper to add content to the acamon account
+  template: src="templates/nagios/nagios_scp" dest="{{ nagios_tmp_dir }}/nagios_scp" mode="700"
 
-- name: set the authorized key for acamon
-  command: "{{ base_dir }}/nagios_{{ acting_user }}/add_public_key"
+- name: Create the script to add the public key to the acamon account
+  template: src="templates/nagios/add_public_key" dest="{{ nagios_tmp_dir }}/add_public_key" mode="700"
 
-- name: generating nagios test scripts for host
-  template: src="templates/nagios/disk_check.py" dest="{{ base_dir }}/nagios_{{ acting_user }}/scripts/disk_check.py" mode="750"
+- name: Set the authorized key for acamon
+  command: "{{ nagios_tmp_dir }}/add_public_key"
 
-- template: src="templates/nagios/inode_check.py" dest="{{ base_dir }}/nagios_{{ acting_user }}/scripts/inode_check.py" mode="750"
-- template: src="templates/nagios/load_check.py" dest="{{ base_dir }}/nagios_{{ acting_user }}/scripts/load_check.py" mode="750"
-- template: src="templates/nagios/cpu_idle_check.py" dest="{{ base_dir }}/nagios_{{ acting_user }}/scripts/cpu_idle_check.py" mode="750"
+- include: includes/nagios/create_default_scripts.yml
 
-- command: "{{ base_dir }}/nagios_{{ acting_user }}/nagios_scp {{ base_dir }}/nagios_{{ acting_user }}/scripts/disk_check.py nagios"
-- command: "{{ base_dir }}/nagios_{{ acting_user }}/nagios_scp {{ base_dir }}/nagios_{{ acting_user }}/scripts/inode_check.py nagios"
-- command: "{{ base_dir }}/nagios_{{ acting_user }}/nagios_scp {{ base_dir }}/nagios_{{ acting_user }}/scripts/load_check.py nagios"
-- command: "{{ base_dir }}/nagios_{{ acting_user }}/nagios_scp {{ base_dir }}/nagios_{{ acting_user }}/scripts/cpu_idle_check.py nagios"
-
-- file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/nagios_scp"
-- file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/add_public_key"
-- file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/scripts/disk_check.py"
-- file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/scripts/inode_check.py"
-- file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/scripts/load_check.py"
-- file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/scripts/cpu_idle_check.py"
-- file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}/scripts"
-- file: state="absent" path="{{ base_dir}}/nagios_{{acting_user}}"
+- name: Remove nagios tmp directory
+  file: state="absent" path="{{ nagios_tmp_dir}}"
 
 - set_fact:
-    nagios_result: "{{ lookup('nagios_register', nagios_registration_oauth_key, nagios_registration_oauth_secret, nagios_registration_server, inventory_file, groups, nagios_contacts) }}"
+    nagios_result: "{{ lookup('nagios_register', nagios_registration_oauth_key, nagios_registration_oauth_secret, nagios_registration_server, inventory_file, groups, nagios_contacts, monitored_processes) }}"
 - debug: msg="{{ nagios_result }}"

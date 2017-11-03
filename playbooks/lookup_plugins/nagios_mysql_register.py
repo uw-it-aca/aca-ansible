@@ -13,7 +13,7 @@ class LookupModule(LookupBase):
         inventory = values[3]
         groups = values[4]
         contacts = values[5]
-
+        monitored_processes = values[6]
         group = re.match('.*/(.*)', inventory).group(1)
         hosts = groups["mysql-db-server"]
 
@@ -61,6 +61,16 @@ class LookupModule(LookupBase):
                                             "check_command": "check_acamon_remote!cpu_idle_check.py"}),
                            headers={"Content-Type": "application/json"})
 
+            # process checks - values are defined in the ansible variable monitored_processes
+            for process in monitored_processes:
+                value = client.request("%s/api/v1/service" % (nagios_server),
+                    method='POST',
+                    body=json.dumps({
+                        "base_service": "active-service",
+                        "description": "Process Check (%s)" % process,
+                        "check_command": "check_acamon_remote!process_check.py!%s" % process}),
+                    headers={"Content-Type": "application/json"})
+
             # mysql sql connections check
             value = client.request("%s/api/v1/service" % (nagios_server),
                            method='POST',
@@ -105,6 +115,12 @@ class LookupModule(LookupBase):
                            body=json.dumps({"name": "CPU Services", "alias": "CPU Services"}),
                            headers={"Content-Type": "application/json"})
 
+            # Create the process group
+            value = client.request("%s/api/v1/servicegroup" % (nagios_server),
+                           method='POST',
+                           body=json.dumps({"name": "Process Services", "alias": "Process Services"}),
+                           headers={"Content-Type": "application/json"})
+
             # Create the mysql db service group
             value = client.request("%s/api/v1/servicegroup" % (nagios_server),
                            method='POST',
@@ -131,6 +147,12 @@ class LookupModule(LookupBase):
                                    method='PATCH',
                                    body=json.dumps({"group": "CPU Services", "service": "Load Average Check"}),
                                    headers={"Content-Type": "application/json"})
+
+            for process in monitored_processes:
+                value = client.request("%s/api/v1/servicegroup" % (nagios_server),
+                    method='PATCH',
+                    body=json.dumps({"group": "Process Services", "service": "Process Check (%s)" % process}),
+                    headers={"Content-Type": "application/json"})
 
             value = client.request("%s/api/v1/servicegroup" % (nagios_server),
                                    method='PATCH',
@@ -192,6 +214,14 @@ class LookupModule(LookupBase):
                                body=json.dumps({"service": "CPU Idle Check",
                                                 "host": host}),
                                headers={"Content-Type": "application/json"})
+
+                # Add the process checks to this host
+                for process in monitored_processes:
+                    client.request("%s/api/v1/service" % (nagios_server),
+                        method='PATCH',
+                        body=json.dumps({"service": "Process Check (%s)" % process,
+                                         "host": host}),
+                        headers={"Content-Type": "application/json"})
 
                 # Add the connections check to this host
                 client.request("%s/api/v1/service" % (nagios_server),

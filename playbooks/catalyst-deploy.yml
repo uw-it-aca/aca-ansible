@@ -1,4 +1,11 @@
-- hosts: all
+- hosts: catalyst-app-server
+  vars:
+    files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
+    acting_user: "{{ lookup('env', 'USER') }}"
+  tasks:
+    - include: includes/nagios_registration.yml
+
+- hosts: catalyst-proxy-server
   vars:
     files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
     acting_user: "{{ lookup('env', 'USER') }}"
