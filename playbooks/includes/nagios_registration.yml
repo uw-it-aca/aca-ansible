@@ -19,7 +19,7 @@
 - include: includes/nagios/create_default_scripts.yml
 
 - include: includes/nagios/create_catalyst_scripts.yml
-  when: "catalyst-app-server" in group_names
+  when: '"catalyst-app-server" in group_names'
 
 - name: Remove nagios tmp directory
   file: state="absent" path="{{ nagios_tmp_dir}}"
