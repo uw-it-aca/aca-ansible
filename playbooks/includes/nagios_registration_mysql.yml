@@ -24,9 +24,12 @@
 - include: includes/nagios/create_default_scripts.yml
 - include: includes/nagios/create_default_mysql_scripts.yml
 
+- include: includes/nagios/create_catalyst_mysql_scripts.yml
+  when: "catalyst-db-server" in group_names
+
 - name: Remove nagios tmp directory
   file: state="absent" path="{{ nagios_tmp_dir}}"
 
 - set_fact:
-    nagios_registered: "{{ lookup('nagios_mysql_register', nagios_registration_oauth_key, nagios_registration_oauth_secret, nagios_registration_server, inventory_file, groups, nagios_contacts, monitored_processes) }}"
+    nagios_registered: "{{ lookup('nagios_register') }}"
 - debug: msg="{{ nagios_registered }}"

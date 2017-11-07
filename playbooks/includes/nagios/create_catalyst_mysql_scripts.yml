@@ -1,0 +1,5 @@
+- name: Create catalyst nagios mysql scripts
+  template: src="templates/nagios/catalyst/mailqueue_check.py" dest="{{ nagios_tmp_dir }}/scripts/mailqueue_check.py" mode="750"
+
+- name: Copy nagios mysql scripts to monitor user
+  command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/mailqueue_check.py nagios"
