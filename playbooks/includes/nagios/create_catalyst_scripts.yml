@@ -1,0 +1,5 @@
+- name: Create catalyst nagios scripts
+  template: src="templates/nagios/svn_local_mods_check.py" dest="{{ nagios_tmp_dir }}/scripts/svn_local_mods_check.py" mode="750"
+
+- name: Copy nagios scripts to monitor user
+  command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/svn_local_mods_check.py nagios"
