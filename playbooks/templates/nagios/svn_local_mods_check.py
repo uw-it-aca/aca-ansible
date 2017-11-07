@@ -11,8 +11,6 @@ import sys
 import re
 
 
-current_exit_code = 0
-
 p = subprocess.Popen("svn stat {{ monitored_svn_path }}",
                      stdout=subprocess.PIPE,
                      stderr=subprocess.STDOUT,
@@ -41,8 +39,9 @@ for line in iter(p.stdout.readline, b''):
         mod_apps.append(app_name)
 
 if len(mod_apps):
-    current_exit_code = 1
     print("Modifications for {{ monitored_svn_path }} in %s " % (
         ', '.join(mod_apps)))
+    sys.exit(1)
 
-sys.exit(current_exit_code)
+print("OK")
+sys.exit(0)
