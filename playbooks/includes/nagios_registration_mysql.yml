@@ -25,7 +25,7 @@
 - include: includes/nagios/create_default_mysql_scripts.yml
 
 - include: includes/nagios/create_catalyst_mysql_scripts.yml
-  when: "catalyst-db-server" in group_names
+  when: '"catalyst-db-server" in group_names'
 
 - name: Remove nagios tmp directory
   file: state="absent" path="{{ nagios_tmp_dir}}"
