@@ -53,6 +53,8 @@ class LookupModule(LookupBase):
         self._create_servicegroup("Disk Services")
         self._create_servicegroup("CPU Services")
         self._create_servicegroup("Process Services")
+        self._create_servicegroup("Integrity Services")
+        self._create_servicegroup("MySQL DB Services")
 
         # Disk check values are defined in the ansible variable monitored_disk_partitions
 	self._create_service("Disk Check",
@@ -75,7 +77,6 @@ class LookupModule(LookupBase):
         self._add_service_to_group("Load Average Check", "CPU Services")
 
         if "mysql-db-server" in self._current_groups:
-            self._create_servicegroup("MySQL DB Services")
 	    # mysql sql connections check
 	    self._create_service("MySQL Connections Check",
 				 "check_acamon_remote!mysql_connections_check.py")
@@ -117,11 +118,16 @@ class LookupModule(LookupBase):
             services.append(name)
 
         if self._monitored_svn_path:
-            self._create_servicegroup("Integrity Services")
             self._create_service("SVN Local Mods",
                                  "check_acamon_remote!svn_local_mods_check.py")
             self._add_service_to_group("SVN Local Mods", "Integrity Services")
             services.append("SVN Local Mods")
+
+        if self._monitored_crontab_path:
+            self._create_service("Crontab Check",
+                                 "check_acamon_remote!crontab_check.py")
+            self._add_service_to_group("Crontab Check", "Integrity Services")
+            services.append("Crontab Check")
 
         return services
 
@@ -141,6 +147,7 @@ class LookupModule(LookupBase):
         self._monitored_processes = variables.get('monitored_processes', [])
         self._monitored_svn_path = variables.get('monitored_svn_path', None)
         self._monitored_mailqueue = variables.get('monitored_mailqueue', False)
+        self._monitored_crontab_path = variables.get('monitored_crontab_path', None)
 
         try:
 # Commenting this out while figuring out better options.  Contacts set on the host don't get service alerts
