@@ -18,14 +18,14 @@ p = subprocess.Popen("{{ mysql_path }} -u {{ nagios_mysql_user|default('nagios')
 
 content = ""
 for line in iter(p.stdout.readline, b''):
-    if 'mysql: [Warning]' not in line:
+    if 'Warning' not in line and 'Variable_name' not in line:
         content += line
 
 if re.match('.*Access denied for user', content):
     print "Access denied.  Read %s for details" % os.path.realpath(__file__)
     sys.exit(3)
 
-matches = re.match('.*\nThreads_connected\s+([\d]+)', content)
+matches = re.match('.*Threads_connected\s+([\d]+)', content)
 
 if not matches:
     print "Error parsing: %s" % content
@@ -37,10 +37,10 @@ p = subprocess.Popen("{{ mysql_path }} -u {{ nagios_mysql_user|default('nagios')
 
 content = ""
 for line in iter(p.stdout.readline, b''):
-    if 'mysql: [Warning]' not in line:
+    if 'Warning' not in line and 'Variable_name' not in line:
         content += line
 
-matches = re.match('.*\nmax_connections\s+([\d]+)', content)
+matches = re.match('.*max_connections\s+([\d]+)', content)
 
 if not matches:
     print "Error parsing: %s" % content
@@ -58,5 +58,3 @@ if percent > 0.9:
     sys.exit(2)
 
 sys.exit(0)
-
-

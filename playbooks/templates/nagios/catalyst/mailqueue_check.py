@@ -18,22 +18,18 @@ p = subprocess.Popen("{{ mysql_path }} -u {{ nagios_mysql_user|default('nagios')
 
 content = ""
 for line in iter(p.stdout.readline, b''):
-    if 'mysql: [Warning]' not in line:
+    if 'Warning' not in line:
         content += line
 
 if re.match('.*Access denied for user', content):
     print "Access denied.  Read %s for details" % os.path.realpath(__file__)
     sys.exit(3)
 
-matches = re.match('^(0|1)\n$', content)
+matches = re.match('^1\n$', content)
 
-if not matches:
-    print "Error parsing: %s" % content
-    sys.exit(3)
-
-if matches.group(1) == '1':
-    print("OK")
-    sys.exit(0)
-else:
+if matches:
     print("Mailqueue running for longer than 60 mins")
     sys.exit(2)
+else:
+    print("OK")
+    sys.exit(0)
