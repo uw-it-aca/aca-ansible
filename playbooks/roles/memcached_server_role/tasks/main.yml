@@ -1,0 +1,4 @@
+---
+- name: Memcache Server
+  debug: msg="{{ ansible_hostname }}"
+- include: ../../../includes/nagios_registration.yml
