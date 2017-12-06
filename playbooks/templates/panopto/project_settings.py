@@ -173,7 +173,7 @@ PANOPTO_API_APP_ID = '{{ panopto_api_app_id }}'
 PANOPTO_API_TOKEN = '{{ panopto_api_token }}'
 PANOPTO_SERVER = '{{ panopto_api_server }}'
 
-from django_mobileesp.detector import agent
+from django_mobileesp.detector import mobileesp_agent as agent
 DETECT_USER_AGENTS = {
     'is_tablet': agent.detectTierTablet,
     'is_mobile': agent.detectMobileQuick,
