@@ -14,33 +14,22 @@ import sys
 import re
 import os
 
-p = subprocess.Popen("{{ mysql_path }} -u {{ nagios_mysql_user|default('nagios') }} -p{{ mysql_password }} -e 'show status where variable_name=\"Open_files\"'", stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+p = subprocess.Popen("{{ mysql_path }} -u {{ nagios_mysql_user|default('nagios') }} -p{{ mysql_password }} -e 'SELECT TIMEDIFF(now(), timestamp) > \"01:00:00\" AS delay FROM solstice.Status WHERE flag = \"mail_queue_running\"'", stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
 
 content = ""
 for line in iter(p.stdout.readline, b''):
-    if 'Warning' not in line and 'Variable_name' not in line:
+    if 'Warning' not in line:
         content += line
 
 if re.match('.*Access denied for user', content):
     print "Access denied.  Read %s for details" % os.path.realpath(__file__)
     sys.exit(3)
 
-matches = re.match('.*Open_files\s+([\d]+)', content)
+matches = re.match('^1\n$', content)
 
-if not matches:
-    print "Error parsing: %s" % content
-    sys.exit(3)
-
-count = int(matches.group(1))
-
-print "%s open files" % count
-
-# We have an open file limit of 1024
-
-if count > 700:
-    sys.exit(1)
-
-if count > 900:
+if matches:
+    print("Mailqueue running for longer than 60 mins")
     sys.exit(2)
-
-sys.exit(0)
+else:
+    print("OK")
+    sys.exit(0)

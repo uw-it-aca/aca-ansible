@@ -1,0 +1,19 @@
+- name: Create default nagios scripts
+  template: src="templates/nagios/disk_check.py" dest="{{ nagios_tmp_dir }}/scripts/disk_check.py" mode="750"
+- template: src="templates/nagios/inode_check.py" dest="{{ nagios_tmp_dir }}/scripts/inode_check.py" mode="750"
+- template: src="templates/nagios/load_check.py" dest="{{ nagios_tmp_dir }}/scripts/load_check.py" mode="750"
+- template: src="templates/nagios/cpu_idle_check.py" dest="{{ nagios_tmp_dir }}/scripts/cpu_idle_check.py" mode="750"
+- template: src="templates/nagios/process_check.py" dest="{{ nagios_tmp_dir }}/scripts/process_check.py" mode="750"
+- template: src="templates/nagios/crontab_check.py" dest="{{ nagios_tmp_dir }}/scripts/crontab_check.py" mode="750"
+  when: monitored_crontab_path|default(false)
+
+
+- name: Copy nagios scripts to monitor user
+  command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/disk_check.py nagios"
+
+- command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/inode_check.py nagios"
+- command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/load_check.py nagios"
+- command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/cpu_idle_check.py nagios"
+- command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/process_check.py nagios"
+- command: "{{ nagios_tmp_dir }}/nagios_scp {{ nagios_tmp_dir }}/scripts/crontab_check.py nagios"
+  when: monitored_crontab_path|default(false)

@@ -10,6 +10,7 @@ INSTALLED_APPS += [
     'supporttools',
     'django_client_logger',
     'myuw.apps.MyUWConfig',
+    'blti'
 ]
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for

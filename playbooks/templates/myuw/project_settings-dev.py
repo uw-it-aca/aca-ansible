@@ -2,13 +2,15 @@
 TIME_ZONE = 'America/Los_Angeles'
 
 INSTALLED_APPS += (
-    'south',
+    'authz_group',
     'templatetag_handlebars',
     'rc_django',
-    'myuw_mobile',
     'userservice',
     'supporttools',
-    'django_client_logger'
+    'django_client_logger',
+    'myuw.apps.MyUWConfig',
+    'blti',
+    'django_mobileesp'
 )
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
@@ -22,7 +24,7 @@ LOGGING = {
         }
     },
     'formatters': {
-        'myuw_mobile': {
+        'myuw': {
             'format': '%(levelname)-4s %(asctime)s %(message)s [%(name)s]',
             'datefmt': '%d %H:%M:%S',
         },
@@ -33,33 +35,54 @@ LOGGING = {
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         },
-        'myuw_mobile': {
+        'myuw': {
             'level': 'INFO',
             'class': 'permissions_logging.DateNameFileHandler',
             'filename': '{{ base_dir }}/logs/myuw-%Y-%m-%d',
             'permissions': 0o664,
-            'formatter': 'myuw_mobile',
+            'formatter': 'myuw',
+        },
+        'pref': {
+            'level': 'INFO',
+            'class': 'permissions_logging.DateNameFileHandler',
+            'filename': '{{ base_dir }}/logs/pref-%Y-%m-%d',
+            'permissions': 0o664,
+            'formatter': 'myuw',
         },
         'card': {
             'level': 'INFO',
             'class': 'permissions_logging.DateNameFileHandler',
             'filename': '{{ base_dir }}/logs/card-%Y-%m-%d',
             'permissions': 0o664,
-            'formatter': 'myuw_mobile',
+            'formatter': 'myuw',
         },
         'link': {
             'level': 'INFO',
             'class': 'permissions_logging.DateNameFileHandler',
             'filename': '{{ base_dir }}/logs/link-%Y-%m-%d',
             'permissions': 0o664,
-            'formatter': 'myuw_mobile',
+            'formatter': 'myuw',
         },
         'session': {
             'level': 'INFO',
             'class': 'permissions_logging.DateNameFileHandler',
             'filename': '{{ base_dir }}/logs/session-%Y-%m-%d',
             'permissions': 0o664,
-            'formatter': 'myuw_mobile',
+            'formatter': 'myuw',
+        },
+        'performance_log': {
+            'level': 'INFO',
+            'class': 'permissions_logging.DateNameFileHandler',
+            'filename': '{{ base_dir }}/logs/view_performance-%Y-%m-%d',
+            'permissions': 0o664,
+            'formatter': 'myuw',
+        },
+        'restclients_timing_log': {
+            'level': 'INFO',
+            'class': 'permissions_logging.DateNameFileHandler',
+            'filename': '/data/myuw/logs/restclients_timing-%Y-%m-%d',
+            'permissions': 0o664,
+            'formatter': 'myuw',
         },
         'console':{
             'level': 'ERROR',
@@ -72,13 +95,28 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-        'restclients': {
-            'handlers': ['myuw_mobile'],
+        'restclients_core.dao': {
+            'handlers': ['restclients_timing_log'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'myuw.util.performance': {
+            'handlers': ['performance_log'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'myuw.views.choose': {
+            'handlers': ['pref'],
             'level': 'INFO',
             'propagate': True,
         },
-        'myuw_mobile': {
-            'handlers': ['myuw_mobile'],
+        'myuw.views.logger': {
+            'handlers': ['link'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'myuw': {
+            'handlers': ['myuw'],
             'level': 'INFO',
             'propagate': True,
         },
@@ -100,36 +138,51 @@ LOGGING = {
     }
 }
 
+RESTCLIENTS_MEMCACHED_SERVERS = {{ restclients_memcached_servers|default("''")}}
 
-USERSERVICE_VALIDATION_MODULE = "myuw_mobile.userservice_validation.validate"
+USERSERVICE_VALIDATION_MODULE = "myuw.userservice_validation.validate"
 USERSERVICE_ADMIN_GROUP='{{ userservice_admin_group }}'
 RESTCLIENTS_ADMIN_GROUP='{{ restclients_admin_group }}'
 RESTCLIENTS_DAO_CACHE_CLASS='{{restclients_dao_cache_class}}'
 AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
 
+MYUW_ADMIN_GROUP = '{{ myuw_admin_group }}'
+MYUW_ENABLED_FEATURES = {{ myuw_enabled_features }}
+
 SUPPORTTOOLS_PARENT_APP = "MyUW"
-SUPPORTTOOLS_PARENT_APP_URL = "/mobile/landing/"
+SUPPORTTOOLS_PARENT_APP_URL = "/"
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-'django.contrib.auth.context_processors.auth',
-'django.core.context_processors.debug',
-'django.core.context_processors.i18n',
-'django.core.context_processors.media',
-'django.core.context_processors.static',
-'django.core.context_processors.tz',
-'django.contrib.messages.context_processors.messages',
-'django.core.context_processors.request',
-'myuw_mobile.context_processors.has_less_compiled',
-'myuw_mobile.context_processors.has_google_analytics',
-'supporttools.context_processors.supportools_globals',
-)
+EMAIL_BACKEND = "{{ email_backend }}"
+EMAIL_HOST = "{{ email_host }}"
+EMAIL_PORT = {{ email_port }}
+EMAIL_TIMEOUT = {{ email_timeout }}
+{% if safe_email_recipient|default(None) %}
+SAFE_EMAIL_RECIPIENT = '{{ safe_email_recipient }}'
+{% endif %}
 
-from django_mobileesp.detector import agent
+{% if myuw_fyp_redirects|default(False) %}
+MYUW_USER_SERVLET_URL = "{{ myuw_legacy_url }}"
+MYUW_MANDATORY_SWITCH_PATH = "{{ myuw_fyp_list_path }}"
+MYUW_OPTIN_SWITCH_PATH = "{{ myuw_optin_list_path }}"
+{% endif %}
 
-MIDDLEWARE_CLASSES += (
+# Assign rather than append since order is significant
+MIDDLEWARE_CLASSES = (
+    'django.middleware.common.CommonMiddleware',
+    'blti.middleware.CSRFHeaderMiddleware',
+    'blti.middleware.SessionHeaderMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.auth.middleware.RemoteUserMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'userservice.user.UserServiceMiddleware',
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
     'rc_django.middleware.EnableServiceDegradationMiddleware',
 )
+
+from django_mobileesp.detector import mobileesp_agent as agent
 
 DETECT_USER_AGENTS = {
     'is_tablet': agent.detectTierTablet,
@@ -140,3 +193,12 @@ GOOGLE_ANALYTICS_KEY = "{{ ga_tracker_key }}"
 GOOGLE_SEARCH_KEY = '{{ gcse_key }}'
 
 SERU_LIST = "{{ myuw_seru_path }}"
+
+BLTI_AES_KEY = b'{{ blti_aes_key }}'
+BLTI_AES_IV = b'{{ blti_aes_iv }}'
+
+LTI_CONSUMERS = {
+{% for consumer in lti_consumers|default([]) %}
+    '{{ consumer.key }}': '{{ consumer.secret }}',
+{% endfor %}
+}
