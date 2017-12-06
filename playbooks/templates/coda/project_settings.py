@@ -88,19 +88,19 @@ LOGGING = {
     'loggers': {
         'sws': {
             'handlers': ['sws_file'],
-            'level': 'DEBUG'
+            'level': '{{logger_level|default("DEBUG")}}'
         },
         'gws': {
             'handlers': ['gws_file'],
-            'level': 'DEBUG'
+            'level': '{{logger_level|default("DEBUG")}}'
         },
         'pws': {
             'handlers': ['pws_file'],
-            'level': 'DEBUG'
+            'level': '{{logger_level|default("DEBUG")}}'
         },
         'coursedashboards': {
             'handlers': ['coda_file'],
-            'level': 'DEBUG'
+            'level': '{{logger_level|default("DEBUG")}}'
         },
         'django.request': {
             'handlers': ['mail_admins'],
