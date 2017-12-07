@@ -9,7 +9,8 @@ INSTALLED_APPS += [
     'django_mobileesp',
     'coursedashboards.apps.CourseDashboardsConfig',
     'rc_django',
-    'djangorestframework',
+    'rest_framework.authtoken',
+    'rest_framework',
 ]
 
 COMPRESS_PRECOMPILERS += (
