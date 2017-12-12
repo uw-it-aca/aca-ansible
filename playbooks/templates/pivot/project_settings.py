@@ -127,7 +127,7 @@ USE_TZ = True
 
 #STATIC_URL = '/static/'
 
-CSV_ROOT = 'data/'
+CSV_ROOT = '{{ csv_data_path }}'
 
 LOGIN_REDIRECT_URL = '/'
 
