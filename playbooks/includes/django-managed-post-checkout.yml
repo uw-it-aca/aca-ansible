@@ -1,10 +1,14 @@
-    - name: Create a virtualenv for the build
+    - name: create a virtualenv (python3) for the build
+      command: /usr/local/bin/virtualenv3 -p {{ python_interpreter|default('python2.6') }} {{ base_dir }}/builds/{{current_build_value}}
+      when: python_interpreter == "python3"
+
+    - name: Create a virtualenv (python2.7) for the build
       command: /usr/local/bin/virtualenv-2.7 -p {{ python_interpreter|default('python2.6') }} {{ base_dir }}/builds/{{current_build_value}}
-      when: centos7 is undefined or not centos7
+      when: (centos7 is undefined or not centos7) and not (python_interpreter == "python3")
 
     - name: Create a virtualenv for the build
       command: /usr/bin/virtualenv {{ base_dir }}/builds/{{current_build_value}}
-      when: centos7 is defined and centos7
+      when: (centos7 is defined and centos7) and not (python_interpreter == "python3")
 
     - name: Copy over requirements for the project level
       copy: src="{{ files_dir }}/project_requirements.txt" dest="{{ base_dir }}/project_requirements.txt" group="{{ file_group }}" mode="0664"
