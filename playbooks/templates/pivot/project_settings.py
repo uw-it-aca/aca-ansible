@@ -71,3 +71,5 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Pivot specific settings
 CSV_ROOT = '{{ csv_data_path }}'
+
+LOGIN_URL = '/login/'
