@@ -11,7 +11,7 @@ WSGIScriptAlias {{ wsgi_url_base|default("/") }} {{ base_dir }}/live/wsgi/django
 
 {% include 'apache/static_content' %}
 
-{% if wsgi_pass_auth %}
+{% if wsgi_pass_auth|default(false) %}
 
 WSGIPassAuthorization on
 
