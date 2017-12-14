@@ -1,10 +1,6 @@
 <Location {{ shibboleth_required_url|default("/") }}>
     Authtype shibboleth
-    ShibRequireSession On
-    ShibRedirectToSSL 443
+    ShibRequestSetting requireSession true
+    ShibRequestSetting redirectToSSL 443
     require valid-user
-</Location>
-
-<Location /Shibboleth.sso>
-    SetHandler shib
 </Location>
