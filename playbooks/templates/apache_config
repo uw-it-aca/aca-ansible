@@ -1,5 +1,5 @@
 WSGIPythonHome {{ base_dir }}/live/
-WSGIPythonPath {{ base_dir }}/live/lib/{{ python_interpreter|default('python2.6') }}/site-packages:{{ base_dir }}/mysql-libs/
+WSGIPythonPath {{ base_dir }}/live/lib/{{ python_interpreter|default('python2.6') }}/site-packages:{{ base_dir }}/{{ database_libs|default('mysql-libs')}}
 
 WSGIScriptAlias {{ wsgi_url_base|default("/") }} {{ base_dir }}/live/wsgi/django.wsgi
 

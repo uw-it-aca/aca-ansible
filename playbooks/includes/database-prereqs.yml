@@ -1,4 +1,4 @@
-    # Copy over the mysql files that are a pain to build on the hosts
+    # Copy over the database files that are a pain to build on the hosts
     - name: Copy mysql libraries
       synchronize: src="{{ files_dir }}/mysql-libs" dest="{{ base_dir }}/" rsync_opts=--no-group,--omit-dir-times,--exclude=.svn perms=no
       when: database_type is not defined or database_type == "mysql"
@@ -30,3 +30,7 @@
     - name: Configure freetds.conf
       template: src="templates/odbc/freetds.conf" dest="{{ base_dir }}/odbc/freetds.conf" group="{{ file_group }}" mode="664"
       when: database_type is defined and database_type == "MS SQL"
+
+    - name: Copy pgsql-py2.7 libraries
+      synchronize: src="{{ files_dir }}/psycopg2-2.7.3.2-py2.7-linux-x86_64-libs" dest="{{ base_dir }}/" rsync_opts=--no-group,--omit-dir-times,--exclude=.svn perms=no
+      when: database_type is defined and database_type == "postgres" and python_interpreter == "python2.7"
