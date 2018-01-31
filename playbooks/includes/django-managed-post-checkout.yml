@@ -1,6 +1,6 @@
     - name: create a virtualenv (python3) for the build
-      command: /usr/local/bin/virtualenv3 -p {{ python_interpreter|default('python2.6') }} {{ base_dir }}/builds/{{current_build_value}}
-      when: python_interpreter == "python3"
+      command: /usr/local/bin/virtualenv3 -p {{ python_interpreter|default('python3.6') }} {{ base_dir }}/builds/{{current_build_value}}
+      when: python_interpreter == "python3.6"
 
     - name: Create a virtualenv (python2.7) for the build
       command: /usr/local/bin/virtualenv-2.7 -p {{ python_interpreter|default('python2.6') }} {{ base_dir }}/builds/{{current_build_value}}

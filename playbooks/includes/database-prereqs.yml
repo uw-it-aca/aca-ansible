@@ -34,3 +34,7 @@
     - name: Copy pgsql-py2.7 libraries
       synchronize: src="{{ files_dir }}/psycopg2-2.7.3.2-py2.7-linux-x86_64.egg" dest="{{ base_dir }}/" rsync_opts=--no-group,--omit-dir-times,--exclude=.svn perms=no
       when: database_type is defined and database_type == "postgres" and python_interpreter == "python2.7"
+
+    - name: Copy pgsql-py3.6 libraries
+      synchronize: src="{{ files_dir }}/psycopg2-2.7.3.2-py3.6-linux-x86_64.egg" dest="{{ base_dir }}/" rsync_opts=--no-group,--omit-dir-times,--exclude=.svn perms=no
+      when: database_type is defined and database_type == "postgres" and python_interpreter == "python3.6"
