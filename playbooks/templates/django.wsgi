@@ -3,7 +3,7 @@ import sys
 import site
 
 sys.path.append('{{ base_dir }}/builds/{{ current_build_value }}/')
-sys.path.append('{{ base_dir }}/{{ database_libs|default('mysql-libs')}}/')
+sys.path.append('{{ base_dir }}/{{ db_connector|default('mysql-libs')}}/')
 
 site.addsitedir('{{ base_dir }}/builds/{{ current_build_value }}/lib/{{ python_interpreter|default("python2.6") }}/site-packages/')
 site.addsitedir('{{ base_dir }}/builds/{{ current_build_value }}/lib/python2.6/site-packages/')

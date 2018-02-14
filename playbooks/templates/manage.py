@@ -9,7 +9,7 @@ sys.path.append('{{ base_dir }}/builds/{{ current_build_value }}/{{ path }}')
 {% endfor %}
 
 site.addsitedir('{{ base_dir }}/builds/{{ current_build_value }}/lib/{{ python_interpreter|default("python2.6") }}/site-packages/')
-sys.path.append('{{ base_dir }}/{{ database_libs|default('mysql-libs')}}/')
+sys.path.append('{{ base_dir }}/{{ db_connector|default('mysql-libs')}}/')
 
 os.environ["PATH"] += os.pathsep + os.pathsep.join([
     '{{ base_dir }}/node-libs/bin/',
