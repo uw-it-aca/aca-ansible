@@ -172,6 +172,7 @@ TEMPLATES = [
                 ]),
                 {% endif %}
             ],
+            'debug': DEBUG,
         },
     },
 ]
