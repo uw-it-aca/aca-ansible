@@ -2,33 +2,33 @@ RESTCLIENTS_IASYSTEM_UW_DAO_CLASS = 'Live'
 RESTCLIENTS_IASYSTEM_UW_HOST = 'https://uw.iasystem.org:443'
 RESTCLIENTS_IASYSTEM_UW_CERT_FILE='{% if webservice_client_cert_path|default(None) %}{{ webservice_client_cert_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_cert_name }}{% endif %}'
 RESTCLIENTS_IASYSTEM_UW_KEY_FILE='{% if webservice_client_key_path|default(None) %}{{ webservice_client_key_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_key_name }}{% endif %}'
-RESTCLIENTS_IASYSTEM_UW_TIMEOUT={{ iasystem_uw_socket_timeout|default(5) }}
-RESTCLIENTS_IASYSTEM_UW_POOL_SIZE={{ iasystem_uw_max_pool_size|default(10) }}
+RESTCLIENTS_IASYSTEM_UW_TIMEOUT={{ iasystem_socket_timeout|default(5) }}
+RESTCLIENTS_IASYSTEM_UW_POOL_SIZE={{ iasystem_max_pool_size|default(10) }}
 
 RESTCLIENTS_IASYSTEM_UWB_DAO_CLASS = 'Live'
 RESTCLIENTS_IASYSTEM_UWB_HOST = 'https://uwb.iasystem.org:443'
 RESTCLIENTS_IASYSTEM_UWB_CERT_FILE='{% if webservice_client_cert_path|default(None) %}{{ webservice_client_cert_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_cert_name }}{% endif %}'
 RESTCLIENTS_IASYSTEM_UWB_KEY_FILE='{% if webservice_client_key_path|default(None) %}{{ webservice_client_key_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_key_name }}{% endif %}'
-RESTCLIENTS_IASYSTEM_UWB_TIMEOUT={{ iasystem_uwb_socket_timeout|default(5) }}
-RESTCLIENTS_IASYSTEM_UWB_POOL_SIZE={{ iasystem_uwb_max_pool_size|default(10) }}
+RESTCLIENTS_IASYSTEM_UWB_TIMEOUT={{ iasystem_socket_timeout|default(5) }}
+RESTCLIENTS_IASYSTEM_UWB_POOL_SIZE={{ iasystem_max_pool_size|default(10) }}
 
 RESTCLIENTS_IASYSTEM_UWT_DAO_CLASS = 'Live'
 RESTCLIENTS_IASYSTEM_UWT_HOST = 'https://uwt.iasystem.org:443'
 RESTCLIENTS_IASYSTEM_UWT_CERT_FILE='{% if webservice_client_cert_path|default(None) %}{{ webservice_client_cert_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_cert_name }}{% endif %}'
 RESTCLIENTS_IASYSTEM_UWT_KEY_FILE='{% if webservice_client_key_path|default(None) %}{{ webservice_client_key_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_key_name }}{% endif %}'
-RESTCLIENTS_IASYSTEM_UWT_TIMEOUT={{ iasystem_uwt_socket_timeout|default(5) }}
-RESTCLIENTS_IASYSTEM_UWT_POOL_SIZE={{ iasystem_uwt_max_pool_size|default(10) }}
+RESTCLIENTS_IASYSTEM_UWT_TIMEOUT={{ iasystem_socket_timeout|default(5) }}
+RESTCLIENTS_IASYSTEM_UWT_POOL_SIZE={{ iasystem_max_pool_size|default(10) }}
 
 RESTCLIENTS_IASYSTEM_UWEO_AP_DAO_CLASS = 'Live'
 RESTCLIENTS_IASYSTEM_UWEO_AP_HOST = 'https://uweo-ap.iasystem.org:443'
 RESTCLIENTS_IASYSTEM_UWEO_AP_CERT_FILE='{% if webservice_client_cert_path|default(None) %}{{ webservice_client_cert_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_cert_name }}{% endif %}'
 RESTCLIENTS_IASYSTEM_UWEO_AP_KEY_FILE='{% if webservice_client_key_path|default(None) %}{{ webservice_client_key_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_key_name }}{% endif %}'
-RESTCLIENTS_IASYSTEM_UWEO_AP_TIMEOUT={{ iasystem_uwt_socket_timeout|default(5) }}
-RESTCLIENTS_IASYSTEM_UWEO_AP_POOL_SIZE={{ iasystem_uwt_max_pool_size|default(10) }}
+RESTCLIENTS_IASYSTEM_UWEO_AP_TIMEOUT={{ iasystem_socket_timeout|default(5) }}
+RESTCLIENTS_IASYSTEM_UWEO_AP_POOL_SIZE={{ iasystem_max_pool_size|default(10) }}
 
 RESTCLIENTS_IASYSTEM_UWEO_IELP_DAO_CLASS = 'Live'
 RESTCLIENTS_IASYSTEM_UWEO_IELP_HOST = 'https://uweo-ielp.iasystem.org:443'
 RESTCLIENTS_IASYSTEM_UWEO_IELP_CERT_FILE='{% if webservice_client_cert_path|default(None) %}{{ webservice_client_cert_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_cert_name }}{% endif %}'
 RESTCLIENTS_IASYSTEM_UWEO_IELP_KEY_FILE='{% if webservice_client_key_path|default(None) %}{{ webservice_client_key_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_key_name }}{% endif %}'
-RESTCLIENTS_IASYSTEM_UWEO_IELP_TIMEOUT={{ iasystem_uwt_socket_timeout|default(5) }}
-RESTCLIENTS_IASYSTEM_UWEO_IELP_POOL_SIZE={{ iasystem_uwt_max_pool_size|default(10) }}
+RESTCLIENTS_IASYSTEM_UWEO_IELP_TIMEOUT={{ iasystem_socket_timeout|default(5) }}
+RESTCLIENTS_IASYSTEM_UWEO_IELP_POOL_SIZE={{ iasystem_max_pool_size|default(5) }}
