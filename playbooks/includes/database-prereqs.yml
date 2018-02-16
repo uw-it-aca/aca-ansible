@@ -1,4 +1,9 @@
     # Set fact for db_connector
+    - name: setting fact db_connector mysql-libs
+      set_fact:
+        db_connector: "mysql-libs"
+      when: database_type is not defined or database_type == "mysql"
+
     - name: setting fact db_connector psycopg2-2.7.3.2-py3.6-linux-x86_64.egg
       set_fact:
         db_connector: "psycopg2-2.7.3.2-py2.7-linux-x86_64.egg"
@@ -10,11 +15,7 @@
       when: database_type is defined and database_type == "postgres" and python_interpreter == "python3.6"
 
     # Copy over the database files that are a pain to build on the hosts
-    - name: Copy mysql libraries
-      synchronize: src="{{ files_dir }}/mysql-libs" dest="{{ base_dir }}/" rsync_opts=--no-group,--omit-dir-times,--exclude=.svn perms=no
-      when: database_type is not defined or database_type == "mysql"
-
-    - name: Copy pgsql libraries
+    - name: Copy database connector
       synchronize: src="{{ files_dir }}/{{ db_connector }}" dest="{{ base_dir }}/" rsync_opts=--no-group,--omit-dir-times,--exclude=.svn perms=no
 
     - name: Ensure odbc directory exists
