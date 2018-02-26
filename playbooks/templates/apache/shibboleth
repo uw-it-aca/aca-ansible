@@ -2,5 +2,5 @@
     Authtype shibboleth
     ShibRequestSetting requireSession true
     ShibRequestSetting redirectToSSL 443
-    require valid-user
+    require {{ shibboleth_require_string|default("valid-user") }}
 </Location>
