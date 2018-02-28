@@ -52,6 +52,11 @@ INSTALLED_APPS += (
     'rc_django',
 )
 
+COMPRESS_PRECOMPILERS += (
+    ('text/x-sass', 'django_pyscss.compressor.DjangoScssFilter'),
+    ('text/x-scss', 'django_pyscss.compressor.DjangoScssFilter'),
+)
+
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 LOGGING = {
