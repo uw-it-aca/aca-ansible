@@ -48,7 +48,13 @@ INSTALLED_APPS += (
     'analytics',
     'grade_conversion_calculator',
     'grading_standard',
+    'anonymous_feedback',
     'rc_django',
+)
+
+COMPRESS_PRECOMPILERS += (
+    ('text/x-sass', 'django_pyscss.compressor.DjangoScssFilter'),
+    ('text/x-scss', 'django_pyscss.compressor.DjangoScssFilter'),
 )
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
