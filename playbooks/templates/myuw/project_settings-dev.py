@@ -202,3 +202,6 @@ LTI_CONSUMERS = {
     '{{ consumer.key }}': '{{ consumer.secret }}',
 {% endfor %}
 }
+
+REMOTE_USER_FORMAT = "{{ remote_user_format|default("eppn") }}"
+LOGOUT_URL = "{{ logout_url|default("/user_logout") }}"

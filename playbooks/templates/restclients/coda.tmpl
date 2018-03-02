@@ -2,4 +2,4 @@ RESTCLIENTS_CODA_DAO_CLASS = 'Live'
 RESTCLIENTS_CODA_HOST='{% if "coda" in restclients.production|default(False) %}https://coda.uw.edu{% else %}https://coda-test.uw.edu{% endif %}'
 RESTCLIENTS_CODA_TIMEOUT={{ coda_timeout|default(5) }}
 RESTCLIENTS_CODA_POOL_SIZE={{ coda_max_pool_size|default(10) }}
-RESTCLIENTS_CODA_AUTH_TOKEN={{ coda_auth_token }}
+RESTCLIENTS_CODA_AUTH_TOKEN='{{ coda_auth_token|default(0)}}'
