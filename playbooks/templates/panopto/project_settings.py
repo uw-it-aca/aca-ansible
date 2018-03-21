@@ -6,11 +6,11 @@ INSTALLED_APPS += (
     'templatetag_handlebars',
     'handlebars_i18n',
     'supporttools',
+    'rc_django',
     'restclients',
     'userservice',
     'authz_group',
     'scheduler',
-    'personal_folder',
     'blti',
 )
 
