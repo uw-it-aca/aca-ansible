@@ -8,7 +8,7 @@ INSTALLED_APPS += (
     'rc_django',
     'userservice',
     'authz_group',
-    'scheduler',
+    'scheduler.apps.SchedulerConfig',
     'blti',
 )
 
