@@ -59,8 +59,8 @@ MIDDLEWARE_CLASSES += (
     'django.middleware.security.SecurityMiddleware',
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
     'turbolinks.middleware.TurbolinksMiddleware',
-    'htmlmin.middleware.HtmlMinifyMiddleware',
-    'htmlmin.middleware.MarkRequestMiddleware',
+    #'htmlmin.middleware.HtmlMinifyMiddleware',
+    #'htmlmin.middleware.MarkRequestMiddleware',
     'userservice.user.UserServiceMiddleware'
 )
 
@@ -159,7 +159,7 @@ GOOGLE_ANALYTICS_KEY = "{{ google_analytics_key | default('') }}"
 GOOGLE_MAPS_API = "{{ google_maps_api_key | default('') }}"
 
 # htmlmin
-HTML_MINIFY = True
+#HTML_MINIFY = True
 
 
 SPOTSEEKER_HOST = "{{ spotseeker_client_host }}"
