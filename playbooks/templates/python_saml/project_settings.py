@@ -1,4 +1,5 @@
 INSTALLED_APPS.append('uw_saml')
+ALLOWED_HOSTS.append('{{ sp_hostname }}')
 
 from django.core.urlresolvers import reverse_lazy
 LOGIN_URL = reverse_lazy('saml_login')
