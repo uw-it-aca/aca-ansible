@@ -1,6 +1,8 @@
 INSTALLED_APPS += ('uw_saml',)
 ALLOWED_HOSTS += ('{{ sp_hostname }}',)
 
+SAML_USER_ATTRIBUTE = '{{ saml_user_attribute|default("uwnetid") }}'
+
 from django.core.urlresolvers import reverse_lazy
 LOGIN_URL = reverse_lazy('saml_login')
 
