@@ -27,6 +27,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.auth.middleware.PersistentRemoteUserMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'userservice.user.UserServiceMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
@@ -37,6 +38,7 @@ INSTALLED_APPS += (
     'templatetag_handlebars',
     'sis_provisioner.apps.SISProvisionerConfig',
     'supporttools',
+    'authz_group',
     'blti',
     'groups',
     'libguide',
@@ -340,6 +342,8 @@ SIS_IMPORT_LIMIT = {
         'default': 1000
     }
 }
+
+AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
 
 CANVAS_MANAGER_ADMIN_GROUP = 'u_acadev_canvas_support'
 RESTCLIENTS_ADMIN_GROUP = 'u_acadev_canvas_support-admin'
