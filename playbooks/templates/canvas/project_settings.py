@@ -27,7 +27,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.auth.middleware.PersistentRemoteUserMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'userservice.user.UserServiceMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
@@ -38,8 +37,6 @@ INSTALLED_APPS += (
     'templatetag_handlebars',
     'sis_provisioner.apps.SISProvisionerConfig',
     'supporttools',
-    'userservice',
-    'authz_group',
     'blti',
     'groups',
     'libguide',
@@ -298,6 +295,7 @@ BLTI_AES_IV = b'{{ blti_aes_iv }}'
 
 SESSION_COOKIE_NAME = 'cvssessionid'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 60 * 60 * 8
 SESSION_COOKIE_DOMAIN = '.uw.edu'
 CSRF_COOKIE_DOMAIN = '.uw.edu'
 
@@ -342,8 +340,6 @@ SIS_IMPORT_LIMIT = {
         'default': 1000
     }
 }
-
-AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
 
 CANVAS_MANAGER_ADMIN_GROUP = 'u_acadev_canvas_support'
 RESTCLIENTS_ADMIN_GROUP = 'u_acadev_canvas_support-admin'
