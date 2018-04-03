@@ -20,9 +20,8 @@ UW_SAML = {
             'binding': 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
         },
         'NameIDFormat': 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
-        'x509cert': '''{{ sp_x509_cert }}'''
-        # for encrypted saml assertions uncomment and add the private key
-        # 'privateKey': '',
+        'x509cert': '''{{ sp_x509_cert }}''',
+        {% if sp_private_key|default(None) %}'privateKey': '{{ sp_private_key }}',{% endif %}
     },
     'idp': {
         'entityId': '{{ idp_entity_id }}',
@@ -34,10 +33,13 @@ UW_SAML = {
             'url': '{{ idp_logout_url }}',
             'binding': 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
         },
-        'x509cert': '''{{ idp_x509_cert }}'''
+        'x509cert': '''{{ idp_x509_cert }}''',
     },
     'security': {
-        # for 2FA uncomment this line
-        # 'requestedAuthnContext':  ['urn:oasis:names:tc:SAML:2.0:ac:classes:TimeSyncToken']
+        'authnRequestsSigned': {{ sp_authn_requests_signed|default(False) }},
+        'wantMessagesSigned': {{ sp_want_messages_signed|default(True) }},
+        'wantAssertionsSigned': {{ sp_want_assertions_signed|default(False) }},
+        'wantAssertionsEncrypted': {{ sp_want_assertions_encrypted|default(False) }},
+        {% if sp_use_2fa|default(False) %}'requestedAuthnContext': ['urn:oasis:names:tc:SAML:2.0:ac:classes:TimeSyncToken'],{% endif %}
     }
 }
