@@ -21,8 +21,6 @@ UW_SAML = {
         },
         'NameIDFormat': 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
         'x509cert': '''{{ sp_x509_cert }}'''
-        # for encrypted saml assertions uncomment and add the private key
-        # 'privateKey': '',
     },
     'idp': {
         'entityId': '{{ idp_entity_id }}',
@@ -37,7 +35,6 @@ UW_SAML = {
         'x509cert': '''{{ idp_x509_cert }}'''
     },
     'security': {
-        # for 2FA uncomment this line
-        # 'requestedAuthnContext':  ['urn:oasis:names:tc:SAML:2.0:ac:classes:TimeSyncToken']
+        'wantMessagesSigned': True,
     }
 }
