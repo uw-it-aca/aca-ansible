@@ -21,7 +21,7 @@ UW_SAML = {
         },
         'NameIDFormat': 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
         'x509cert': '''{{ sp_x509_cert }}''',
-        'private_key': '{{ sp_private_key|default("") }}',
+        {% if sp_private_key|default(None) %}'privateKey': '{{ sp_private_key }}',{% endif %}
     },
     'idp': {
         'entityId': '{{ idp_entity_id }}',
