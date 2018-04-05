@@ -31,6 +31,11 @@ DATABASES = {
         'PASSWORD': '{{ database_password|default("") }}',
         'HOST': '{{ database_host }}',
         'PORT': '{{ database_port|default("") }}',
+        'OPTIONS': {
+{% for key, value in (database_options|default({})).items() %}
+    '{{ key }}', '{{ value }}',
+{% endfor %}
+        },
     }
 }
 {% endif %}
