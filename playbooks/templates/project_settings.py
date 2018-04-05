@@ -33,7 +33,7 @@ DATABASES = {
         'PORT': '{{ database_port|default("") }}',
         'OPTIONS': {
 {% for key, value in (database_options|default({})).items() %}
-    '{{ key }}', '{{ value }}',
+    '{{ key }}': '{{ value }}',
 {% endfor %}
         },
     }
