@@ -14,6 +14,11 @@
         db_connector: "psycopg2-2.7.3.2-py3.6-linux-x86_64.egg"
       when: database_type is defined and database_type == "postgres" and python_interpreter == "python3.6"
 
+    - name: setting fact db_connector (ssl) psycopg2-2.7.4-py2.7-linux-x86_64.egg
+      set_fact:
+        db_connector: "psycopg2-2.7.4-py2.7-linux-x86_64.egg"
+      when: database_type is defined and database_type == "postgres-ssl" and python_interpreter == "python2.7"
+
     # Copy over the database files that are a pain to build on the hosts
     - name: Copy database connector
       synchronize: src="{{ files_dir }}/{{ db_connector }}" dest="{{ base_dir }}/" rsync_opts=--no-group,--omit-dir-times,--exclude=.svn perms=no
