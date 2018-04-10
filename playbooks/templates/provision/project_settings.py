@@ -5,7 +5,6 @@ INSTALLED_APPS += [
     'templatetag_handlebars',
     'authz_group',
     'django_mobileesp',
-    'rc_django',
     'endorsement',
     'userservice',
     'django_client_logger',
