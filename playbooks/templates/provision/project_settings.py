@@ -124,6 +124,9 @@ PROVISION_ADMIN_GROUP = '{{ provision_admin_group }}'
 USERSERVICE_ADMIN_GROUP = '{{ provision_admin_group }}'
 RESTCLIENTS_ADMIN_GROUP = '{{ provision_admin_group }}'
 
+APP_SERVER_BASE = '{{ app_server_base }}'
+
+EMAIL_REPLY_ADDRESS = 'UW-IT <help@uw.edu>'
 EMAIL_BACKEND = '{{ email_backend }}'
 EMAIL_HOST = '{{ email_host }}'
 {% if safe_email_recipient|default(None) %}
