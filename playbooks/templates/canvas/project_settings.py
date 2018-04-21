@@ -38,7 +38,6 @@ INSTALLED_APPS += (
     'templatetag_handlebars',
     'sis_provisioner.apps.SISProvisionerConfig',
     'supporttools',
-    'userservice',
     'authz_group',
     'blti',
     'groups',
@@ -48,7 +47,13 @@ INSTALLED_APPS += (
     'analytics',
     'grade_conversion_calculator',
     'grading_standard',
+    'anonymous_feedback',
     'rc_django',
+)
+
+COMPRESS_PRECOMPILERS += (
+    ('text/x-sass', 'django_pyscss.compressor.DjangoScssFilter'),
+    ('text/x-scss', 'django_pyscss.compressor.DjangoScssFilter'),
 )
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
@@ -292,6 +297,7 @@ BLTI_AES_IV = b'{{ blti_aes_iv }}'
 
 SESSION_COOKIE_NAME = 'cvssessionid'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 60 * 60 * 8
 SESSION_COOKIE_DOMAIN = '.uw.edu'
 CSRF_COOKIE_DOMAIN = '.uw.edu'
 

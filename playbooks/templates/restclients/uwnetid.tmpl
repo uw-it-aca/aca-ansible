@@ -4,3 +4,6 @@ RESTCLIENTS_UWNETID_KEY_FILE='{% if webservice_client_key_path|default(None) %}{
 RESTCLIENTS_UWNETID_HOST='https://uwnetid.washington.edu:443'
 RESTCLIENTS_UWNETID_TIMEOUT={{ uwnetid_socket_timeout|default(5) }}
 RESTCLIENTS_UWNETID_POOL_SIZE={{ uwnetid_max_pool_size|default(10) }}
+{% if "uwnetid" in restclients.test|default(False) %}
+RESTCLIENTS_UWNETID_VERSION='v0-eval'
+{% endif %}

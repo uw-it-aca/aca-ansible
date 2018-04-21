@@ -31,6 +31,11 @@ DATABASES = {
         'PASSWORD': '{{ database_password|default("") }}',
         'HOST': '{{ database_host }}',
         'PORT': '{{ database_port|default("") }}',
+        'OPTIONS': {
+{% for key, value in (database_options|default({})).items() %}
+    '{{ key }}': '{{ value }}',
+{% endfor %}
+        },
     }
 }
 {% endif %}
@@ -172,6 +177,7 @@ TEMPLATES = [
                 ]),
                 {% endif %}
             ],
+            'debug': DEBUG,
         },
     },
 ]
@@ -265,4 +271,8 @@ TEMPLATE_LOADERS = (
 
 {% if project_settings_template|default(None) %}
 {% include project_settings_template %}
+{% endif %}
+
+{% if include_python_saml|default(False) %}
+{% include "templates/python_saml/project_settings.py" %}
 {% endif %}

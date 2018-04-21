@@ -1,16 +1,14 @@
-# Settings for Instructor Course Dashboards (coda) project.
+# Settings for Provision Request Tool project.
 TIME_ZONE = 'America/Los_Angeles'
 
 INSTALLED_APPS += [
-    'supporttools',
-    'authz_group',
     'templatetag_handlebars',
-    'userservice',
+    'authz_group',
     'django_mobileesp',
-    'coursedashboards.apps.CourseDashboardsConfig',
-    'rc_django',
-    'rest_framework.authtoken',
-    'rest_framework',
+    'endorsement',
+    'userservice',
+    'django_client_logger',
+    'supporttools',
 ]
 
 COMPRESS_PRECOMPILERS += (
@@ -45,20 +43,11 @@ LOGGING = {
         }
     },
     'handlers': {
-        'coda_file': {
+        'endorsement_file': {
             'level': 'DEBUG',
             'formatter': 'simple',
             'class': 'logging.handlers.TimedRotatingFileHandler',
-            'filename': '{{ base_dir }}/logs/coda.log',
-            'when': 'midnight',
-            'interval': 1,
-            'backupCount': 7
-        },
-        'sws_file': {
-            'level': 'DEBUG',
-            'formatter': 'simple',
-            'class': 'logging.handlers.TimedRotatingFileHandler',
-            'filename': '{{ base_dir }}/logs/sws_client.log',
+            'filename': '{{ base_dir }}/logs/endorsement.log',
             'when': 'midnight',
             'interval': 1,
             'backupCount': 7
@@ -88,10 +77,6 @@ LOGGING = {
         },
     },
     'loggers': {
-        'sws': {
-            'handlers': ['sws_file'],
-            'level': '{{logger_level|default("DEBUG")}}'
-        },
         'gws': {
             'handlers': ['gws_file'],
             'level': '{{logger_level|default("DEBUG")}}'
@@ -100,8 +85,8 @@ LOGGING = {
             'handlers': ['pws_file'],
             'level': '{{logger_level|default("DEBUG")}}'
         },
-        'coursedashboards': {
-            'handlers': ['coda_file'],
+        'endorsement': {
+            'handlers': ['endorsement_file'],
             'level': '{{logger_level|default("DEBUG")}}'
         },
         'django.request': {
@@ -121,7 +106,7 @@ RESTCLIENTS_MEMCACHED_SERVERS = {{ restclients_memcached_servers|default("''")}}
 
 RESTCLIENTS_DEFAULT_TIMEOUT = 3
 
-SUPPORTTOOLS_PARENT_APP = "CoDa"
+SUPPORTTOOLS_PARENT_APP = "Provision"
 SUPPORTTOOLS_PARENT_APP_URL = "/"
 
 from django_mobileesp.detector import mobileesp_agent as agent
@@ -136,7 +121,9 @@ DETECT_USER_AGENTS = {
     'is_mobile': agent.detectMobileQuick,
 }
 
-CODA_ADMIN_GROUP = '{{ coda_admin_group }}'
+PROVISION_ADMIN_GROUP = '{{ provision_admin_group }}'
+USERSERVICE_ADMIN_GROUP = '{{ provision_admin_group }}'
+RESTCLIENTS_ADMIN_GROUP = '{{ provision_admin_group }}'
 
 EMAIL_BACKEND = '{{ email_backend }}'
 EMAIL_HOST = '{{ email_host }}'
