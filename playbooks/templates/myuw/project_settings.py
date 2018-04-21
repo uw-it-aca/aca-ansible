@@ -10,7 +10,8 @@ INSTALLED_APPS += [
     'supporttools',
     'django_client_logger',
     'myuw.apps.MyUWConfig',
-    'blti'
+    'blti',
+    'hx_toolkit'
 ]
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
@@ -63,6 +64,13 @@ LOGGING = {
             'permissions': 0o664,
             'formatter': 'myuw',
         },
+        'notice': {
+            'level': 'INFO',
+            'class': 'permissions_logging.DateNameFileHandler',
+            'filename': '{{ base_dir }}/logs/notice-%Y-%m-%d',
+            'permissions': 0o664,
+            'formatter': 'myuw',
+        },
         'session': {
             'level': 'INFO',
             'class': 'permissions_logging.DateNameFileHandler',
@@ -70,7 +78,7 @@ LOGGING = {
             'permissions': 0o664,
             'formatter': 'myuw',
         },
-        'performance_log': {
+        'performance': {
             'level': 'INFO',
             'class': 'permissions_logging.DateNameFileHandler',
             'filename': '{{ base_dir }}/logs/view_performance-%Y-%m-%d',
@@ -96,13 +104,23 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-        'restclients_core.dao': {
+        'restclients_core': {
+            'handlers': ['restclients_timing_log'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'uw_sws': {
+            'handlers': ['restclients_timing_log'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'uw_iasystem': {
             'handlers': ['restclients_timing_log'],
             'level': 'INFO',
             'propagate': False,
         },
         'myuw.util.performance': {
-            'handlers': ['performance_log'],
+            'handlers': ['performance'],
             'level': 'INFO',
             'propagate': False,
         },
@@ -111,8 +129,28 @@ LOGGING = {
             'level': 'INFO',
             'propagate': True,
         },
+        'myuw.views.api.banner_message': {
+            'handlers': ['pref'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'myuw.views.api.resources.pin': {
+            'handlers': ['pref'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'myuw.views.api.instructor_section_display': {
+            'handlers': ['pref'],
+            'level': 'INFO',
+            'propagate': True,
+        },
         'myuw.views.logger': {
             'handlers': ['link'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'myuw.views.api.notices.seen': {
+            'handlers': ['notice'],
             'level': 'INFO',
             'propagate': True,
         },
