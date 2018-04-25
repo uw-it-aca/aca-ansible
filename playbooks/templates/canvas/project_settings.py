@@ -386,9 +386,9 @@ AWS_SQS = {
         'VISIBILITY_TIMEOUT': 60,
         'MESSAGE_GATHER_SIZE': {{ event_enrollment_sqs_gather }},
         'VALIDATE_SNS_SIGNATURE': True,
-        'VALIDATE_MSG_SIGNATURE': True,
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
         'PAYLOAD_SETTINGS': {
+            'VALIDATE_MSG_SIGNATURE': True,
             'KEYS': {
 {% for payload_key in event_enrollment_payload_keys|default([]) %}
                 '{{ payload_key.key }}': '{{ payload_key.secret }}',
@@ -404,9 +404,10 @@ AWS_SQS = {
         'VISIBILITY_TIMEOUT': 60,
         'MESSAGE_GATHER_SIZE': {{ event_enrollment_v2_sqs_gather }},
         'VALIDATE_SNS_SIGNATURE': True,
-        'VALIDATE_MSG_SIGNATURE': True,
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
-        'PAYLOAD_SETTINGS': {}
+        'PAYLOAD_SETTINGS': {
+            'VALIDATE_MSG_SIGNATURE': True,
+        }
     },
     'INSTRUCTOR_ADD': {
         'TOPIC_ARN': '{{ event_instructor_add_topic_arn }}',
@@ -416,9 +417,10 @@ AWS_SQS = {
         'VISIBILITY_TIMEOUT': 60,
         'MESSAGE_GATHER_SIZE': 50,
         'VALIDATE_SNS_SIGNATURE': True,
-        'VALIDATE_MSG_SIGNATURE': True,
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
-        'PAYLOAD_SETTINGS': {}
+        'PAYLOAD_SETTINGS': {
+            'VALIDATE_MSG_SIGNATURE': True,
+        }
     },
     'INSTRUCTOR_DROP': {
         'TOPIC_ARN': '{{ event_instructor_drop_topic_arn }}',
@@ -428,9 +430,10 @@ AWS_SQS = {
         'VISIBILITY_TIMEOUT': 60,
         'MESSAGE_GATHER_SIZE': 50,
         'VALIDATE_SNS_SIGNATURE': True,
-        'VALIDATE_MSG_SIGNATURE': True,
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
-        'PAYLOAD_SETTINGS': {}
+        'PAYLOAD_SETTINGS': {
+            'VALIDATE_MSG_SIGNATURE': True,
+        }
     },
     'GROUP': {
         'TOPIC_ARN': '{{ event_group_topic_arn }}',
@@ -440,9 +443,9 @@ AWS_SQS = {
         'VISIBILITY_TIMEOUT': 60,
         'MESSAGE_GATHER_SIZE': {{ event_group_sqs_gather }},
         'VALIDATE_SNS_SIGNATURE': True,
-        'VALIDATE_MSG_SIGNATURE': True,
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
         'PAYLOAD_SETTINGS': {
+            'VALIDATE_MSG_SIGNATURE': True,
             'KEYS': {
 {% for payload_key in event_group_payload_keys|default([]) %}
                 '{{ payload_key.key }}': '{{ payload_key.secret }}',
@@ -458,9 +461,10 @@ AWS_SQS = {
         'VISIBILITY_TIMEOUT': 60,
         'MESSAGE_GATHER_SIZE': 50,
         'VALIDATE_SNS_SIGNATURE': True,
-        'VALIDATE_MSG_SIGNATURE': True,
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
-        'PAYLOAD_SETTINGS': {}
+        'PAYLOAD_SETTINGS': {
+            'VALIDATE_MSG_SIGNATURE': True,
+        }
     }
 }
 
