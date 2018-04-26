@@ -8,6 +8,15 @@ WSGIScriptAlias {{ wsgi_url_base|default("/") }} {{ base_dir }}/live/wsgi/django
      Allow from all
      </Directory>
 
+<IfModule mod_headers.c>
+    Header always set Strict-Transport-Security "max-age=31535999; includeSubDomains; preload"
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L]
+</IfModule>
 
 {% include 'apache/static_content' %}
 
