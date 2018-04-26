@@ -97,7 +97,7 @@ LOGGING = {
     }
 }
 
-USERSERVICE_VALIDATION_MODULE = "coursedashboards.userservice_validation.validate"
+USERSERVICE_VALIDATION_MODULE = "endorsement.userservice_validation.validate"
 USERSERVICE_ADMIN_GROUP='{{ userservice_admin_group }}'
 RESTCLIENTS_ADMIN_GROUP='{{ restclients_admin_group }}'
 RESTCLIENTS_DAO_CACHE_CLASS='{{restclients_dao_cache_class}}'
@@ -113,7 +113,6 @@ from django_mobileesp.detector import mobileesp_agent as agent
 
 MIDDLEWARE_CLASSES += [
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
-    'rc_django.middleware.EnableServiceDegradationMiddleware',
 ]
 
 DETECT_USER_AGENTS = {
@@ -125,6 +124,9 @@ PROVISION_ADMIN_GROUP = '{{ provision_admin_group }}'
 USERSERVICE_ADMIN_GROUP = '{{ provision_admin_group }}'
 RESTCLIENTS_ADMIN_GROUP = '{{ provision_admin_group }}'
 
+APP_SERVER_BASE = '{{ app_server_base }}'
+
+EMAIL_REPLY_ADDRESS = 'UW-IT <help@uw.edu>'
 EMAIL_BACKEND = '{{ email_backend }}'
 EMAIL_HOST = '{{ email_host }}'
 {% if safe_email_recipient|default(None) %}
