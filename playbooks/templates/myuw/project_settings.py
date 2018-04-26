@@ -225,3 +225,5 @@ MYUW_ADMIN_GROUP = '{{ myuw_admin_group }}'
 MYUW_ENABLED_FEATURES = {{ myuw_enabled_features }}
 REMOTE_USER_FORMAT = "{{ remote_user_format|default("eppn") }}"
 LOGOUT_URL = "{{ logout_url|default("/user_logout") }}"
+
+MYUWCLASS = "{{ myuwclass }}"
