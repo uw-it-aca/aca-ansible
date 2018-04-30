@@ -1,6 +1,6 @@
 RESTCLIENTS_NWS_DAO_CLASS = 'Live'
 RESTCLIENTS_NWS_CERT_FILE='{% if webservice_client_cert_path|default(None) %}{{ webservice_client_cert_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_cert_name }}{% endif %}'
 RESTCLIENTS_NWS_KEY_FILE='{% if webservice_client_key_path|default(None) %}{{ webservice_client_key_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_key_name }}{% endif %}'
-RESTCLIENTS_NWS_HOST='{% if "nws" in restclients.production|default(False) %}https://apps-ws.admin.uw.edu{% else %}https://api.test.concert.uw.edu{% endif %}'
+RESTCLIENTS_NWS_HOST='{% if "nws" in restclients.production|default(False) %}https://api.concert.uw.edu{% else %}https://api.test.concert.uw.edu{% endif %}'
 RESTCLIENTS_NWS_TIMEOUT={{ nws_timeout|default(5) }}
 RESTCLIENTS_NWS_POOL_SIZE={{ nws_max_pool_size|default(5) }}
