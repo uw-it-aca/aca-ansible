@@ -26,6 +26,13 @@ COMPRESS_JS_FILTERS = [
     'compressor.filters.jsmin.JSMinFilter',
 ]
 
+ADMINS = (
+    # ('Your Name', 'your_email@example.com'),
+{% for admin in admins|default([]) %}
+    ('{{ admin.name }}', '{{ admin.email }}'),
+{% endfor %}
+)
+
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 LOGGING = {
