@@ -38,7 +38,6 @@ INSTALLED_APPS += (
     'templatetag_handlebars',
     'sis_provisioner.apps.SISProvisionerConfig',
     'supporttools',
-    'authz_group',
     'blti',
     'groups',
     'libguide',
@@ -343,11 +342,10 @@ SIS_IMPORT_LIMIT = {
     }
 }
 
-AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
-
 CANVAS_MANAGER_ADMIN_GROUP = 'u_acadev_canvas_support'
 RESTCLIENTS_ADMIN_GROUP = 'u_acadev_canvas_support-admin'
-USERSERVICE_ADMIN_GROUP = RESTCLIENTS_ADMIN_GROUP
+RESTCLIENTS_ADMIN_AUTH_MODULE = 'sis_provisioner.views.admin.can_view_source_data'
+
 NONPERSONAL_NETID_EXCEPTION_GROUP = 'u_acadev_canvas_nonpersonal_netids'
 
 RESTCLIENTS_DISABLE_THREADING = True
