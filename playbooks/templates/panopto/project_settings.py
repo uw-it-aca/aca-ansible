@@ -7,7 +7,6 @@ INSTALLED_APPS += (
     'supporttools',
     'rc_django',
     'userservice',
-    'authz_group',
     'scheduler.apps.SchedulerConfig',
     'blti',
 )
@@ -149,10 +148,7 @@ LOGGING = {
 
 PANOPTO_ADMIN_GROUP = 'u_acadev_panopto_support'
 
-AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
-USERSERVICE_ADMIN_GROUP = PANOPTO_ADMIN_GROUP
-
-RESTCLIENTS_ADMIN_GROUP = PANOPTO_ADMIN_GROUP
+RESTCLIENTS_ADMIN_AUTH_MODULE = 'scheduler.views.can_view_restclients_data'
 RESTCLIENTS_TIMEOUT = 60
 RESTCLIENTS_DAO_CACHE_CLASS = 'scheduler.cache.RestClientsCache'
 
