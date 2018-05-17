@@ -6,7 +6,6 @@ INSTALLED_APPS += [
     'templatetag_handlebars',
     'supporttools',
     'userservice',
-    'authz_group',
     'rc_django',
 ]
 
@@ -105,10 +104,10 @@ LOGGING = {
     }
 }
 
-AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
-USERSERVICE_VALIDATION_MODULE = 'notify.userservice_validation_module.validate_override_user'
-USERSERVICE_ADMIN_GROUP = '{{ support_group }}'
-RESTCLIENTS_ADMIN_GROUP = USERSERVICE_ADMIN_GROUP
+NOTIFY_ADMIN_GROUP = '{{ support_group }}'
+USERSERVICE_VALIDATION_MODULE = 'notify.utilities.validate_override_user'
+USERSERVICE_OVERRIDE_AUTH_MODULE = 'notify.views.can_override_user'
+RESTCLIENTS_ADMIN_AUTH_MODULE = 'notify.views.can_proxy_restclient'
 RESTCLIENTS_DAO_CACHE_CLASS='notify.cache_implementation.UICache'
 
 AWS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'
