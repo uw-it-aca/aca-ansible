@@ -294,8 +294,6 @@ LTI_CONSUMERS = {
 BLTI_AES_KEY = b'{{ blti_aes_key }}'
 BLTI_AES_IV = b'{{ blti_aes_iv }}'
 
-SESSION_COOKIE_NAME = 'cvssessionid'
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 60 * 60 * 8
 SESSION_COOKIE_DOMAIN = '.uw.edu'
 CSRF_COOKIE_DOMAIN = '.uw.edu'
