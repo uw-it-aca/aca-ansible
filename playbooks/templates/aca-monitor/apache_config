@@ -1,5 +1,3 @@
-WSGIPassAuthorization On
-
 ScriptAlias /nagios/cgi-bin /data/nagios/nagios/sbin
 <Directory "/data/nagios/nagios/sbin">
     Options ExecCGI
