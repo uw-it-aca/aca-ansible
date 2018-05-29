@@ -6,5 +6,4 @@ INSTALLED_APPS += (
     'nagios_registration',
     'oauth_provider',
     'templatetag_handlebars',
-    'uw_saml',
 )
