@@ -2,7 +2,6 @@
 TIME_ZONE = 'America/Los_Angeles'
 
 INSTALLED_APPS += (
-    'authz_group',
     'templatetag_handlebars',
     'rc_django',
     'userservice',
@@ -100,6 +99,11 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
+        'rc_django': {
+            'handlers': ['restclients_timing_log'],
+            'level': 'INFO',
+            'propagate': False,
+        },
         'myuw.util.performance': {
             'handlers': ['performance_log'],
             'level': 'INFO',
@@ -139,15 +143,7 @@ LOGGING = {
 }
 
 RESTCLIENTS_MEMCACHED_SERVERS = {{ restclients_memcached_servers|default("''")}}
-
-USERSERVICE_VALIDATION_MODULE = "myuw.userservice_validation.validate"
-USERSERVICE_ADMIN_GROUP='{{ userservice_admin_group }}'
-RESTCLIENTS_ADMIN_GROUP='{{ restclients_admin_group }}'
 RESTCLIENTS_DAO_CACHE_CLASS='{{restclients_dao_cache_class}}'
-AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
-
-MYUW_ADMIN_GROUP = '{{ myuw_admin_group }}'
-MYUW_ENABLED_FEATURES = {{ myuw_enabled_features }}
 
 SUPPORTTOOLS_PARENT_APP = "MyUW"
 SUPPORTTOOLS_PARENT_APP_URL = "/"
@@ -203,6 +199,17 @@ LTI_CONSUMERS = {
 {% endfor %}
 }
 
+MYUW_ADMIN_GROUP = "{{ myuw_admin_group }}"
+MYUW_OVERRIDE_GROUP = "{{ myuw_override_group }}"
+MYUW_ASTRA_GROUP_STEM = "{{ myuw_astra_group_stem }}"
+MYUW_DISABLE_ACTIONS_WHEN_OVERRIDE = "{{ myuw_disable_actions_when_override }}"
+
+USERSERVICE_VALIDATION_MODULE = "myuw.authorization.validate_netid"
+USERSERVICE_OVERRIDE_AUTH_MODULE = "myuw.authorization.can_override_user"
+RESTCLIENTS_ADMIN_AUTH_MODULE = "myuw.authorization.can_proxy_restclient"
+
+MYUWCLASS = "{{ myuwclass }}"
 REMOTE_USER_FORMAT = "{{ remote_user_format|default("eppn") }}"
 LOGOUT_URL = "{{ logout_url|default("/user_logout") }}"
-MYUWCLASS = "{{ myuwclass }}"
+
+MYUW_ENABLED_FEATURES = {{ myuw_enabled_features }}
