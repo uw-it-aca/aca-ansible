@@ -213,11 +213,3 @@ REMOTE_USER_FORMAT = "{{ remote_user_format|default("eppn") }}"
 LOGOUT_URL = "{{ logout_url|default("/user_logout") }}"
 
 MYUW_ENABLED_FEATURES = {{ myuw_enabled_features }}
-
-MYUW_ADMIN_GROUP = "{{ myuw_admin_group }}"
-MYUW_OVERRIDE_GROUP = "{{ myuw_override_group }}"
-MYUW_ASTRA_GROUP_STEM = "{{ myuw_astra_group_stem }}"
-MYUW_DISABLE_ACTIONS_WHEN_OVERRIDE = "{{ myuw_disable_actions_when_override }}"
-USERSERVICE_VALIDATION_MODULE = "myuw.authorization.validate_netid"
-USERSERVICE_OVERRIDE_AUTH_MODULE = "myuw.authorization.can_override_user"
-RESTCLIENTS_ADMIN_AUTH_MODULE = "myuw.authorization.can_proxy_restclient"
