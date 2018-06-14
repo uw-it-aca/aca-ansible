@@ -212,12 +212,6 @@ DETECT_USER_AGENTS = {
 GOOGLE_ANALYTICS_KEY = "{{ ga_tracker_key }}"
 GOOGLE_SEARCH_KEY = '{{ gcse_key }}'
 
-{% if myuw_fyp_redirects|default(False) %}
-MYUW_USER_SERVLET_URL = "{{ myuw_legacy_url }}"
-MYUW_MANDATORY_SWITCH_PATH = "{{ myuw_fyp_list_path }}"
-MYUW_OPTIN_SWITCH_PATH = "{{ myuw_optin_list_path }}"
-{% endif %}
-
 SERU_LIST = "{{ myuw_seru_path }}"
 MYUWCLASS = "{{ myuwclass }}"
 
