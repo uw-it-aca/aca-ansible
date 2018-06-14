@@ -156,12 +156,6 @@ EMAIL_TIMEOUT = {{ email_timeout }}
 SAFE_EMAIL_RECIPIENT = '{{ safe_email_recipient }}'
 {% endif %}
 
-{% if myuw_fyp_redirects|default(False) %}
-MYUW_USER_SERVLET_URL = "{{ myuw_legacy_url }}"
-MYUW_MANDATORY_SWITCH_PATH = "{{ myuw_fyp_list_path }}"
-MYUW_OPTIN_SWITCH_PATH = "{{ myuw_optin_list_path }}"
-{% endif %}
-
 # Assign rather than append since order is significant
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
