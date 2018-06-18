@@ -103,7 +103,7 @@ LOGGING = {
     'loggers': {
         'django.security.DisallowedHost': {
             'handlers': ['null'],
-            'propagate': True,
+            'propagate': False,
         },
         'django.request': {
             'handlers': ['mail_admins', 'file'],
