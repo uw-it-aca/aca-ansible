@@ -14,7 +14,6 @@ INSTALLED_APPS += [
     'course_grader.apps.CourseGraderConfig',
     'supporttools',
     'userservice',
-    'authz_group',
     'rc_django',
     'grade_conversion_calculator',
 ]
@@ -96,14 +95,12 @@ LOGGING = {
 
 GRADEPAGE_ADMIN_GROUP = '{{ support_group }}'
 
-AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.uw_group_service.UWGroupService'
 USERSERVICE_VALIDATION_MODULE = 'course_grader.dao.person.is_netid'
-USERSERVICE_ADMIN_GROUP = GRADEPAGE_ADMIN_GROUP
-
-RESTCLIENTS_ADMIN_GROUP = GRADEPAGE_ADMIN_GROUP
-RESTCLIENTS_DAO_CACHE_CLASS = 'course_grader.cache.RestClientsCache'
-
+USERSERVICE_OVERRIDE_AUTH_MODULE = 'course_grader.views.support.can_override_user'
 ALLOW_GRADE_SUBMISSION_OVERRIDE = {{ allow_grade_submission_override }}
+
+RESTCLIENTS_ADMIN_AUTH_MODULE = 'course_grader.views.support.can_proxy_restclient'
+RESTCLIENTS_DAO_CACHE_CLASS = 'course_grader.cache.RestClientsCache'
 
 EMAIL_BACKEND = '{{ email_backend }}'
 EMAIL_HOST = '{{ email_host }}'
