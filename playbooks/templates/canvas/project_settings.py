@@ -354,24 +354,10 @@ SUPPORTTOOLS_PARENT_APP = 'Canvas LMS'
 SUPPORTTOOLS_PARENT_APP_URL = RESTCLIENTS_CANVAS_HOST
 
 EVENT_COUNT_PRUNE_AFTER_DAY = 7
-EVENT_VALIDATE_SNS_SIGNATURE = True
-EVENT_VALIDATE_ENROLLMENT_SIGNATURE = False
-EVENT_ENROLLMENT_TOPIC_ARN = '{{ event_enrollment_topic_arn }}'
-EVENT_ENROLLMENT_KEYS = {
-{% for payload_key in event_enrollment_payload_keys|default([]) %}
-    '{{ payload_key.key }}': '{{ payload_key.secret }}',
-{% endfor %}
-}
 
 AWS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'
 EVENT_AWS_SQS_CERT = '{{ webservice_client_cert_path }}'
 EVENT_AWS_SQS_KEY = '{{ webservice_client_key_path }}'
-
-EVENT_AWS_ACCESS_KEY_ID = '{{ event_enrollment_key_id }}'
-EVENT_AWS_SECRET_ACCESS_KEY = '{{ event_enrollment_secret_key }}'
-EVENT_SQS_ENROLLMENT_QUEUE = '{{ event_enrollment_sqs_queue }}'
-EVENT_SQS_VISIBILITY_TIMEOUT = 60
-EVENT_SQS_MESSAGE_GATHER_SIZE = {{ event_enrollment_sqs_gather }}
 
 AWS_SQS = {
     'ENROLLMENT_V2': {
