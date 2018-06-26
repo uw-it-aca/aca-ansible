@@ -374,24 +374,6 @@ EVENT_SQS_VISIBILITY_TIMEOUT = 60
 EVENT_SQS_MESSAGE_GATHER_SIZE = {{ event_enrollment_sqs_gather }}
 
 AWS_SQS = {
-    'ENROLLMENT' : {
-        'TOPIC_ARN' : '{{ event_enrollment_topic_arn }}',
-        'QUEUE': '{{ event_enrollment_sqs_queue }}',
-        'KEY_ID': '{{ event_enrollment_key_id }}',
-        'KEY': '{{ event_enrollment_secret_key }}',
-        'VISIBILITY_TIMEOUT': 60,
-        'MESSAGE_GATHER_SIZE': {{ event_enrollment_sqs_gather }},
-        'VALIDATE_SNS_SIGNATURE': True,
-        'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
-        'PAYLOAD_SETTINGS': {
-            'VALIDATE_MSG_SIGNATURE': True,
-            'KEYS': {
-{% for payload_key in event_enrollment_payload_keys|default([]) %}
-                '{{ payload_key.key }}': '{{ payload_key.secret }}',
-{% endfor %}
-            }
-        }
-    },
     'ENROLLMENT_V2': {
         'TOPIC_ARN': '{{ event_enrollment_v2_topic_arn }}',
         'QUEUE': '{{ event_enrollment_v2_sqs_queue }}',
