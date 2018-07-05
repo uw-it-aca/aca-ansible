@@ -5,6 +5,7 @@ SAML_USER_ATTRIBUTE = '{{ saml_user_attribute|default("uwnetid") }}'
 
 from django.core.urlresolvers import reverse_lazy
 LOGIN_URL = reverse_lazy('saml_login')
+LOGOUT_URL = reverse_lazy('saml_logout')
 
 UW_SAML = {
     'strict': True,
