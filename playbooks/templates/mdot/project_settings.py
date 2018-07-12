@@ -43,7 +43,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'null_command',
     'rest_framework',
-    'mdotdevs',
     'mdot_rest',
     'mdot',
     'compressor',
