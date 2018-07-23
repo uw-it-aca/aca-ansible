@@ -36,6 +36,23 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'pivot.context_processors.google_analytics',
+            ],
+        },
+    },
+]
+
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 LOGGING = {
@@ -95,3 +112,6 @@ LOGGING = {
 CSV_ROOT = '{{ csv_data_path }}'
 
 LOGIN_URL = '/login/'
+
+# Google Analytics
+GOOGLE_ANALYTICS_KEY = '{{ ga_tracking_id }}'
