@@ -226,6 +226,5 @@ USERSERVICE_OVERRIDE_AUTH_MODULE = "myuw.authorization.can_override_user"
 RESTCLIENTS_ADMIN_AUTH_MODULE = "myuw.authorization.can_proxy_restclient"
 
 REMOTE_USER_FORMAT = "{{ remote_user_format|default("eppn") }}"
-LOGOUT_URL = "{{ logout_url|default("/user_logout") }}"
 
 MYUW_ENABLED_FEATURES = {{ myuw_enabled_features }}
