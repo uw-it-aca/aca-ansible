@@ -269,10 +269,10 @@ TEMPLATE_LOADERS = (
 {% endfor %}
 {% endfor %}
 
-{% if project_settings_template|default(None) %}
-{% include project_settings_template %}
-{% endif %}
-
 {% if include_python_saml|default(False) %}
 {% include "templates/python_saml/project_settings.py" %}
+{% endif %}
+
+{% if project_settings_template|default(None) %}
+{% include project_settings_template %}
 {% endif %}
