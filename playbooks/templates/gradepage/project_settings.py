@@ -109,9 +109,7 @@ EMAIL_NOREPLY_ADDRESS = 'GradePage <{{ email_noreply_address }}>'
 SAFE_EMAIL_RECIPIENT = '{{ safe_email_recipient }}'
 {% endif %}
 
-{% for host in allowed_hosts|default([]) %}
-GRADEPAGE_HOST = 'https://{{ host }}'
-{% endfor %}
+GRADEPAGE_HOST = 'https://{{ sp_hostname }}'
 SUBMISSION_DEADLINE_WARNING_HOURS = 48
 PAST_TERMS_VIEWABLE = 4
 GRADE_RETENTION_YEARS = 5
