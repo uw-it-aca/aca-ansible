@@ -98,6 +98,7 @@ LOGGING = {
 }
 
 USERSERVICE_VALIDATION_MODULE = "endorsement.userservice_validation.validate"
+USERSERVICE_OVERRIDE_AUTH_MODULE = "endorsement.userservice_validation.can_override_user"
 USERSERVICE_ADMIN_GROUP='{{ userservice_admin_group }}'
 RESTCLIENTS_ADMIN_GROUP='{{ restclients_admin_group }}'
 RESTCLIENTS_DAO_CACHE_CLASS='{{restclients_dao_cache_class}}'
