@@ -9,7 +9,8 @@ INSTALLED_APPS += (
     'django_client_logger',
     'myuw.apps.MyUWConfig',
     'blti',
-    'django_mobileesp'
+    'django_mobileesp',
+    'hx_toolkit'
 )
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
@@ -38,6 +39,13 @@ LOGGING = {
             'level': 'INFO',
             'class': 'permissions_logging.DateNameFileHandler',
             'filename': '{{ base_dir }}/logs/myuw-%Y-%m-%d',
+            'permissions': 0o664,
+            'formatter': 'myuw',
+        },
+        'event': {
+            'level': 'INFO',
+            'class': 'permissions_logging.DateNameFileHandler',
+            'filename': '{{ base_dir }}/logs/event-%Y-%m-%d',
             'permissions': 0o664,
             'formatter': 'myuw',
         },
@@ -99,6 +107,11 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
+        'aws_message': {
+            'handlers': ['event'],
+            'level': 'INFO',
+            'propagate': False,
+        },
         'rc_django': {
             'handlers': ['restclients_timing_log'],
             'level': 'INFO',
@@ -109,15 +122,20 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
-        'myuw.views.choose': {
+        'myuw.event': {
+            'handlers': ['event'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'myuw.views.api.banner_message': {
             'handlers': ['pref'],
             'level': 'INFO',
-            'propagate': True,
+            'propagate': False,
         },
         'myuw.views.logger': {
             'handlers': ['link'],
             'level': 'INFO',
-            'propagate': True,
+            'propagate': False,
         },
         'myuw': {
             'handlers': ['myuw'],
@@ -136,6 +154,11 @@ LOGGING = {
         },
         'session': {
             'handlers': ['session'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        '': {
+            'handlers': ['myuw'],
             'level': 'INFO',
             'propagate': True,
         },

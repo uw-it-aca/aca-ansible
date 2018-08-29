@@ -42,6 +42,13 @@ LOGGING = {
             'permissions': 0o664,
             'formatter': 'myuw',
         },
+        'event': {
+            'level': 'INFO',
+            'class': 'permissions_logging.DateNameFileHandler',
+            'filename': '{{ base_dir }}/logs/event-%Y-%m-%d',
+            'permissions': 0o664,
+            'formatter': 'myuw',
+        },
         'pref': {
             'level': 'INFO',
             'class': 'permissions_logging.DateNameFileHandler',
@@ -113,6 +120,11 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
          },
+        'aws_message': {
+            'handlers': ['event'],
+            'level': 'INFO',
+            'propagate': False,
+        },
         'uw_sws': {
             'handlers': ['restclients_timing_log'],
             'level': 'INFO',
@@ -128,35 +140,40 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
-        'myuw.views.choose': {
-            'handlers': ['pref'],
-            'level': 'INFO',
-            'propagate': True,
-        },
         'myuw.views.api.banner_message': {
             'handlers': ['pref'],
             'level': 'INFO',
-            'propagate': True,
+            'propagate': False,
         },
         'myuw.views.api.resources.pin': {
             'handlers': ['pref'],
             'level': 'INFO',
-            'propagate': True,
+            'propagate': False,
         },
         'myuw.views.api.instructor_section_display': {
             'handlers': ['pref'],
             'level': 'INFO',
-            'propagate': True,
+            'propagate': False,
         },
         'myuw.views.logger': {
             'handlers': ['link'],
             'level': 'INFO',
-            'propagate': True,
+            'propagate': False,
         },
         'myuw.views.api.notices.seen': {
             'handlers': ['notice'],
             'level': 'INFO',
-            'propagate': True,
+            'propagate': False,
+        },
+        'myuw.event': {
+            'handlers': ['event'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'myuw.management.commands.load_section_status_changes': {
+            'handlers': ['event'],
+            'level': 'INFO',
+            'propagate': False,
         },
         'myuw': {
             'handlers': ['myuw'],
@@ -175,6 +192,11 @@ LOGGING = {
         },
         'session': {
             'handlers': ['session'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        '': {
+            'handlers': ['myuw'],
             'level': 'INFO',
             'propagate': True,
         },
@@ -228,3 +250,20 @@ RESTCLIENTS_ADMIN_AUTH_MODULE = "myuw.authorization.can_proxy_restclient"
 REMOTE_USER_FORMAT = "{{ remote_user_format|default("eppn") }}"
 
 MYUW_ENABLED_FEATURES = {{ myuw_enabled_features }}
+
+AWS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'
+
+AWS_SQS = {
+    'SECTION_SATSUS_V1': {
+        'ACCOUNT_NUMBER': '{{ event_section_status_v1_account_number }}',
+        'QUEUE': '{{ event_section_status_v1_sqs_queue }}',
+        'REGION': '{{ event_section_status_v1_region_name }}',
+        'KEY_ID': '{{ event_section_status_v1_key_id }}',
+        'KEY': '{{ event_section_status_v1_secret_key }}',
+        'VISIBILITY_TIMEOUT': 50,
+        'MESSAGE_GATHER_SIZE': 10,
+        'WAIT_TIME': 5,
+        'VALIDATE_SNS_SIGNATURE': True,
+        'PAYLOAD_SETTINGS': {}
+    }
+}
