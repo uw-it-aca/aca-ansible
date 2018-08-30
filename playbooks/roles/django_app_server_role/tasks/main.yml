@@ -6,4 +6,3 @@
 
 - include: ../../../includes/django-managed-post-checkout.yml
 - include: ../../../includes/nagios_registration.yml
-- include: ../../../includes/acagraph_registration.yml
