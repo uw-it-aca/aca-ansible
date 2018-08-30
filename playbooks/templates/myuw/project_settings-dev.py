@@ -137,23 +137,23 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
-        'myuw': {
-            'handlers': ['myuw'],
-            'level': 'INFO',
-            'propagate': True,
-        },
         'card': {
             'handlers': ['card'],
             'level': 'INFO',
-            'propagate': True,
+            'propagate': False,
         },
         'link': {
             'handlers': ['link'],
             'level': 'INFO',
-            'propagate': True,
+            'propagate': False,
         },
         'session': {
             'handlers': ['session'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'myuw': {
+            'handlers': ['myuw'],
             'level': 'INFO',
             'propagate': True,
         },
