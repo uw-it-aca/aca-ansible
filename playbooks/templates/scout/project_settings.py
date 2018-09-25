@@ -58,7 +58,6 @@ MIDDLEWARE_CLASSES += (
     'django.contrib.auth.middleware.RemoteUserMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
-    'turbolinks.middleware.TurbolinksMiddleware',
     'userservice.user.UserServiceMiddleware'
 )
 
