@@ -3,7 +3,11 @@ ALLOWED_HOSTS += ('{{ sp_hostname }}',)
 
 SAML_USER_ATTRIBUTE = '{{ saml_user_attribute|default("uwnetid") }}'
 
+{% if django_version|version_compare('2', '>=')  %}
+from django.urls import reverse_lazy
+{% else %}
 from django.core.urlresolvers import reverse_lazy
+{% endif %}
 LOGIN_URL = reverse_lazy('saml_login')
 LOGOUT_URL = reverse_lazy('saml_logout')
 
