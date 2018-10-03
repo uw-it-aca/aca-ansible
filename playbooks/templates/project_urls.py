@@ -1,4 +1,6 @@
-{% if django19|default(false) %}
+{% if django_version|version_compare('2', '>=') %}
+from django.urls import include, re_path
+{% elif django_version|version_compare('1.9', '>=') %}
 from django.conf.urls import include, url
 {% else %}
 from django.conf.urls import patterns, include, url
@@ -8,7 +10,7 @@ from django.conf.urls import patterns, include, url
 {% include extra_urls_head_section %}
 {% endif %}
 
-{% if django19|default(false) %}
+{% if django_version|version_compare('1.9', '>=') %}
 urlpatterns = [
 {% else %}
 urlpatterns = patterns('',
@@ -16,7 +18,7 @@ urlpatterns = patterns('',
     {% for definition in project_url_definitions %}
     {{ definition }},
     {% endfor %}
-{% if django19|default(false) %}
+{% if django_version|version_compare('1.9', '>=') %}
 ]
 {% else %}
 )
