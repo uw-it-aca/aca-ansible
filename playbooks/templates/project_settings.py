@@ -106,7 +106,7 @@ ROOT_URLCONF = 'project.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'project.wsgi.application'
 
-{% if django_version|version_compare('1.9', '>=') %}
+{% if django_version is version_compare('1.9', '>=') %}
 INSTALLED_APPS = [
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
@@ -122,7 +122,7 @@ INSTALLED_APPS = [
     {% if preprocess_templates|default(False)%}'template_preprocess',{% endif %}
 ]
 
-{% if django_version|version_compare('2', '>=') %}
+{% if django_version is version_compare('2', '>=') %}
 MIDDLEWARE = [
 {% else %}
 MIDDLEWARE_CLASSES = [

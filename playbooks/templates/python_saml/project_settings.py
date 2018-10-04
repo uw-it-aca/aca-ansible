@@ -3,7 +3,7 @@ ALLOWED_HOSTS += ('{{ sp_hostname }}',)
 
 SAML_USER_ATTRIBUTE = '{{ saml_user_attribute|default("uwnetid") }}'
 
-{% if django_version|version_compare('2', '>=')  %}
+{% if django_version is version_compare('2', '>=')  %}
 from django.urls import reverse_lazy
 {% else %}
 from django.core.urlresolvers import reverse_lazy
