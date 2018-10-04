@@ -1,8 +1,5 @@
 # Settings for Canvas project.
 
-# Explicitly set for Django 1.7 warnings
-TEST_RUNNER = 'django.test.runner.DiscoverRunner'
-
 TIME_ZONE = 'America/Los_Angeles'
 
 TEMPLATES[0]['OPTIONS']['context_processors'].extend([
@@ -17,7 +14,7 @@ CACHES = {
 }
 
 # Assign rather than append since order is significant
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'blti.middleware.CSRFHeaderMiddleware',
     'blti.middleware.SessionHeaderMiddleware',
@@ -28,10 +25,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.PersistentRemoteUserMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'userservice.user.UserServiceMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_mobileesp.middleware.UserAgentDetectionMiddleware',
-)
+    'django_user_agents.middleware.UserAgentMiddleware',
+]
 
 INSTALLED_APPS += (
     'django.contrib.humanize',
@@ -48,6 +43,7 @@ INSTALLED_APPS += (
     'grading_standard',
     'anonymous_feedback',
     'rc_django',
+    'django_user_agents',
 )
 
 COMPRESS_PRECOMPILERS += (
@@ -55,8 +51,6 @@ COMPRESS_PRECOMPILERS += (
     ('text/x-scss', 'django_pyscss.compressor.DjangoScssFilter'),
 )
 
-# See http://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -453,9 +447,3 @@ EMAIL_HOST = '{{ email_host }}'
 {% if safe_email_recipient|default(None) %}
 SAFE_EMAIL_RECIPIENT = '{{ safe_email_recipient }}'
 {% endif %}
-
-from django_mobileesp.detector import mobileesp_agent as agent
-DETECT_USER_AGENTS = {
-    'is_tablet': agent.detectTierTablet,
-    'is_mobile': agent.detectMobileQuick,
-}
