@@ -30,7 +30,6 @@ MIDDLEWARE = [
 
 INSTALLED_APPS += (
     'django.contrib.humanize',
-    'templatetag_handlebars',
     'sis_provisioner.apps.SISProvisionerConfig',
     'supporttools',
     'blti',
