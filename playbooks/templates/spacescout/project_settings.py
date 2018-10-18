@@ -280,8 +280,13 @@ SS_LDAP_DIRECTORY = '{{ ldap_directory }}'
 # LDAP search parameters
 SS_LDAP_SEARCH_BASE = '{{ ldap_search_base }}'
 
+{% if labstats_url is defined %}
 LABSTATS_URL = '{{ labstats_url }}'
+{% endif %}
+
+{% if cte_techloan_url is defined %}
 CTE_TECHLOAN_URL = '{{ cte_techloan_url }}'
+{% endif %}
 
 LS_CENTER_LAT = '47.655003'
 LS_CENTER_LON = '-122.306864'
