@@ -222,7 +222,6 @@ INSTALLED_APPS += (
 
 # Values can be one of 'all_ok' or 'oauth'. If using 'oauth', client applications will need an oauth key/secret pair.
 SPOTSEEKER_AUTH_MODULE = 'spotseeker_server.auth.oauth'
-#SPOTSEEKER_AUTH_MODULE = 'spotseeker_server.auth.all_ok'
 
 # Custom validation can be added by adding SpotForm and ExtendedInfoForm to org_forms and setting them here.
 SPOTSEEKER_SPOT_FORM = 'spotseeker_server.org_forms.uw_spot.UWSpotForm'
@@ -242,30 +241,9 @@ SPACE_TABLE_KEYS = {
 
 INSTALLED_APPS += (
     'django_verbatim',
-    'spacescout_admin',
 )
 
-# Admin project local_settings.py:
-# Email to receive notice of publication requests
-SS_PUBLISHER_EMAIL = [
-{% for email in admin_publish_emails %}
-    '{{ email }}',
-{% endfor %}
-]
-
-# Email subject of publication requests
-SS_PUBLISHER_FROM = '{{ admin_from_email }}'
-
-SS_ADMIN_SERVER_HOST = '{{ admin_app_ss_server }}'
-SS_ADMIN_OAUTH_KEY = '{{ admin_app_ss_oauth_key }}'
-SS_ADMIN_OAUTH_SECRET = '{{ admin_app_ss_oauth_secret }}'
-
-# Key Used to Describe Spaces
-SS_SPACE_DESCRIPTION = 'extended_info.location_description'
-SS_ADMIN_FIELDS_MODULE = 'spacescout_admin.field_definitions.uw'
-
 JSON_PRETTY_PRINT = False
-APP_URL_ROOT = '/admin/'
 
 SPOTSEEKER_AUTH_ADMINS = {{ ss_auth_admins }}
 
