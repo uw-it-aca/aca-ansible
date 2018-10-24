@@ -173,10 +173,6 @@ SPOTSEEKER_SEARCH_FILTERS = ['spotseeker_server.org_filters.uw_search.Filter']
 
 OAUTH_PROVIDER_SECRET_SIZE = 64
 
-INSTALLED_APPS += (
-    'django_verbatim',
-)
-
 JSON_PRETTY_PRINT = False
 
 SPOTSEEKER_AUTH_ADMINS = {{ ss_auth_admins }}
