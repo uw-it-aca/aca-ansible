@@ -372,7 +372,7 @@ AWS_SQS = {
         'KEY_ID': '{{ event_enrollment_v2_key_id }}',
         'KEY': '{{ event_enrollment_v2_secret_key }}',
         'VISIBILITY_TIMEOUT': 60,
-        'MESSAGE_GATHER_SIZE': {{ event_enrollment_v2_sqs_gather }},
+        'MESSAGE_GATHER_SIZE': 10,
         'VALIDATE_SNS_SIGNATURE': True,
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
         {% if django_version is version_compare('2', '>=') %}
@@ -390,7 +390,7 @@ AWS_SQS = {
         'KEY_ID': '{{ event_instructor_add_key_id }}',
         'KEY': '{{ event_instructor_add_secret_key }}',
         'VISIBILITY_TIMEOUT': 60,
-        'MESSAGE_GATHER_SIZE': 50,
+        'MESSAGE_GATHER_SIZE': 10,
         'VALIDATE_SNS_SIGNATURE': True,
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
         {% if django_version is version_compare('2', '>=') %}
@@ -408,7 +408,7 @@ AWS_SQS = {
         'KEY_ID': '{{ event_instructor_drop_key_id }}',
         'KEY': '{{ event_instructor_drop_secret_key }}',
         'VISIBILITY_TIMEOUT': 60,
-        'MESSAGE_GATHER_SIZE': 50,
+        'MESSAGE_GATHER_SIZE': 10,
         'VALIDATE_SNS_SIGNATURE': True,
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
         {% if django_version is version_compare('2', '>=') %}
@@ -426,7 +426,7 @@ AWS_SQS = {
         'KEY_ID': '{{ event_group_key_id }}',
         'KEY': '{{ event_group_secret_key }}',
         'VISIBILITY_TIMEOUT': 60,
-        'MESSAGE_GATHER_SIZE': {{ event_group_sqs_gather }},
+        'MESSAGE_GATHER_SIZE': 10,
         'VALIDATE_SNS_SIGNATURE': True,
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
         {% if django_version is version_compare('2', '>=') %}
@@ -454,7 +454,7 @@ AWS_SQS = {
         'KEY_ID': '{{ event_person_change_key_id }}',
         'KEY': '{{ event_person_change_secret_key }}',
         'VISIBILITY_TIMEOUT': 60,
-        'MESSAGE_GATHER_SIZE': 50,
+        'MESSAGE_GATHER_SIZE': 10,
         'VALIDATE_SNS_SIGNATURE': True,
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
         {% if django_version is version_compare('2', '>=') %}
