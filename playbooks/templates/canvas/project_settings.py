@@ -48,7 +48,9 @@ INSTALLED_APPS += (
     'libguide',
     'course_roster',
     'canvas_users',
+    {% if django_version is version_compare('2', '<') %}
     'analytics',
+    {% endif %}
     'grade_conversion_calculator',
     'grading_standard',
     'anonymous_feedback',
@@ -490,7 +492,7 @@ EMAIL_HOST = '{{ email_host }}'
 SAFE_EMAIL_RECIPIENT = '{{ safe_email_recipient }}'
 {% endif %}
 
-{% if django_version is version_compare('2', '>=') %}
+{% if django_version is version_compare('2', '<') %}
 from django_mobileesp.detector import mobileesp_agent as agent
 DETECT_USER_AGENTS = {
     'is_tablet': agent.detectTierTablet,
