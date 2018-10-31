@@ -14,7 +14,11 @@ CACHES = {
 }
 
 # Assign rather than append since order is significant
+{% if django_version is version_compare('2', '>=') %}
 MIDDLEWARE = [
+{% else %}
+MIDDLEWARE_CLASSES = [
+{% endif %}
     'django.middleware.common.CommonMiddleware',
     'blti.middleware.CSRFHeaderMiddleware',
     'blti.middleware.SessionHeaderMiddleware',
@@ -25,11 +29,18 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.PersistentRemoteUserMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'userservice.user.UserServiceMiddleware',
+    {% if django_version is version_compare('2', '>=') %}
     'django_user_agents.middleware.UserAgentMiddleware',
+    {% else %}
+    'django_mobileesp.middleware.UserAgentDetectionMiddleware',
+    {% endif %}
 ]
 
 INSTALLED_APPS += (
     'django.contrib.humanize',
+    {% if django_version is version_compare('2', '<') %}
+    'templatetag_handlebars',
+    {% endif %}
     'sis_provisioner.apps.SISProvisionerConfig',
     'supporttools',
     'blti',
@@ -42,7 +53,9 @@ INSTALLED_APPS += (
     'grading_standard',
     'anonymous_feedback',
     'rc_django',
+    {% if django_version is version_compare('2', '>=') %}
     'django_user_agents',
+    {% endif %}
 )
 
 COMPRESS_PRECOMPILERS += (
@@ -354,74 +367,104 @@ EVENT_AWS_SQS_KEY = '{{ webservice_client_key_path }}'
 
 AWS_SQS = {
     'ENROLLMENT_V2': {
-        'TOPIC_ARN': '{{ event_enrollment_v2_topic_arn }}',
-        'QUEUE': '{{ event_enrollment_v2_sqs_queue }}',
         'KEY_ID': '{{ event_enrollment_v2_key_id }}',
         'KEY': '{{ event_enrollment_v2_secret_key }}',
         'VISIBILITY_TIMEOUT': 60,
         'MESSAGE_GATHER_SIZE': {{ event_enrollment_v2_sqs_gather }},
         'VALIDATE_SNS_SIGNATURE': True,
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
+        {% if django_version is version_compare('2', '>=') %}
+        'QUEUE_ARN': '{{ event_enrollment_v2_sqs_queue }}',
+        'VALIDATE_BODY_SIGNATURE': True,
+        {% else %}
+        'TOPIC_ARN': '{{ event_enrollment_v2_topic_arn }}',
+        'QUEUE': '{{ event_enrollment_v2_sqs_queue }}',
         'PAYLOAD_SETTINGS': {
             'VALIDATE_MSG_SIGNATURE': True,
         }
+        {% endif %}
     },
     'INSTRUCTOR_ADD': {
-        'TOPIC_ARN': '{{ event_instructor_add_topic_arn }}',
-        'QUEUE': '{{ event_instructor_add_sqs_queue }}',
         'KEY_ID': '{{ event_instructor_add_key_id }}',
         'KEY': '{{ event_instructor_add_secret_key }}',
         'VISIBILITY_TIMEOUT': 60,
         'MESSAGE_GATHER_SIZE': 50,
         'VALIDATE_SNS_SIGNATURE': True,
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
+        {% if django_version is version_compare('2', '>=') %}
+        'QUEUE_ARN': '{{ event_instructor_add_sqs_queue }}',
+        'VALIDATE_BODY_SIGNATURE': True,
+        {% else %}
+        'TOPIC_ARN': '{{ event_instructor_add_topic_arn }}',
+        'QUEUE': '{{ event_instructor_add_sqs_queue }}',
         'PAYLOAD_SETTINGS': {
             'VALIDATE_MSG_SIGNATURE': True,
         }
+        {% endif %}
     },
     'INSTRUCTOR_DROP': {
-        'TOPIC_ARN': '{{ event_instructor_drop_topic_arn }}',
-        'QUEUE': '{{ event_instructor_drop_sqs_queue }}',
         'KEY_ID': '{{ event_instructor_drop_key_id }}',
         'KEY': '{{ event_instructor_drop_secret_key }}',
         'VISIBILITY_TIMEOUT': 60,
         'MESSAGE_GATHER_SIZE': 50,
         'VALIDATE_SNS_SIGNATURE': True,
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
+        {% if django_version is version_compare('2', '>=') %}
+        'QUEUE_ARN': '{{ event_instructor_drop_sqs_queue }}',
+        'VALIDATE_BODY_SIGNATURE': True,
+        {% else %}
+        'TOPIC_ARN': '{{ event_instructor_drop_topic_arn }}',
+        'QUEUE': '{{ event_instructor_drop_sqs_queue }}',
         'PAYLOAD_SETTINGS': {
             'VALIDATE_MSG_SIGNATURE': True,
         }
+        {% endif %}
     },
     'GROUP': {
-        'TOPIC_ARN': '{{ event_group_topic_arn }}',
-        'QUEUE': '{{ event_group_sqs_queue }}',
         'KEY_ID': '{{ event_group_key_id }}',
         'KEY': '{{ event_group_secret_key }}',
         'VISIBILITY_TIMEOUT': 60,
         'MESSAGE_GATHER_SIZE': {{ event_group_sqs_gather }},
         'VALIDATE_SNS_SIGNATURE': True,
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
+        {% if django_version is version_compare('2', '>=') %}
+        'QUEUE_ARN': '{{ event_group_sqs_queue }}',
+        'VALIDATE_BODY_SIGNATURE': True,
+        'BODY_DECRYPT_KEYS': {
+{% for payload_key in event_group_payload_keys|default([]) %}
+            '{{ payload_key.key }}': '{{ payload_key.secret }}',
+{% endfor %}
+        },
+        {% else %}
+        'TOPIC_ARN': '{{ event_group_topic_arn }}',
+        'QUEUE': '{{ event_group_sqs_queue }}',
         'PAYLOAD_SETTINGS': {
-            'VALIDATE_MSG_SIGNATURE': True,
+            'VALIDATE_MSG_SIGNATURE': False,  # SNI error
             'KEYS': {
 {% for payload_key in event_group_payload_keys|default([]) %}
                 '{{ payload_key.key }}': '{{ payload_key.secret }}',
 {% endfor %}
             }
         }
+        {% endif %}
     },
     'PERSON_V1': {
-        'TOPIC_ARN': '{{ event_person_change_topic_arn }}',
-        'QUEUE': '{{ event_person_change_sqs_queue }}',
         'KEY_ID': '{{ event_person_change_key_id }}',
         'KEY': '{{ event_person_change_secret_key }}',
         'VISIBILITY_TIMEOUT': 60,
         'MESSAGE_GATHER_SIZE': 50,
         'VALIDATE_SNS_SIGNATURE': True,
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
+        {% if django_version is version_compare('2', '>=') %}
+        'QUEUE_ARN': '{{ event_person_change_sqs_queue }}',
+        'VALIDATE_BODY_SIGNATURE': True,
+        {% else %}
+        'TOPIC_ARN': '{{ event_person_change_topic_arn }}',
+        'QUEUE': '{{ event_person_change_sqs_queue }}',
         'PAYLOAD_SETTINGS': {
             'VALIDATE_MSG_SIGNATURE': True,
         }
+        {% endif %}
     }
 }
 
@@ -445,4 +488,12 @@ EMAIL_BACKEND = '{{ email_backend }}'
 EMAIL_HOST = '{{ email_host }}'
 {% if safe_email_recipient|default(None) %}
 SAFE_EMAIL_RECIPIENT = '{{ safe_email_recipient }}'
+{% endif %}
+
+{% if django_version is version_compare('2', '>=') %}
+from django_mobileesp.detector import mobileesp_agent as agent
+DETECT_USER_AGENTS = {
+    'is_tablet': agent.detectTierTablet,
+    'is_mobile': agent.detectMobileQuick,
+}
 {% endif %}
