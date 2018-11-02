@@ -40,13 +40,14 @@ DATABASES = {
 }
 {% endif %}
 
-# Hosts/domain names that are valid for this site; required if DEBUG is False
-# # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = (
+
+ALLOWED_HOSTS = {% if django_version is version_compare('2', '>=') %}[{% else %}({% endif %}
+
 {% for host in allowed_hosts|default([]) %}
     '{{ host }}',
 {% endfor %}
-)
+{% if django_version is version_compare('2', '>=') %}]{% else %}){% endif %}
+
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -106,8 +107,8 @@ ROOT_URLCONF = 'project.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'project.wsgi.application'
 
-{% if django_version is version_compare('1.9', '>=') %}
-INSTALLED_APPS = [
+INSTALLED_APPS = {% if django_version is version_compare('1.9', '>=') %}[{% else %}({% endif %}
+
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -119,33 +120,41 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     {% if not skip_compress_statics|default(False) %}'compressor',{% endif %}
-    {% if preprocess_templates|default(False)%}'template_preprocess',{% endif %}
-]
 
-{% if django_version is version_compare('2', '>=') %}
-MIDDLEWARE = [
-{% else %}
-MIDDLEWARE_CLASSES = [
-{% endif %}
+    {% if preprocess_templates|default(False)%}'template_preprocess',{% endif %}
+
+    {% if django_version is version_compare('1.9', '<') %}'null_command',{% endif %}
+
+{% if django_version is version_compare('1.9', '>=') %}]{% else %}){% endif %}
+
+
+{% if django_version is version_compare('2', '>=') %}MIDDLEWARE{% else %}MIDDLEWARE_CLASSES{% endif %} = [
+
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     {% if persistent_remote_user|default(False) %}'django.contrib.auth.middleware.PersistentRemoteUserMiddleware'{% else %}'django.contrib.auth.middleware.RemoteUserMiddleware'{% endif %},
+
     'django.middleware.locale.LocaleMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
     {% if include_userservice|default(True) %}'userservice.user.UserServiceMiddleware',{% endif %}
 ]
 
-AUTHENTICATION_BACKENDS = [
+
+AUTHENTICATION_BACKENDS = {% if django_version is version_compare('1.9', '>=') %}[{% else %}({% endif %}
+
     '{{ authentication_backend|default('django.contrib.auth.backends.RemoteUserBackend')}}',
-]
+{% if django_version is version_compare('1.9', '>=') %}]{% else %}){% endif %}
+
 
 {% if preprocess_templates|default(False) %}
 COMPILED_TEMPLATE_PATH = '{{ base_dir }}/compiled_templates/{{ current_build_value }}'
 {% endif %}
+
+{% if django_version is version_compare('1.9', '>=') %}
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -199,7 +208,8 @@ STATICFILES_FINDERS = [
 ]
 
 {% if login_url|default(None) %}
-LOGIN_URL = '{{ login_url }}'{% endif %}
+LOGIN_URL = '{{ login_url }}'
+{% endif %}
 
 {% else %}
 
@@ -207,34 +217,6 @@ TEMPLATE_DEBUG = DEBUG
 
 AUTHENTICATION_BACKENDS = (
     '{{ authentication_backend|default('django.contrib.auth.backends.RemoteUserBackend')}}',
-)
-
-INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    {% if not skip_compress_statics|default(False) %}'compressor',{% endif %}
-    'null_command',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
-)
-
-MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.contrib.auth.middleware.RemoteUserMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    {% if include_userservice|default(True) %}'userservice.user.UserServiceMiddleware',{% endif %}
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 # Additional locations of static files
