@@ -1,5 +1,9 @@
-INSTALLED_APPS += ('uw_saml',)
-ALLOWED_HOSTS += ('{{ sp_hostname }}',)
+INSTALLED_APPS += {% if django_version is version_compare('2', '>=') %}[{% else %}({% endif %}
+'uw_saml',
+{% if django_version is version_compare('2', '>=') %}]{% else %}){% endif %}
+ALLOWED_HOSTS += {% if django_version is version_compare('2', '>=') %}[{% else %}({% endif %}
+'{{ sp_hostname }}',
+{% if django_version is version_compare('2', '>=') %}]{% else %}){% endif %}
 
 SAML_USER_ATTRIBUTE = '{{ saml_user_attribute|default("uwnetid") }}'
 
