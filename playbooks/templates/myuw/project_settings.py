@@ -244,7 +244,7 @@ AWS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'
 
 AWS_SQS = {
     'SECTION_SATSUS_V1': {
-        'QUEUEC_ARN': '{{ event_section_status_v1_queue_arn }}',
+        'QUEUE_ARN': '{{ event_section_status_v1_queue_arn }}',
         'KEY_ID': '{{ event_section_status_v1_key_id }}',
         'KEY': '{{ event_section_status_v1_secret_key }}',
         'VISIBILITY_TIMEOUT': 50,
