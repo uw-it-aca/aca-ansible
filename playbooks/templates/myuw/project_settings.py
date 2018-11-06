@@ -3,15 +3,21 @@ TIME_ZONE = 'America/Los_Angeles'
 
 INSTALLED_APPS += [
     'templatetag_handlebars',
-    'rc_django',
     'userservice',
-    'django_mobileesp',
+    'rc_django',
     'supporttools',
     'django_client_logger',
-    'myuw.apps.MyUWConfig',
     'blti',
-    'hx_toolkit'
+    'hx_toolkit',
+    'django_user_agents',
+    'myuw.apps.MyUWConfig',
 ]
+
+MIDDLEWARE += [
+    'django_user_agents.middleware.UserAgentMiddleware',
+    'rc_django.middleware.EnableServiceDegradationMiddleware',
+]
+USER_AGENTS_CACHE = None
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
@@ -84,14 +90,14 @@ LOGGING = {
             'permissions': 0o664,
             'formatter': 'myuw',
         },
-        'performance': {
+        'views_timing': {
             'level': 'INFO',
             'class': 'permissions_logging.DateNameFileHandler',
             'filename': '{{ base_dir }}/logs/view_performance-%Y-%m-%d',
             'permissions': 0o664,
             'formatter': 'myuw',
         },
-        'restclients_timing_log': {
+        'restclients_timing': {
             'level': 'INFO',
             'class': 'permissions_logging.DateNameFileHandler',
             'filename': '/data/myuw/logs/restclients_timing-%Y-%m-%d',
@@ -111,12 +117,12 @@ LOGGING = {
             'propagate': True,
         },
         'restclients_core': {
-            'handlers': ['restclients_timing_log'],
+            'handlers': ['restclients_timing'],
             'level': 'INFO',
             'propagate': False,
         },
         'rc_django': {
-            'handlers': ['restclients_timing_log'],
+            'handlers': ['restclients_timing'],
             'level': 'INFO',
             'propagate': False,
          },
@@ -126,17 +132,17 @@ LOGGING = {
             'propagate': False,
         },
         'uw_sws': {
-            'handlers': ['restclients_timing_log'],
+            'handlers': ['restclients_timing'],
             'level': 'INFO',
             'propagate': False,
         },
         'uw_iasystem': {
-            'handlers': ['restclients_timing_log'],
+            'handlers': ['restclients_timing'],
             'level': 'INFO',
             'propagate': False,
         },
-        'myuw.util.performance': {
-            'handlers': ['performance'],
+        'myuw.logger.logresp': {
+            'handlers': ['views_timing'],
             'level': 'INFO',
             'propagate': False,
         },
@@ -190,15 +196,10 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
-        'myuw': {
-            'handlers': ['myuw'],
-            'level': 'INFO',
-            'propagate': True,
-        },
         '': {
             'handlers': ['myuw'],
             'level': 'INFO',
-            'propagate': True,
+            'propagate': False,
         },
     }
 }
@@ -211,8 +212,6 @@ RESTCLIENTS_DEFAULT_TIMEOUT = 3
 SUPPORTTOOLS_PARENT_APP = "MyUW"
 SUPPORTTOOLS_PARENT_APP_URL = "/"
 
-from django_mobileesp.detector import mobileesp_agent as agent
-
 EMAIL_BACKEND = "{{ email_backend }}"
 EMAIL_HOST = "{{ email_host }}"
 EMAIL_PORT = {{ email_port }}
@@ -220,16 +219,6 @@ EMAIL_TIMEOUT = {{ email_timeout }}
 {% if safe_email_recipient|default(None) %}
 SAFE_EMAIL_RECIPIENT = '{{ safe_email_recipient }}'
 {% endif %}
-
-MIDDLEWARE_CLASSES += [
-    'django_mobileesp.middleware.UserAgentDetectionMiddleware',
-    'rc_django.middleware.EnableServiceDegradationMiddleware',
-]
-
-DETECT_USER_AGENTS = {
-    'is_tablet': agent.detectTierTablet,
-    'is_mobile': agent.detectMobileQuick,
-}
 
 GOOGLE_ANALYTICS_KEY = "{{ ga_tracker_key }}"
 GOOGLE_SEARCH_KEY = '{{ gcse_key }}'
@@ -255,14 +244,12 @@ AWS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'
 
 AWS_SQS = {
     'SECTION_SATSUS_V1': {
-        'ACCOUNT_NUMBER': '{{ event_section_status_v1_account_number }}',
-        'QUEUE': '{{ event_section_status_v1_sqs_queue }}',
-        'REGION': '{{ event_section_status_v1_region_name }}',
+        'QUEUE_ARN': '{{ event_section_status_v1_queue_arn }}',
         'KEY_ID': '{{ event_section_status_v1_key_id }}',
         'KEY': '{{ event_section_status_v1_secret_key }}',
         'VISIBILITY_TIMEOUT': 50,
         'MESSAGE_GATHER_SIZE': 10,
-        'WAIT_TIME': 5,
+        'WAIT_TIME': 7,
         'VALIDATE_SNS_SIGNATURE': True,
         'PAYLOAD_SETTINGS': {}
     }
