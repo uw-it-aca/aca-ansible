@@ -225,6 +225,11 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': False,
         },
+        'aws_message': {
+            'handlers': ['event_log'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
         'groups': {
             'handlers': ['groups_log'],
             'level': 'DEBUG',
@@ -302,7 +307,8 @@ LTI_CONSUMERS = {
 BLTI_AES_KEY = b'{{ blti_aes_key }}'
 BLTI_AES_IV = b'{{ blti_aes_iv }}'
 
-SESSION_COOKIE_AGE = 60 * 60 * 8
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_DOMAIN = '.uw.edu'
 CSRF_COOKIE_DOMAIN = '.uw.edu'
 
@@ -395,7 +401,7 @@ AWS_SQS = {
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
         {% if django_version is version_compare('2', '>=') %}
         'QUEUE_ARN': '{{ event_instructor_add_sqs_queue }}',
-        'VALIDATE_BODY_SIGNATURE': True,
+        'VALIDATE_BODY_SIGNATURE': False,
         {% else %}
         'TOPIC_ARN': '{{ event_instructor_add_topic_arn }}',
         'QUEUE': '{{ event_instructor_add_sqs_queue }}',
@@ -413,7 +419,7 @@ AWS_SQS = {
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
         {% if django_version is version_compare('2', '>=') %}
         'QUEUE_ARN': '{{ event_instructor_drop_sqs_queue }}',
-        'VALIDATE_BODY_SIGNATURE': True,
+        'VALIDATE_BODY_SIGNATURE': False,
         {% else %}
         'TOPIC_ARN': '{{ event_instructor_drop_topic_arn }}',
         'QUEUE': '{{ event_instructor_drop_sqs_queue }}',
@@ -459,7 +465,7 @@ AWS_SQS = {
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
         {% if django_version is version_compare('2', '>=') %}
         'QUEUE_ARN': '{{ event_person_change_sqs_queue }}',
-        'VALIDATE_BODY_SIGNATURE': True,
+        'VALIDATE_BODY_SIGNATURE': False,
         {% else %}
         'TOPIC_ARN': '{{ event_person_change_topic_arn }}',
         'QUEUE': '{{ event_person_change_sqs_queue }}',
