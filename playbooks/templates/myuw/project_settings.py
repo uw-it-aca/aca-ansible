@@ -104,13 +104,19 @@ LOGGING = {
             'permissions': 0o664,
             'formatter': 'myuw',
         },
-
         'console':{
             'level': 'ERROR',
             'class': 'logging.StreamHandler',
         },
+        'null': {
+            'class': 'logging.NullHandler',
+        },
     },
     'loggers': {
+        'django.security.DisallowedHost': {
+            'handlers': ['null'],
+            'propagate': False,
+        },
         'django.request': {
             'handlers': ['mail_admins', 'console'],
             'level': 'ERROR',
