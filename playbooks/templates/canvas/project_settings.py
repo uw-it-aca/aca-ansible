@@ -34,6 +34,7 @@ MIDDLEWARE_CLASSES = [
     {% else %}
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
     {% endif %}
+   'scheduled_job_client.apps.ScheduledJobClientConfig',
 ]
 
 INSTALLED_APPS += (
@@ -473,6 +474,33 @@ AWS_SQS = {
             'VALIDATE_MSG_SIGNATURE': True,
         }
         {% endif %}
+    }
+}
+
+SCHEDULED_JOB_CLIENT = {
+    'CLUSTER_NAME': '{{ scheduled_job_cluster_name }}',
+    'CLUSTER_MEMBER': '{{ inventory_hostname_short }}',
+    'KEY_ID': '{{ scheduled_job_key_id }}',
+    'KEY': '{{ scheduled_job_secret_key }}',
+    'NOTIFICATION': {
+        'ENDPOINT_BASE': 'https://{{ inventory_hostname }}',
+        'PROTOCOL': 'https',
+        'TOPIC_ARN': '{{ scheduled_job_notification_topic_arn }}',
+    },
+    'STATUS': {
+        'QUEUE_ARN': '{{ scheduled_job_status_queue_arn }}',
+        'TOPIC_ARN': '{{ scheduled_job_status_queue_arn }}',
+        'QUEUE_URL': '{{ scheduled_job_status_queue_url }}'
+    },
+    'JOBS': {
+{% for task in scheduled_job_task_list|default([]) %}
+        '{{ task.label }}': {
+            'title': '{{ task.label }}',
+            'type': '{{ task.type }}',
+            'action': '{{ task.action }}',
+            'arguments': {{ task.arguments }}
+        },
+{% endfor %}
     }
 }
 
