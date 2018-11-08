@@ -34,7 +34,6 @@ MIDDLEWARE_CLASSES = [
     {% else %}
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
     {% endif %}
-   'scheduled_job_client.apps.ScheduledJobClientConfig',
 ]
 
 INSTALLED_APPS += (
@@ -59,6 +58,7 @@ INSTALLED_APPS += (
     {% if django_version is version_compare('2', '>=') %}
     'django_user_agents',
     {% endif %}
+   'scheduled_job_client.apps.ScheduledJobClientConfig',
 )
 
 COMPRESS_PRECOMPILERS += (
