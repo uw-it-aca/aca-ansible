@@ -513,7 +513,7 @@ SCHEDULED_JOB_CLIENT = {
             'type': '{{ task.type }}',
             'action': '{{ task.action }}',
             'arguments': {{ task.arguments }},
-            'cwd': '{{ base_dir }}'
+            'cwd': '{{ base_dir }}/builds/{{ current_build_value }}'
         },
 {% endfor %}
     }
