@@ -119,7 +119,7 @@
       when: extra_async_django_command3|default(false)
 
     - name: Reload apache
-      command: /usr/local/apache/bin/ap-reload
+      command: /usr/local/apache/bin/ap-reload --restart
 
     - name: Fix permissions on the pip accel cache
       command: find {{ pip_accel_cache_dir }} -exec chmod g+w {} \;

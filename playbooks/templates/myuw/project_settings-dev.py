@@ -95,8 +95,15 @@ LOGGING = {
             'level': 'ERROR',
             'class': 'logging.StreamHandler',
         },
+        'null': {
+            'class': 'logging.NullHandler',
+        },
     },
     'loggers': {
+        'django.security.DisallowedHost': {
+            'handlers': ['null'],
+            'propagate': False,
+        },
         'django.request': {
             'handlers': ['mail_admins', 'console'],
             'level': 'ERROR',
@@ -162,6 +169,8 @@ LOGGING = {
 
 RESTCLIENTS_MEMCACHED_SERVERS = {{ restclients_memcached_servers|default("''")}}
 RESTCLIENTS_DAO_CACHE_CLASS='{{restclients_dao_cache_class}}'
+
+TIMING_LOG_ENABLED = True
 
 SUPPORTTOOLS_PARENT_APP = "MyUW"
 SUPPORTTOOLS_PARENT_APP_URL = "/"
