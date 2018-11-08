@@ -483,8 +483,8 @@ SCHEDULED_JOB_CLIENT = {
     'KEY_ID': '{{ scheduled_job_key_id }}',
     'KEY': '{{ scheduled_job_secret_key }}',
     'NOTIFICATION': {
-        'ENDPOINT_BASE': 'https://{{ inventory_hostname }}',
-        'PROTOCOL': 'https',
+        'ENDPOINT_BASE': 'http://{{ inventory_hostname }}',
+        'PROTOCOL': 'http',
         'TOPIC_ARN': '{{ scheduled_job_notification_topic_arn }}',
     },
     'STATUS': {
