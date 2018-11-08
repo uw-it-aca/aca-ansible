@@ -188,6 +188,16 @@ LOGGING = {
             'interval': 1,
             'backupCount': 7,
         },
+        'scheduled_job_log': {
+            'level': 'INFO',
+            'formatter': 'simple',
+            'class': 'permissions_logging.TimedRotatingFileHandler',
+            'filename': '{{ base_dir }}/logs/scheduled_job.log',
+            'permissions': 0o664,
+            'when': 'midnight',
+            'interval': 1,
+            'backupCount': 7,
+        },
         'console': {
             'level': 'ERROR',
             'class': 'logging.StreamHandler',
@@ -245,6 +255,10 @@ LOGGING = {
         },
         'course_roster': {
             'handlers': ['course_roster_log'],
+            'level': 'DEBUG',
+        },
+        'scheduled_job_client': {
+            'handlers': ['scheduled_job_log'],
             'level': 'DEBUG',
         },
         'blti.performance': {
@@ -483,8 +497,8 @@ SCHEDULED_JOB_CLIENT = {
     'KEY_ID': '{{ scheduled_job_key_id }}',
     'KEY': '{{ scheduled_job_secret_key }}',
     'NOTIFICATION': {
-        'ENDPOINT_BASE': 'https://{{ inventory_hostname }}',
-        'PROTOCOL': 'https',
+        'ENDPOINT_BASE': 'http://{{ inventory_hostname }}',
+        'PROTOCOL': 'http',
         'TOPIC_ARN': '{{ scheduled_job_notification_topic_arn }}',
     },
     'STATUS': {
@@ -498,7 +512,8 @@ SCHEDULED_JOB_CLIENT = {
             'title': '{{ task.label }}',
             'type': '{{ task.type }}',
             'action': '{{ task.action }}',
-            'arguments': {{ task.arguments }}
+            'arguments': {{ task.arguments }},
+            'cwd': '{{ base_dir }}'
         },
 {% endfor %}
     }
