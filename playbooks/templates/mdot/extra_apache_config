@@ -19,12 +19,10 @@ Alias /media /data/www/media
     Allow from all
 </Directory>
 
-# NetID auth for the django admin
-<IfModule mod_pubcookie.c>
-    <Location /admin>
-        AuthType uwnetid
-        require user {% for admin in django_admins|default('all denied') %}{{ admin }} {% endfor %}
+<Location "/Shibboleth.sso">
+    SetHandler shib
+    Order Deny,Allow
+    Allow from all
+</Location>
 
-        PubCookieAppID {{ pubcookie_app_id|default("ACAPubcookie") }}
-    </Location>
-</IfModule>
+Redirect /admin/logout/ /Shibboleth.sso/Logout
