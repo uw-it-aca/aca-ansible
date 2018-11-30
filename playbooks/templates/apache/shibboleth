@@ -4,3 +4,13 @@
     ShibRequestSetting redirectToSSL 443
     require {{ shibboleth_require_string|default("valid-user") }}
 </Location>
+
+<Location "/Shibboleth.sso">
+    SetHandler shib
+    Order Deny,Allow
+    Allow from all
+</Location>
+
+{% if shibboleth_logout_url %}
+Redirect {{ shibboleth_logout_url }} /Shibboleth.sso/Logout
+{% endif %}
