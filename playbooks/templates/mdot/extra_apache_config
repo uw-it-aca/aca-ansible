@@ -18,11 +18,3 @@ Alias /media /data/www/media
     Order deny,allow
     Allow from all
 </Directory>
-
-<Location "/Shibboleth.sso">
-    SetHandler shib
-    Order Deny,Allow
-    Allow from all
-</Location>
-
-Redirect /admin/logout/ /Shibboleth.sso/Logout
