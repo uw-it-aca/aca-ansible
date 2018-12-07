@@ -48,9 +48,7 @@ INSTALLED_APPS += (
     'libguide',
     'course_roster',
     'canvas_users',
-    {% if django_version is version_compare('2', '<') %}
     'analytics',
-    {% endif %}
     'grade_conversion_calculator',
     'grading_standard',
     'anonymous_feedback',
