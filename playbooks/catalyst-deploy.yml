@@ -1,8 +1,17 @@
 - hosts: catalyst-app-server
   vars:
+      build_name: "{{ inventory_file }}"
+      startit: "{{ lookup('current_build', build_name, 'SET') }}"
+  tasks:
+      - debug: msg="Start it - {{ startit }}"
+        run_once: true
+
+- hosts: catalyst-app-server
+  vars:
     files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
     acting_user: "{{ lookup('env', 'USER') }}"
   tasks:
+    - include: includes/catalyst-app-deploy.yml
     - include: includes/nagios_registration.yml
 
 - hosts: catalyst-proxy-server
