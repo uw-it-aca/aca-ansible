@@ -1,0 +1,13 @@
+    - debug: msg = "the build_name is {{ build_name }}"
+    - debug: msg = "the files_dir is {{ files_dir }}"
+    - debug: msg = "the current build is {{ current_build_value }}"
+
+    - name: Create directory for the next build
+      file: group="{{ file_group }}" mode="2775" state="directory" path="{{ base_dir }}/builds/{{ current_build_value }}"
+
+    - name: Copy config files
+      synchronize: src="{{ files_dir }}/{{ build_name }}/" dest="{{ base_dir }}/builds/{{ current_build_value }}/" rsync_opts=--no-group,--omit-dir-times,--exclude=.svn perms=no
+
+    - name: Install tools
+      with_dict: {{ install_requires }}
+      git: repo={{ item.value }} dest={{ base_dir }}/builds/{{ current_build_value }}/{{ item.key }}
