@@ -1,15 +1,16 @@
 - hosts: catalyst-app-server
   vars:
-      build_name: "{{ inventory_file }}"
-      startit: "{{ lookup('current_build', build_name, 'SET') }}"
+      startit: "{{ lookup('current_build', inventory_file, 'SET') }}"
   tasks:
       - debug: msg="Start it - {{ startit }}"
         run_once: true
 
 - hosts: catalyst-app-server
   vars:
+    current_build_value: "{{ lookup('current_build', inventory_file, 'GET') }}"
     files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
     acting_user: "{{ lookup('env', 'USER') }}"
+    build_name: "{{ lookup('env', 'BUILD_NAME') }}"
   tasks:
     - include: includes/catalyst-app-deploy.yml
     - include: includes/nagios_registration.yml
