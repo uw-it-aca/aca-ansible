@@ -13,8 +13,15 @@
       git: repo={{ item.value }} version=master dest={{ base_dir }}/builds/{{ current_build_value }}/{{ item.key }} accept_hostkey=yes
       become: no
 
+    - name: Build statics
+      shell: perl {{ base_dir }}/builds/{{ current_build_value }}/corral/bin/bundle_for_config.pl --config={{ base_dir }}/builds/{{ current_build_value }}/solstice_config.xml --static-hosts={{ groups['catalyst-static-server']|join(',') }}
+      run_once: true
+
     - name: Link apps to the current build
       file: group="{{ file_group }}" src="{{ base_dir }}/builds/{{current_build_value}}" dest="{{ base_dir }}/apps" state="link" force="yes"
 
     - name: Reload apache
-      command: /usr/local/apache/bin/ap-reload --restart
+      command: sudo /usr/local/apache/bin/ap-reload --restart
+
+    - include: purge_builds.yml parent_dir={{ base_dir }}/builds
+    - include: purge_builds.yml parent_dir={{ base_dir }}/static_content
