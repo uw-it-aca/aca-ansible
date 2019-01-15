@@ -13,6 +13,7 @@
     build_name: "{{ lookup('env', 'BUILD_NAME') }}"
   tasks:
     - include: includes/catalyst-app-deploy.yml
+    - include: includes/purge_builds.yml parent_dir={{ base_dir }}/builds
     - include: includes/nagios_registration.yml
 
 - hosts: catalyst-proxy-server
@@ -21,6 +22,10 @@
     acting_user: "{{ lookup('env', 'USER') }}"
   tasks:
     - include: includes/nagios_registration.yml
+
+- hosts: catalyst-static-server
+  tasks:
+    - include: includes/purge_builds.yml parent_dir={{ base_dir }}/static_content
 
 - hosts: mysql-db-server
   vars:

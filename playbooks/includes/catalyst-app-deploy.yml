@@ -1,6 +1,6 @@
-    - debug: msg="{{ build_name }}"
-    - debug: msg="{{ files_dir }}"
-    - debug: msg="{{ current_build_value }}"
+    - debug: msg="Build name: {{ build_name }}"
+    - debug: msg="Files dir: {{ files_dir }}"
+    - debug: msg="Current build: {{ current_build_value }}"
 
     - name: Create directory for the next build
       file: group="{{ file_group }}" mode="2775" state="directory" path="{{ base_dir }}/builds/{{ current_build_value }}"
@@ -14,13 +14,16 @@
 
     - name: Build statics
       shell: perl {{ base_dir }}/builds/{{ current_build_value }}/corral/bin/bundle_for_config.pl --config={{ base_dir }}/builds/{{ current_build_value }}/solstice_config.xml --static-hosts={{ groups['catalyst-static-server']|join(',') }}
+      register: statics_cfg
       run_once: true
+
+    - debug: msg="Build statics output: {{ statics_cfg.stdout }}"
+
+    - name: Update statics config
+      shell: perl {{ base_dir }}/builds/{{ current_build_value }}/hostconfig/bin/update_statics_config.pl --config-file={{ base_dir }}/builds/{{ current_build_value }}/hostconfig/config.xml {{ statics_cfg.stdout }}
 
     - name: Link apps to the current build
       file: group="{{ file_group }}" src="{{ base_dir }}/builds/{{current_build_value}}" dest="{{ base_dir }}/apps" state="link" force="yes"
 
     - name: Reload apache
       command: sudo /usr/local/apache/bin/ap-reload --restart
-
-    - include: purge_builds.yml parent_dir={{ base_dir }}/builds
-    - include: purge_builds.yml parent_dir={{ base_dir }}/static_content
