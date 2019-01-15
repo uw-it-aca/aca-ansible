@@ -11,7 +11,6 @@
     - name: Install tools
       with_dict: "{{ install_requires }}"
       git: repo={{ item.value }} version=master dest={{ base_dir }}/builds/{{ current_build_value }}/{{ item.key }} accept_hostkey=yes
-      become: no
 
     - name: Build statics
       shell: perl {{ base_dir }}/builds/{{ current_build_value }}/corral/bin/bundle_for_config.pl --config={{ base_dir }}/builds/{{ current_build_value }}/solstice_config.xml --static-hosts={{ groups['catalyst-static-server']|join(',') }}
