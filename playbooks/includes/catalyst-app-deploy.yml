@@ -1,6 +1,6 @@
-    - debug: msg="Build name: {{ build_name }}"
-    - debug: msg="Files dir: {{ files_dir }}"
-    - debug: msg="Current build: {{ current_build_value }}"
+    - debug: msg="Build name is {{ build_name }}"
+    - debug: msg="Files dir is {{ files_dir }}"
+    - debug: msg="Current build is {{ current_build_value }}"
 
     - name: Create directory for the next build
       file: group="{{ file_group }}" mode="2775" state="directory" path="{{ base_dir }}/builds/{{ current_build_value }}"
@@ -17,7 +17,7 @@
       register: statics_cfg
       run_once: true
 
-    - debug: msg="Build statics output: {{ statics_cfg.stdout }}"
+    - debug: msg="Build statics output is {{ statics_cfg.stdout }}"
 
     - name: Update statics config
       shell: perl {{ base_dir }}/builds/{{ current_build_value }}/hostconfig/bin/update_statics_config.pl --config-file={{ base_dir }}/builds/{{ current_build_value }}/hostconfig/config.xml {{ statics_cfg.stdout }}
