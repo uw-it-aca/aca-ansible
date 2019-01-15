@@ -3,9 +3,6 @@
     nagios_base_dir: "{{ base_dir }}/tmp"
     nagios_tmp_dir: "{{ base_dir }}/tmp/nagios_{{ acting_user }}"
 
-- name: Create base_dir
-  file: state="directory" path="{{ nagios_base_dir }}" mode="2775" group="{{ file_group }}"
-
 - name: Create tmp directory for nagios files
   file: state="directory" path="{{ nagios_tmp_dir }}" mode="700"
 
