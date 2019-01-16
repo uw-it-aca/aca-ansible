@@ -8,9 +8,9 @@
 - hosts: catalyst-app-server
   vars:
     current_build_value: "{{ lookup('current_build', inventory_file, 'GET') }}"
-    files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
+    files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/deploy/aca-builds/files') }}"
+    config_dir: "{{ files_dir }}/{{ lookup('env', 'BUILD_NAME') }}/catalyst-app-server"
     acting_user: "{{ lookup('env', 'USER') }}"
-    build_name: "{{ lookup('env', 'BUILD_NAME') }}"
   tasks:
     - include: includes/catalyst-app-deploy.yml
     - include: includes/purge_builds.yml parent_dir={{ base_dir }}/builds
@@ -18,9 +18,9 @@
 
 - hosts: catalyst-proxy-server
   vars:
-    files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
+    files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/deploy/aca-builds/files') }}"
+    config_dir: "{{ files_dir }}/{{ lookup('env', 'BUILD_NAME') }}/catalyst-proxy-server"
     acting_user: "{{ lookup('env', 'USER') }}"
-    build_name: "{{ lookup('env', 'BUILD_NAME') }}"
   tasks:
     - include: includes/catalyst-proxy-deploy.yml
     - include: includes/nagios_registration.yml
@@ -31,7 +31,7 @@
 
 - hosts: mysql-db-server
   vars:
-    files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
+    files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/deploy/aca-builds/files') }}"
     acting_user: "{{ lookup('env', 'USER') }}"
   tasks:
     - include: includes/nagios_registration_mysql.yml
