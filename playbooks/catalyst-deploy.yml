@@ -20,7 +20,9 @@
   vars:
     files_dir: "{{ lookup('env', 'ANSIBLE_FILES')|default('/data/ansible/aca-builds/files', true) }}"
     acting_user: "{{ lookup('env', 'USER') }}"
+    build_name: "{{ lookup('env', 'BUILD_NAME') }}"
   tasks:
+    - include: includes/catalyst-proxy-deploy.yml
     - include: includes/nagios_registration.yml
 
 - hosts: catalyst-static-server

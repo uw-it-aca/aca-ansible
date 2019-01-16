@@ -1,0 +1,5 @@
+    - name: Copy config files
+      synchronize: src="{{ files_dir }}/{{ build_name }}/proxy_config/" dest="{{ base_dir }}/conf/" rsync_opts=--no-group,--omit-dir-times,--exclude=.svn perms=no
+
+    - name: Reload apache
+      command: sudo /usr/local/apache/bin/ap-reload --restart
