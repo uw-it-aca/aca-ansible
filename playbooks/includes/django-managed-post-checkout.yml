@@ -81,9 +81,9 @@
       when: aca_cdn_path | default(false)
 
     - include: syncdb.yml
-      when: django_version is version('1.9', '<')
+      when: django_version is version('1.8', '<')
     - include: migrate.yml
-      when: django_version is version('1.9', '>=')
+      when: django_version is version('1.8', '>=')
 
     - name: Link live to the current build
       file: group="{{ file_group }}" src="{{ base_dir }}/builds/{{current_build_value}}" dest="{{ base_dir }}/live" state="link" force="yes"

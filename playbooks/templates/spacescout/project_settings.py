@@ -157,10 +157,6 @@ INSTALLED_APPS += (
 # From the server project settings:
 CACHE_MIDDLEWARE_SECONDS = 60 * 60  # Cache what we can for an hour
 
-INSTALLED_APPS += (
-    'south',
-)
-
 # From the server project local settings:
 
 # Values can be one of 'all_ok' or 'oauth'. If using 'oauth', client applications will need an oauth key/secret pair.
