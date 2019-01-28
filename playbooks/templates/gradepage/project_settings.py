@@ -2,25 +2,15 @@
 
 TIME_ZONE = 'America/Los_Angeles'
 
-{% if django_version is version_compare('2', '<') %}
-MIDDLEWARE_CLASSES += [
-    'django_mobileesp.middleware.UserAgentDetectionMiddleware',
-]
-{% endif %}
-
 INSTALLED_APPS += [
     'django.contrib.humanize',
-    {% if django_version is version_compare('2', '<') %}
-    'templatetag_handlebars',
-    {% endif %}
     'course_grader.apps.CourseGraderConfig',
     'supporttools',
     'userservice',
+    'persistent_message',
     'rc_django',
     'grade_conversion_calculator',
-    {% if django_version is version_compare('2', '>=') %}
     'django_user_agents',
-    {% endif %}
 ]
 
 TEMPLATES[0]['OPTIONS']['context_processors'].extend([
@@ -107,6 +97,8 @@ ALLOW_GRADE_SUBMISSION_OVERRIDE = {{ allow_grade_submission_override }}
 RESTCLIENTS_ADMIN_AUTH_MODULE = 'course_grader.views.support.can_proxy_restclient'
 RESTCLIENTS_DAO_CACHE_CLASS = 'course_grader.cache.RestClientsCache'
 
+PERSISTENT_MESSAGE_AUTH_MODULE = USERSERVICE_OVERRIDE_AUTH_MODULE
+
 EMAIL_BACKEND = '{{ email_backend }}'
 EMAIL_HOST = '{{ email_host }}'
 EMAIL_NOREPLY_ADDRESS = 'GradePage <{{ email_noreply_address }}>'
@@ -124,11 +116,3 @@ REGISTRAR_SUPPORT_EMAIL = '{{ registrar_support_email }}'
 REGISTRAR_SUPPORT_PHONE = '{{ registrar_support_phone }}'
 
 SUPPORTTOOLS_PARENT_APP = 'GradePage'
-
-{% if django_version is version_compare('2', '<') %}
-from django_mobileesp.detector import mobileesp_agent as agent
-DETECT_USER_AGENTS = {
-    'is_tablet': agent.detectTierTablet,
-    'is_mobile': agent.detectMobileQuick,
-}
-{% endif %}
