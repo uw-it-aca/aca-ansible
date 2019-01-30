@@ -12,6 +12,6 @@
     Allow from all
 </Location>
 
-{% if shibboleth_logout_url %}
+{% if shibboleth_logout_url is defined %}
 Redirect {{ shibboleth_logout_url }} /Shibboleth.sso/Logout
 {% endif %}
