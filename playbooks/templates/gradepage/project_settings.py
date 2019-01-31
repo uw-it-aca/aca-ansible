@@ -88,7 +88,8 @@ LOGGING = {
     }
 }
 
-GRADEPAGE_ADMIN_GROUP = '{{ support_group }}'
+GRADEPAGE_SUPPORT_GROUP = '{{ support_group }}'
+GRADEPAGE_ADMIN_GROUP = '{{ admin_group }}'
 
 USERSERVICE_VALIDATION_MODULE = 'course_grader.dao.person.is_netid'
 USERSERVICE_OVERRIDE_AUTH_MODULE = 'course_grader.views.support.can_override_user'
@@ -97,7 +98,7 @@ ALLOW_GRADE_SUBMISSION_OVERRIDE = {{ allow_grade_submission_override }}
 RESTCLIENTS_ADMIN_AUTH_MODULE = 'course_grader.views.support.can_proxy_restclient'
 RESTCLIENTS_DAO_CACHE_CLASS = 'course_grader.cache.RestClientsCache'
 
-PERSISTENT_MESSAGE_AUTH_MODULE = USERSERVICE_OVERRIDE_AUTH_MODULE
+PERSISTENT_MESSAGE_AUTH_MODULE = 'course_grader.views.support.can_manage_persistent_messages'
 
 EMAIL_BACKEND = '{{ email_backend }}'
 EMAIL_HOST = '{{ email_host }}'
