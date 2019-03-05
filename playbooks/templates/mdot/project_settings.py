@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-from django_mobileesp.detector import mobileesp_agent as agent
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -41,8 +40,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_user_agents',
     'null_command',
     'rest_framework',
+    'django_filters',
     'mdot_rest',
     'mdot',
     'compressor',
@@ -57,7 +58,7 @@ MIDDLEWARE_CLASSES += (
 #    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'django_mobileesp.middleware.UserAgentDetectionMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
     'htmlmin.middleware.HtmlMinifyMiddleware',
     'htmlmin.middleware.MarkRequestMiddleware',
 )
@@ -197,18 +198,8 @@ COMPRESS_JS_FILTERS = [
 # devtools
 # ACA_DEVTOOLS_ENABLED = True
 
-# mobileesp
-
-DETECT_USER_AGENTS = {
-    'is_android': agent.detectAndroid,
-    'is_ios': agent.detectIos,
-    'is_windows_phone': agent.detectWindowsPhone,
-    'is_tablet': agent.detectTierTablet,
-    'is_mobile': agent.detectMobileQuick,
-}
-
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',),
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
 }
 
 RESTCLIENTS_MDOT_DAO_CLASS = 'mdot.mdot_rest_client.client.MDOTLive'
