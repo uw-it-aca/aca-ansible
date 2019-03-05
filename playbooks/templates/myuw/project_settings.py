@@ -137,6 +137,11 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
+        'uw_gws': {
+            'handlers': ['restclients_timing'],
+            'level': 'INFO',
+            'propagate': False,
+        },
         'uw_sws': {
             'handlers': ['restclients_timing'],
             'level': 'INFO',
