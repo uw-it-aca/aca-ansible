@@ -25,8 +25,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 
-ALLOWED_HOSTS = ['mdot-test.s.uw.edu']
-
 # Enable sending of email
 EMAIL_HOST = '{{ email_host|default('localhost') }}'
 EMAIL_USE_TLS = True
