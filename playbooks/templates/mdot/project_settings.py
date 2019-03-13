@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mdot-test.s.uw.edu']
 
 # Enable sending of email
 EMAIL_HOST = '{{ email_host|default('localhost') }}'
@@ -40,10 +40,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_user_agents',
     'null_command',
     'rest_framework',
     'django_filters',
+    'django_user_agents',
     'mdot_rest',
     'mdot',
     'compressor',
@@ -133,7 +133,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'mdot.context_processors.less_compiled',
                 'mdot.context_processors.google_analytics',
-                'mdot.context_processors.devtools_bar',
+                #'mdot.context_processors.devtools_bar',
+                'mdot.context_processors.get_emails',
             ],
         },
     },
@@ -206,3 +207,8 @@ RESTCLIENTS_MDOT_DAO_CLASS = 'mdot.mdot_rest_client.client.MDOTLive'
 RESTCLIENTS_MDOT_HOST = '{{ mdot_api_host }}'
 
 GOOGLE_ANALYTICS_KEY = '{{ ga_tracking_id|default('') }}'
+
+#Emails
+MDOT_HELP_EMAIL = '{{ mdot_help_email }}'
+MDOT_UX_CONTACT = '{{ mdot_ux_contact }}'
+MDOT_SERVICE_EMAIL = '{{ mdot_service_team_email }}'
