@@ -50,6 +50,7 @@ UW_SAML = {
         'wantMessagesSigned': {{ sp_want_messages_signed|default(True) }},
         'wantAssertionsSigned': {{ sp_want_assertions_signed|default(False) }},
         'wantAssertionsEncrypted': {{ sp_want_assertions_encrypted|default(False) }},
-        {% if sp_use_2fa|default(False) %}'requestedAuthnContext': ['urn:oasis:names:tc:SAML:2.0:ac:classes:TimeSyncToken'],{% endif %}
+        {% if sp_use_2fa|default(False) %}'requestedAuthnContext': ['urn:oasis:names:tc:SAML:2.0:ac:classes:TimeSyncToken'],
+        'failOnAuthnContextMismatch': True,{% endif %}
     }
 }
