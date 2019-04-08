@@ -3,11 +3,6 @@ INSTALLED_APPS += (
     'sis_provisioner.apps.BridgeProvisionerConfig',
 )
 
-# BRIDGE_IMPORT_CSV_ROOT='/data/bridge/csv'
-# BRIDGE_IMPORT_USER_FILENAME='users'
-# BRIDGE_IMPORT_USER_FILE_SIZE={{ import_user_file_size }}
-
-
 RESTCLIENTS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'
 RESTCLIENTS_DISABLE_THREADING = True
 RESTCLIENTS_TIMEOUT = 60
