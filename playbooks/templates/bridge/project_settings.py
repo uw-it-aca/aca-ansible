@@ -1,5 +1,3 @@
-STATIC_URL = '/data/bridge/static/'
-
 INSTALLED_APPS += (
     'rc_django',
     'sis_provisioner.apps.BridgeProvisionerConfig',
