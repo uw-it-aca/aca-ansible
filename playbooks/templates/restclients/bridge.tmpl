@@ -1,4 +1,6 @@
-RESTCLIENTS_BRIDGE_DAO_CLASS = 'restclients.dao_implementation.bridge.Live'
+RESTCLIENTS_BRIDGE_DAO_CLASS = 'Live'
 RESTCLIENTS_BRIDGE_BASIC_AUTH_KEY='{{ bridge_client_key }}'
 RESTCLIENTS_BRIDGE_BASIC_AUTH_SECRET='{{ bridge_client_secret }}'
 RESTCLIENTS_BRIDGE_HOST='{% if "bridge" in restclients.production|default(False) %}https://uw.bridgeapp.com:443{% else %}https://uwtest.bridgeapp.com:443{% endif %}'
+RESTCLIENTS_BRIDGE_TIMEOUT={{ bridge_timeout|default(60) }}
+RESTCLIENTS_BRIDGE_POOL_SIZE={{ bridge_max_pool_size|default(30) }}
