@@ -7,7 +7,10 @@ RESTCLIENTS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'
 RESTCLIENTS_DISABLE_THREADING = True
 RESTCLIENTS_TIMEOUT = 60
 TIMING_LOG_ENABLED = True
-ERRORS_TO_ABORT_LOADER = [401, 500]
+ERRORS_TO_ABORT_LOADER = [401, 500, 502, 503, 504]
+# 502 Bad Gateway
+# 503 Service Unavailable
+# 504 Gateway Timeout
 
 # RESTCLIENTS_DAO_CACHE_CLASS='{{restclients_dao_cache_class}}'
 CACHES = {

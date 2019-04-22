@@ -20,15 +20,15 @@
       pip: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" name=pip-accel
 
     - name: Install the PermissionsLogging module - needed to make sure our logs are group-writable
-      shell: source {{ base_dir }}/builds/{{current_build_value}}/bin/activate && PIP_ACCEL_CACHE={{ pip_accel_cache_dir }} pip-accel install -r {{ base_dir }}/project_requirements.txt -i {{ pypi_mirror | default("https://pypi.s.uw.edu/root/pypi/+simple") }}
+      shell: source {{ base_dir }}/builds/{{current_build_value}}/bin/activate && PIP_ACCEL_CACHE={{ pip_accel_cache_dir }} pip-accel install -r {{ base_dir }}/project_requirements.txt -i {{ pypi_mirror | default("https://pypi.org/simple/") }}
 
     - name: Perform upgrades with pip.  May (but should not) take a while
-      shell: source {{ base_dir }}/builds/{{current_build_value}}/bin/activate && PIP_ACCEL_CACHE={{ pip_accel_cache_dir }} pip-accel install -r {{ base_dir }}//builds/{{current_build_value}}/{{ item }} -U -i {{ pypi_mirror | default("https://pypi.s.uw.edu/root/pypi/+simple") }}
+      shell: source {{ base_dir }}/builds/{{current_build_value}}/bin/activate && PIP_ACCEL_CACHE={{ pip_accel_cache_dir }} pip-accel install -r {{ base_dir }}//builds/{{current_build_value}}/{{ item }} -U -i {{ pypi_mirror | default("https://pypi.org/simple/") }}
       with_items: "{{ pip_upgrades_files }}"
       when: pip_upgrades_files is defined
 
     - name: Install requirements with pip.  May (probably will) take a while
-      shell: cd {{ base_dir }}/builds/{{current_build_value}} && source ./bin/activate && PIP_ACCEL_CACHE={{ pip_accel_cache_dir }} pip-accel install -r {{ item }} -i {{ pypi_mirror | default("https://pypi.s.uw.edu/root/pypi/+simple") }}
+      shell: cd {{ base_dir }}/builds/{{current_build_value}} && source ./bin/activate && PIP_ACCEL_CACHE={{ pip_accel_cache_dir }} pip-accel install -r {{ item }} -i {{ pypi_mirror | default("https://pypi.org/simple/") }}
       with_items: "{{ pip_requirements_files }}"
       environment:
           PATH: "{{ path }}"
