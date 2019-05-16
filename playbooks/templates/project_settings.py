@@ -129,7 +129,7 @@ INSTALLED_APPS = {% if django_version is version_compare('1.9', '>=') %}[{% else
 
 
 {% if django_version is version_compare('2', '>=') %}MIDDLEWARE{% else %}MIDDLEWARE_CLASSES{% endif %} = [
-    'django.middleware.gzip.GZipMiddleware',
+    {% if compress_html|default(False) %}'django.middleware.gzip.GZipMiddleware',{% endif %}
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
