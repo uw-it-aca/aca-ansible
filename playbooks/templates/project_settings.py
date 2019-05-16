@@ -129,9 +129,7 @@ INSTALLED_APPS = {% if django_version is version_compare('1.9', '>=') %}[{% else
 
 
 {% if django_version is version_compare('2', '>=') %}MIDDLEWARE{% else %}MIDDLEWARE_CLASSES{% endif %} = [
-    {% if compress_html|default(False) %}'django.middleware.gzip.GZipMiddleware',
-    'htmlmin.middleware.HtmlMinifyMiddleware',{% endif %}
-
+    {% if compress_html|default(False) %}'django.middleware.gzip.GZipMiddleware',{% endif %}
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -140,8 +138,6 @@ INSTALLED_APPS = {% if django_version is version_compare('1.9', '>=') %}[{% else
     {% if persistent_remote_user|default(False) %}'django.contrib.auth.middleware.PersistentRemoteUserMiddleware'{% else %}'django.contrib.auth.middleware.RemoteUserMiddleware'{% endif %},
 
     'django.middleware.locale.LocaleMiddleware',
-    {% if compress_html|default(False) %}'htmlmin.middleware.MarkRequestMiddleware',{% endif %}
-
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
     {% if include_userservice|default(True) %}'userservice.user.UserServiceMiddleware',{% endif %}
