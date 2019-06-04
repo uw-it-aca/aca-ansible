@@ -150,7 +150,7 @@ PANOPTO_ADMIN_GROUP = 'u_acadev_panopto_support'
 
 RESTCLIENTS_ADMIN_AUTH_MODULE = 'scheduler.views.can_view_restclients_data'
 RESTCLIENTS_TIMEOUT = 60
-RESTCLIENTS_DAO_CACHE_CLASS = 'scheduler.cache.ProvisionCache'
+RESTCLIENTS_DAO_CACHE_CLASS = 'scheduler.cache.RestClientsCache'
 
 SUPPORTTOOLS_PARENT_APP = 'Panopto'
 SUPPORTTOOLS_PARENT_APP_URL = 'https://panopto.uw.edu/'
