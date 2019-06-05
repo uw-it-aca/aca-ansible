@@ -107,6 +107,9 @@ RESTCLIENTS_MEMCACHED_SERVERS = {{ restclients_memcached_servers|default("''")}}
 
 RESTCLIENTS_DEFAULT_TIMEOUT = 3
 
+RESTCLIENTS_PRT_DAO_CLASS = 'Live'
+RESTCLIENTS_PRT_HOST = 'https://staff.washington.edu'
+
 SUPPORTTOOLS_PARENT_APP = "Provision"
 SUPPORTTOOLS_PARENT_APP_URL = "/"
 
