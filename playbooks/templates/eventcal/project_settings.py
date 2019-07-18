@@ -1,7 +1,6 @@
 # Settings for Event Calendar project.
 INSTALLED_APPS += [
-    'restclients',
-    'accountsynchr',
+    'accountsynchr.apps.EventCalConfig',
 ]
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
