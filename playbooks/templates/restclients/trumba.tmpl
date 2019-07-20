@@ -17,9 +17,9 @@ RESTCLIENTS_TRUMBA_TAC_PSWD='{{ restclients_trumba_tac_pswd }}'
 RESTCLIENTS_TRUMBA_BOT_ID='{{ restclients_trumba_bot_id }}'
 RESTCLIENTS_TRUMBA_BOT_PSWD='{{ restclients_trumba_bot_pswd}}'
 
-RESTCLIENTS_TRUMBA_SEA_SOCKET_TIMEOUT={{ trumba_socket_timeout|default(90) }}
-RESTCLIENTS_TRUMBA_SEA_MAX_POOL_SIZE={{ trumba_max_pool_size|default(5) }}
-RESTCLIENTS_TRUMBA_BOT_SOCKET_TIMEOUT={{ trumba_socket_timeout|default(90) }}
-RESTCLIENTS_TRUMBA_BOT_MAX_POOL_SIZE={{ trumba_max_pool_size|default(5) }}
-RESTCLIENTS_TRUMBA_TAC_SOCKET_TIMEOUT={{ trumba_socket_timeout|default(90) }}
-RESTCLIENTS_TRUMBA_TAC_MAX_POOL_SIZE={{ trumba_max_pool_size|default(5) }}
+RESTCLIENTS_TRUMBA_SEA_TIMEOUT={{ trumba_timeout|default(90) }}
+RESTCLIENTS_TRUMBA_BOT_TIMEOUT={{ trumba_timeout|default(90) }}
+RESTCLIENTS_TRUMBA_TAC_TIMEOUT={{ trumba_timeout|default(90) }}
+RESTCLIENTS_TRUMBA_SEA_POOL_SIZE={{ trumba_max_pool_size|default(5) }}
+RESTCLIENTS_TRUMBA_BOT_POOL_SIZE={{ trumba_max_pool_size|default(5) }}
+RESTCLIENTS_TRUMBA_TAC_POOL_SIZE={{ trumba_max_pool_size|default(5) }}
