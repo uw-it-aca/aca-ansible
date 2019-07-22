@@ -1,5 +1,6 @@
-RESTCLIENTS_HRPWS_DAO_CLASS = 'restclients.dao_implementation.hrpws.Live'
+RESTCLIENTS_HRPWS_DAO_CLASS = 'Live'
 RESTCLIENTS_HRPWS_CERT_FILE='{% if webservice_client_cert_path|default(None) %}{{ webservice_client_cert_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_cert_name }}{% endif %}'
 RESTCLIENTS_HRPWS_KEY_FILE='{% if webservice_client_key_path|default(None) %}{{ webservice_client_key_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_key_name }}{% endif %}'
 RESTCLIENTS_HRPWS_HOST='{% if "hrpws" in restclients.production|default(False) %}https://ws.admin.washington.edu:443{% else %}https://wseval.s.uw.edu:443{% endif %}'
-RESTCLIENTS_HRPWS_MAX_POOL_SIZE={{ hrpws_max_pool_size|default(5) }}
+RESTCLIENTS_HRPWS_POOL_SIZE={{ hrpws_max_pool_size|default(5) }}
+RESTCLIENTS_HRPWS_TIMEOUT={{ hrpws_timeout|default(60) }}
