@@ -1,6 +1,6 @@
 RESTCLIENTS_GWS_DAO_CLASS = 'Live'
 RESTCLIENTS_GWS_CERT_FILE='{% if webservice_client_cert_path|default(None) %}{{ webservice_client_cert_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_cert_name }}{% endif %}'
 RESTCLIENTS_GWS_KEY_FILE='{% if webservice_client_key_path|default(None) %}{{ webservice_client_key_path }}{% else %}{{ base_dir }}/certs/{{ webservice_client_key_name }}{% endif %}'
-RESTCLIENTS_GWS_HOST='{% if "gws" in restclients.production|default(False) %}https://iam-ws.u.washington.edu:7443{% else %}https://eval.groups.uw.edu:443{% endif %}'
+RESTCLIENTS_GWS_HOST='{% if "gws" in restclients.production|default(False) %}https://groups.uw.edu{% else %}https://eval.groups.uw.edu{% endif %}'
 RESTCLIENTS_GWS_TIMEOUT={{ gws_timeout|default(5) }}
 RESTCLIENTS_GWS_POOL_SIZE={{ gws_max_pool_size|default(10) }}
