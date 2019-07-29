@@ -27,6 +27,8 @@ CACHES = {
         }
     }
 
+import sys
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -62,15 +64,16 @@ LOGGING = {
             'formatter': 'bridge',
         },
         'console':{
-            'level': 'ERROR',
+            'level': 'INFO',
             'class': 'logging.StreamHandler',
+            'stream': sys.stdout
         },
     },
    'loggers': {
-        'django.request': {
+        'bridge_provisioner_commands': {
             'handlers': ['mail_admins', 'console'],
-            'level': 'ERROR',
-            'propagate': True,
+            'level': 'INFO',
+            'propagate': False,
         },
         'restclients_core': {
             'handlers': ['restclients_timing_log'],

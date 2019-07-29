@@ -1,7 +1,11 @@
+
+
 # Settings for Event Calendar project.
 INSTALLED_APPS += [
     'accountsynchr.apps.EventCalConfig',
 ]
+
+import sys
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
@@ -20,11 +24,6 @@ LOGGING = {
         },
     },
     'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
-        },
         'dailyrotation_file': {
             'level': 'INFO',
             'class': 'permissions_logging.DateNameFileHandler',
@@ -33,24 +32,23 @@ LOGGING = {
             'formatter': 'standard',
         },
         'console':{
-            'level': 'ERROR',
+            'level': 'INFO',
             'class': 'logging.StreamHandler',
+            'stream': sys.stdout
         },
     },
     'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins', 'console'],
+        'eventcal.commands': {
+            'handlers': ['console'],
             'level': 'INFO',
-            'propagate': True,
+            'propagate': False,
         },
         '': {
             'handlers': ['dailyrotation_file'],
             'level': 'INFO',
-            'propagate': True,
+            'propagate': False,
         },
     }
 }
 
 EVENTCAL_ADMIN_GROUP = '{{ eventcal_admin_group }}'
-
-RESTCLIENTS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'
