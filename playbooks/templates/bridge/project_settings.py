@@ -6,7 +6,7 @@ INSTALLED_APPS += (
 BRIDGE_IMPORT_CSV_ROOT = '/data/bridge/csv'
 BRIDGE_IMPORT_USER_FILE_SIZE = {{ import_user_file_size }}
 BRIDGE_USER_WORK_POSITIONS = {{ user_work_positions }}
-BRIDGE_AUTHOR_GROUP_NAME = {{author_group_name }}
+BRIDGE_AUTHOR_GROUP_NAME = "{{author_group_name }}"
 
 RESTCLIENTS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'
 RESTCLIENTS_DISABLE_THREADING = True
