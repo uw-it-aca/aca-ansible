@@ -49,7 +49,8 @@ INSTALLED_APPS = (
     'spotseeker_restclient',
     'null_command',
     'compressor',
-    'userservice'
+    'userservice',
+    'django_user_agents'
 )
 
 MIDDLEWARE_CLASSES += (
@@ -58,7 +59,8 @@ MIDDLEWARE_CLASSES += (
     'django.contrib.auth.middleware.RemoteUserMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
-    'userservice.user.UserServiceMiddleware'
+    'userservice.user.UserServiceMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware'
 )
 
 TEMPLATES = [
