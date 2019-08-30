@@ -120,7 +120,7 @@
       when: reload_apache|default(true)
 
     - name: Fix permissions on the pip accel cache
-      command: find {{ pip_accel_cache_dir }} -exec chmod g+rw {} \;
+      command: find {{ pip_accel_cache_dir }} -exec chmod g+w {} \;
       async: 500
       poll: 0
 
