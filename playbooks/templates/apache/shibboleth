@@ -6,6 +6,15 @@
     require {{ shibboleth_require_string|default("valid-user") }}
 </Location>
 
+{% if shibboleth_google_url is defined %}
+<Location {{ shibboleth_google_url }}>
+    AuthType shibboleth
+    ShibRequestSetting requireSession true
+    ShibRequestSetting requireSessionWith UWGOOGLE
+    require valid-user
+</Location>
+{% endif %}
+
 <Location "/Shibboleth.sso">
     SetHandler shib
     Order Deny,Allow
