@@ -3,7 +3,7 @@
   connection: local
 
   vars:
-    tmp_path: "/tmp/{{ ansible_ssh_user }}/canvas"
+    tmp_path: "/tmp/{{ ansible_user }}/canvas"
 
   tasks:
     - debug: msg="the tmp path is {{ tmp_path }}"
@@ -15,13 +15,13 @@
       file: state="absent" path="{{ tmp_path }}/www"
 
     - name: Export statics
-      git: repo="https://github.com/uw-it-aca/uw-canvas-statics.git" dest="{{ tmp_path }}/www"  
+      git: repo="https://github.com/uw-it-aca/uw-canvas-statics.git" dest="{{ tmp_path }}/www"
 
 - name: Deploy to target hosts
   hosts: django-app-server
 
   vars:
-    tmp_path: "/tmp/{{ ansible_ssh_user }}/canvas/www"
+    tmp_path: "/tmp/{{ ansible_user }}/canvas/www"
 
   tasks:
     - name: Copy files
