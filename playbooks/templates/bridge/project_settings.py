@@ -4,16 +4,19 @@ INSTALLED_APPS += (
 )
 
 BRIDGE_IMPORT_CSV_ROOT = '/data/bridge/csv'
+BRIDGE_GWS_CACHE = '/data/bridge/gws/users'
 BRIDGE_IMPORT_USER_FILE_SIZE = {{ import_user_file_size }}
 BRIDGE_USER_WORK_POSITIONS = {{ user_work_positions }}
 BRIDGE_AUTHOR_GROUP_NAME = "{{author_group_name }}"
 BRIDGE_LOGIN_WINDOW = {{ bridge_upd_window }}
-
+BRIDGE_PERSON_CHANGE_WINDOW = {{ bridge_person_change_window }}
 RESTCLIENTS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'
 RESTCLIENTS_DISABLE_THREADING = True
 RESTCLIENTS_TIMEOUT = 60
 TIMING_LOG_ENABLED = True
-ERRORS_TO_ABORT_LOADER = [401, 500, 502, 503]
+ERRORS_TO_ABORT_LOADER = [401, 403, 500, 502, 503]
+# 401 Unauthorized
+# 403 Forbidden (Rate Limit Exceeded)
 # 502 Bad Gateway
 # 503 Service Unavailable
 # 504 Gateway Timeout
