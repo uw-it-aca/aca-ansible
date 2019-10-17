@@ -361,11 +361,9 @@ SIS_IMPORT_LIMIT = {
         'high': 500
     },
     'group': {
-        'default': 500
+        'default': 0,
+        'high': 20
     },
-    'coursemember': {
-        'default': 1000
-    }
 }
 
 CANVAS_MANAGER_ADMIN_GROUP = 'u_acadev_canvas_support'
