@@ -52,3 +52,14 @@ LOGGING = {
 }
 
 EVENTCAL_ADMIN_GROUP = '{{ eventcal_admin_group }}'
+CSV_FILE_PATH = '/data/eventcal/csv'
+
+EMAIL_BACKEND = '{{ email_backend}}'
+EMAIL_HOST = '{{ email_host }}'
+EMAIL_PORT = {{ email_port }}
+EMAIL_USE_TLS = False
+
+EMAIL_ADDRESS_DOMAIN = '{{ email_address_domain }}'
+EMAIL_SENDER = '{{ email_sender }}'
+PURGE_EMAIL_MESSAGE = '{{ purge_email_message }}'
+PURGE_EMAIL_SUBJECT = '{{ purge_email_subject }}'
