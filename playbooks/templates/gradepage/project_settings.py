@@ -97,6 +97,7 @@ ALLOW_GRADE_SUBMISSION_OVERRIDE = {{ allow_grade_submission_override }}
 
 RESTCLIENTS_ADMIN_AUTH_MODULE = 'course_grader.views.support.can_proxy_restclient'
 RESTCLIENTS_DAO_CACHE_CLASS = 'course_grader.cache.RestClientsCache'
+RESTCLIENTS_CANVAS_ACCOUNT_ID = '{{ canvas_account_id }}'
 
 PERSISTENT_MESSAGE_AUTH_MODULE = 'course_grader.views.support.can_manage_persistent_messages'
 
