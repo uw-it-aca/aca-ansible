@@ -3,14 +3,11 @@ TIME_ZONE = 'America/Los_Angeles'
 
 INSTALLED_APPS += [
     'notify.apps.NotifyUIConfig',
-    'templatetag_handlebars',
     'supporttools',
     'userservice',
+    'persistent_message',
     'rc_django',
-]
-
-MIDDLEWARE_CLASSES += [
-    'django_mobileesp.middleware.UserAgentDetectionMiddleware',
+    'django_user_agents',
 ]
 
 CACHES = {
@@ -113,16 +110,14 @@ RESTCLIENTS_DAO_CACHE_CLASS='notify.cache_implementation.UICache'
 AWS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'
 AWS_SQS = {
     'ENROLLMENT_V2': {
-        'TOPIC_ARN': '{{ event_enrollment_v2_topic_arn }}',
-        'QUEUE': '{{ event_enrollment_v2_sqs_queue }}',
+        'QUEUE_ARN': '{{ event_enrollment_v2_sqs_queue }}',
         'KEY_ID': '{{ event_enrollment_v2_key_id }}',
         'KEY': '{{ event_enrollment_v2_secret_key }}',
         'VISIBILITY_TIMEOUT': 60,
-        'MESSAGE_GATHER_SIZE': {{ event_enrollment_v2_sqs_gather }},
+        'MESSAGE_GATHER_SIZE': 50,
         'VALIDATE_SNS_SIGNATURE': True,
-        'VALIDATE_MSG_SIGNATURE': True,
+        'VALIDATE_BODY_SIGNATURE': True,
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
-        'PAYLOAD_SETTINGS': {}
     },
 }
 
@@ -139,20 +134,8 @@ SENDER_ADDRESS = '{{ sender_address }}'
 GOOGLE_ANALYTICS_KEY = '{{ google_analytics_key }}'
 {% endif %}
 
-UI_SYSTEM_MESSAGE = None
-
 SUPPORTTOOLS_PARENT_APP = 'Notify.UW'
 
 INVALID_UUIDS = [
     '00000000-0000-0000-0000-000000000000'
 ]
-
-from django_mobileesp.detector import mobileesp_agent as agent
-DETECT_USER_AGENTS = {
-    'is_android': agent.detectAndroid,
-    'is_ios': agent.detectIos,
-    'is_windows_phone': agent.detectWindowsPhone,
-    'is_mobile': agent.detectTierTablet | \
-                 agent.detectTierIphone | \
-                 agent.detectMobileQuick,
-}
