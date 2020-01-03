@@ -57,7 +57,7 @@ CSV_FILE_PATH = '/data/eventcal/csv'
 EMAIL_BACKEND = '{{ email_backend}}'
 EMAIL_HOST = '{{ email_host }}'
 EMAIL_PORT = {{ email_port }}
-EMAIL_USE_TLS = False
+EMAIL_TIMEOUT = 15
 
 EMAIL_ADDRESS_DOMAIN = '{{ email_address_domain }}'
 EMAIL_SENDER = '{{ email_sender }}'
