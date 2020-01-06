@@ -10,6 +10,10 @@ INSTALLED_APPS += [
     'django_user_agents',
 ]
 
+MIDDLEWARE += [
+    'django_user_agents.middleware.UserAgentMiddleware',
+]
+
 CACHES = {
     'default' : {
         'BACKEND' : 'django.core.cache.backends.db.DatabaseCache',
@@ -106,6 +110,7 @@ USERSERVICE_VALIDATION_MODULE = 'notify.utilities.validate_override_user'
 USERSERVICE_OVERRIDE_AUTH_MODULE = 'notify.views.can_override_user'
 RESTCLIENTS_ADMIN_AUTH_MODULE = 'notify.views.can_proxy_restclient'
 RESTCLIENTS_DAO_CACHE_CLASS='notify.cache_implementation.UICache'
+PERSISTENT_MESSAGE_AUTH_MODULE = 'notify.views.can_manage_persistent_messages'
 
 AWS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'
 AWS_SQS = {
