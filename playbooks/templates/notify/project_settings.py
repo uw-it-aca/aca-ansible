@@ -119,7 +119,7 @@ AWS_SQS = {
         'KEY_ID': '{{ event_enrollment_v2_key_id }}',
         'KEY': '{{ event_enrollment_v2_secret_key }}',
         'VISIBILITY_TIMEOUT': 60,
-        'MESSAGE_GATHER_SIZE': 50,
+        'MESSAGE_GATHER_SIZE': {{ event_enrollment_v2_sqs_gather }},
         'VALIDATE_SNS_SIGNATURE': True,
         'VALIDATE_BODY_SIGNATURE': True,
         'EVENT_COUNT_PRUNE_AFTER_DAY': 2,
