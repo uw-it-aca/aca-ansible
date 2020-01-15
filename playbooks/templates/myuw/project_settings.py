@@ -2,7 +2,6 @@
 TIME_ZONE = 'America/Los_Angeles'
 
 INSTALLED_APPS += [
-    'templatetag_handlebars',
     'userservice',
     'rc_django',
     'supporttools',
@@ -238,9 +237,12 @@ MYUW_DATA_PATH = "{{ base_dir }}"
 SERU_LIST = "{{ myuw_seru_path }}"
 MYUWCLASS = "{{ myuwclass }}"
 
+MYUW_PROD_URL = "{{ myuw_prod_url }}"
 MYUW_ADMIN_GROUP = "{{ myuw_admin_group }}"
 MYUW_OVERRIDE_GROUP = "{{ myuw_override_group }}"
 MYUW_ASTRA_GROUP_STEM = "{{ myuw_astra_group_stem }}"
+MYUW_TEST_ACCESS_GROUP = "{{ myuw_test_access_group }}"
+
 MYUW_DISABLE_ACTIONS_WHEN_OVERRIDE = {{ myuw_disable_actions_when_override }}
 
 USERSERVICE_VALIDATION_MODULE = "myuw.authorization.validate_netid"
