@@ -46,7 +46,6 @@ INSTALLED_APPS = (
     'scout',
     'scout_manager',
     'hybridize',
-    'spotseeker_restclient',
     'null_command',
     'compressor',
     'userservice',
@@ -58,7 +57,6 @@ MIDDLEWARE_CLASSES += (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.auth.middleware.RemoteUserMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'django_mobileesp.middleware.UserAgentDetectionMiddleware',
     'userservice.user.UserServiceMiddleware',
     'django_user_agents.middleware.UserAgentMiddleware'
 )
@@ -127,17 +125,17 @@ USE_TZ = True
 
 # django mobileesp
 
-from django_mobileesp.detector import mobileesp_agent as agent
-
-DETECT_USER_AGENTS = {
-
-    'is_tablet' : agent.detectTierTablet,
-    'is_mobile': agent.detectMobileQuick,
-
-    'is_and': agent.detectAndroid,
-    'is_ios': agent.detectIos,
-    'is_win': agent.detectWindowsPhone,
-}
+#from django_mobileesp.detector import mobileesp_agent as agent
+#
+#DETECT_USER_AGENTS = {
+#
+#    'is_tablet' : agent.detectTierTablet,
+#    'is_mobile': agent.detectMobileQuick,
+#
+#    'is_and': agent.detectAndroid,
+#    'is_ios': agent.detectIos,
+#    'is_win': agent.detectWindowsPhone,
+#}
 
 COMPRESS_PRECOMPILERS += (
     ('text/x-sass', 'django_pyscss.compressor.DjangoScssFilter'),
@@ -157,10 +155,10 @@ GOOGLE_ANALYTICS_KEY = "{{ google_analytics_key | default('') }}"
 # google maps api
 GOOGLE_MAPS_API = "{{ google_maps_api_key | default('') }}"
 
-SPOTSEEKER_HOST = "{{ spotseeker_client_host }}"
+RESTCLIENTS_SPOTSEEKER_HOST = "{{ spotseeker_client_host }}"
 SPOTSEEKER_OAUTH_KEY = "{{ spotseeker_client_key }}"
 SPOTSEEKER_OAUTH_SECRET = "{{ spotseeker_client_secret }}"
-SPOTSEEKER_DAO_CLASS = "{{ spotseeker_client_dao }}"
+RESTCLIENTS_SPOTSEEKER_DAO_CLASS = "{{ spotseeker_client_dao }}"
 
 OAUTH_USER = "{{ spotseeker_oauth_user }}"
 

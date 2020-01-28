@@ -13,8 +13,13 @@
     - name: Copy over requirements for the project level
       copy: src="{{ files_dir }}/project_requirements.txt" dest="{{ base_dir }}/project_requirements.txt" group="{{ file_group }}" mode="0664"
 
-    - name: Upgrades pip and setuptools
+    - name: Upgrades pip and setuptools (Python > 2.7)
       shell: source {{ base_dir }}/builds/{{current_build_value}}/bin/activate && pip install --upgrade pip && pip install --upgrade setuptools
+      when: python_interpreter is defined and not (python_interpreter == "python2.7")
+
+    - name: Upgrades pip and setuptools (Python 2.7)
+      shell: source {{ base_dir }}/builds/{{current_build_value}}/bin/activate && pip install --upgrade pip && pip install --upgrade 'setuptools<45.0'
+      when: python_interpreter is defined and python_interpreter == "python2.7"
 
     - name: Install pip-accel
       pip: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" name=pip-accel
