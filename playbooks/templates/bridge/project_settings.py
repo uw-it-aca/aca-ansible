@@ -10,6 +10,7 @@ BRIDGE_USER_WORK_POSITIONS = {{ user_work_positions }}
 BRIDGE_AUTHOR_GROUP_NAME = "{{author_group_name }}"
 BRIDGE_LOGIN_WINDOW = {{ bridge_upd_window }}
 BRIDGE_PERSON_CHANGE_WINDOW = {{ bridge_person_change_window }}
+BRIDGE_WORKER_CHANGE_WINDOW = {{ bridge_worker_change_window }}
 RESTCLIENTS_CA_BUNDLE = '{{ base_dir }}/certs/ca-bundle.crt'
 RESTCLIENTS_DISABLE_THREADING = True
 RESTCLIENTS_TIMEOUT = 60
