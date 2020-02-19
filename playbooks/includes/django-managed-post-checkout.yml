@@ -21,19 +21,16 @@
       shell: source {{ base_dir }}/builds/{{current_build_value}}/bin/activate && pip install --upgrade pip && pip install --upgrade 'setuptools<45.0'
       when: python_interpreter is defined and python_interpreter == "python2.7"
 
-    - name: Install pip-accel
-      pip: virtualenv="{{ base_dir }}/builds/{{current_build_value}}" name=pip-accel
-
     - name: Install the PermissionsLogging module - needed to make sure our logs are group-writable
-      shell: source {{ base_dir }}/builds/{{current_build_value}}/bin/activate && PIP_ACCEL_CACHE={{ pip_accel_cache_dir }} pip-accel install -r {{ base_dir }}/project_requirements.txt -i {{ pypi_mirror | default("https://pypi.org/simple/") }}
+      shell: source {{ base_dir }}/builds/{{current_build_value}}/bin/activate && XDG_CACHE_HOME={{ pip_accel_cache_dir }}/{{ ansible_user_id }} pip install -r {{ base_dir }}/project_requirements.txt -i {{ pypi_mirror | default("https://pypi.org/simple/") }}
 
     - name: Perform upgrades with pip.  May (but should not) take a while
-      shell: source {{ base_dir }}/builds/{{current_build_value}}/bin/activate && PIP_ACCEL_CACHE={{ pip_accel_cache_dir }} pip-accel install -r {{ base_dir }}//builds/{{current_build_value}}/{{ item }} -U -i {{ pypi_mirror | default("https://pypi.org/simple/") }}
+      shell: source {{ base_dir }}/builds/{{current_build_value}}/bin/activate && XDG_CACHE_HOME={{ pip_accel_cache_dir }}/{{ ansible_user_id }} pip install -r {{ base_dir }}//builds/{{current_build_value}}/{{ item }} -U -i {{ pypi_mirror | default("https://pypi.org/simple/") }}
       with_items: "{{ pip_upgrades_files }}"
       when: pip_upgrades_files is defined
 
     - name: Install requirements with pip.  May (probably will) take a while
-      shell: cd {{ base_dir }}/builds/{{current_build_value}} && source ./bin/activate && PIP_ACCEL_CACHE={{ pip_accel_cache_dir }} pip-accel install -r {{ item }} -i {{ pypi_mirror | default("https://pypi.org/simple/") }}
+      shell: cd {{ base_dir }}/builds/{{current_build_value}} && source ./bin/activate && XDG_CACHE_HOME={{ pip_accel_cache_dir }}/{{ ansible_user_id }} pip install -r {{ item }} -i {{ pypi_mirror | default("https://pypi.org/simple/") }}
       with_items: "{{ pip_requirements_files }}"
       environment:
           PATH: "{{ path }}"
@@ -128,7 +125,7 @@
       when: reload_apache|default(true)
 
     - name: Fix permissions on the pip accel cache
-      command: find {{ pip_accel_cache_dir }} -exec chmod g+w {} \;
+      command: find {{ pip_accel_cache_dir }}/{{ ansible_user_id }} -exec chmod g+w {} \;
       async: 500
       poll: 0
 
