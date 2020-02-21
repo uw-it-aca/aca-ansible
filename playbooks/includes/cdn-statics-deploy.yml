@@ -14,5 +14,9 @@
       with_items:
           - aca-cdn-web01.s.uw.edu
           - aca-cdn-web02.s.uw.edu
+      register: result
+      until: result.rc == 0
+      retries: 3
+      delay: 10
 
     - file: state="absent" path="{{ base_dir }}/aca-cdn-ssh.key"
