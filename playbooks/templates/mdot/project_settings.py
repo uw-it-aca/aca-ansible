@@ -201,7 +201,7 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
 }
 
-RESTCLIENTS_MDOT_DAO_CLASS = 'mdot.mdot_rest_client.client.MDOTLive'
+RESTCLIENTS_MDOT_DAO_CLASS = 'Live'
 RESTCLIENTS_MDOT_HOST = '{{ mdot_api_host }}'
 
 GOOGLE_ANALYTICS_KEY = '{{ ga_tracking_id|default('') }}'
