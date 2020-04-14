@@ -231,5 +231,6 @@ LOGGING = {
     }
 }
 
-# Temporary fix to deploy until we move to the new GWS restclient.
 RESTCLIENTS_GWS_DAO_CLASS = 'restclients.dao_implementation.gws.Live'
+
+SCOUT_SHOW_NEWSSPLASH = {{ scout_show_newssplash }}
