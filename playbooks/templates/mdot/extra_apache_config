@@ -18,3 +18,9 @@ Alias /media /data/www/media
     Order deny,allow
     Allow from all
 </Directory>
+
+Alias /robots.txt /data/www/robots.txt
+<Files "robots.txt">
+    Order deny,allow
+    Allow from all 
+</Files>
