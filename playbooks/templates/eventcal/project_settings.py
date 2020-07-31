@@ -58,8 +58,4 @@ EMAIL_BACKEND = '{{ email_backend}}'
 EMAIL_HOST = '{{ email_host }}'
 EMAIL_PORT = {{ email_port }}
 EMAIL_TIMEOUT = 15
-
 EMAIL_ADDRESS_DOMAIN = '{{ email_address_domain }}'
-EMAIL_SENDER = '{{ email_sender }}'
-PURGE_EMAIL_MESSAGE = '{{ purge_email_message }}'
-PURGE_EMAIL_SUBJECT = '{{ purge_email_subject }}'
