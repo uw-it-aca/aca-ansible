@@ -2,4 +2,9 @@
 #from django.views.decorators.cache import never_cache
 
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
+
+from mdot_rest.admin import admin_site
+
 admin.autodiscover()
+admin_site.login = login_required(admin_site.login)
