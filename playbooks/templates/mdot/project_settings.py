@@ -45,15 +45,11 @@ INSTALLED_APPS = (
     'mdot_rest',
     'mdot',
     'compressor',
+    'python3_saml_patch',
+    'uw_saml',
 )
 
-MIDDLEWARE_CLASSES += (
-#    'django.contrib.sessions.middleware.SessionMiddleware',
-#    'django.middleware.common.CommonMiddleware',
-#    'django.middleware.csrf.CsrfViewMiddleware',
-#    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-#    'django.contrib.messages.middleware.MessageMiddleware',
+MIDDLEWARE += (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django_user_agents.middleware.UserAgentMiddleware',
@@ -210,3 +206,6 @@ GOOGLE_ANALYTICS_KEY = '{{ ga_tracking_id|default('') }}'
 MDOT_HELP_EMAIL = '{{ mdot_help_email }}'
 MDOT_UX_CONTACT = '{{ mdot_ux_contact }}'
 MDOT_SERVICE_EMAIL = '{{ mdot_service_team_email }}'
+
+# Users who can log in to the admin site
+ADMIN_AUTHZ_GROUP = '{{ admin_authz_group }}'
