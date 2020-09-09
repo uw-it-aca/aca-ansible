@@ -1,5 +1,6 @@
 # Need this to get the oauth authentication headers in:
 WSGIPassAuthorization On
+WSGIApplicationGroup %{GLOBAL}
 
 # Disabled due to BREACH attack and Django's csrf not being good enough,
 # leaving here as there's a fix in the works.
